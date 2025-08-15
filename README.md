@@ -96,6 +96,8 @@ class YourController extends Controller
 
 ### Available Methods
 
+> **📊 API Coverage Status:** Currently 2 out of 144+ Loxo API endpoints are implemented (1.4%). See [API_COVERAGE.md](API_COVERAGE.md) for detailed progress tracking.
+
 #### Activity Types
 ```php
 // Get all activity types
@@ -304,6 +306,7 @@ If you discover any security vulnerabilities or bugs, please create an issue on 
 - **[🚀 Quick Start Guide](docs/QUICK_START.md)** - Get started in 5 minutes
 - **[🧪 Testing Guide](docs/TESTING.md)** - Development and automated testing
 - **[💡 Examples](examples/)** - Usage examples and code samples
+- **[📊 API Coverage](API_COVERAGE.md)** - Track implemented vs available endpoints
 
 ## Changelog
 
