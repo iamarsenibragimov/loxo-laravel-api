@@ -2,8 +2,10 @@
 
 // Create mock for Laravel Config facade BEFORE autoloading
 namespace Illuminate\Support\Facades {
-    class Config {
-        public static function get($key, $default = null) {
+    class Config
+    {
+        public static function get($key, $default = null)
+        {
             global $config;
             return $config[$key] ?? $default;
         }
@@ -24,11 +26,11 @@ namespace {
             if (strpos(trim($line), '#') === 0) {
                 continue; // Skip comments
             }
-            
+
             list($name, $value) = explode('=', $line, 2);
             $name = trim($name);
             $value = trim($value);
-            
+
             if (!array_key_exists($name, $_ENV)) {
                 $_ENV[$name] = $value;
                 putenv("$name=$value");
@@ -60,9 +62,10 @@ namespace {
         echo "Base URL: " . \Illuminate\Support\Facades\Config::get('loxo.base_url') . "\n";
     }
 
-    function measureTime($functionName) {
+    function measureTime($functionName)
+    {
         $start = microtime(true);
-        
+
         try {
             $result = call_user_func($functionName);
             $duration = round((microtime(true) - $start) * 1000, 2);
@@ -75,47 +78,47 @@ namespace {
         }
     }
 
-    function quickTest() {
+    function quickTest()
+    {
         echo "⚡ Quick Test - Loxo API Package\n";
         echo "================================\n";
-        
+
         try {
             $api = new LoxoApiService();
             echo "✅ Service initialized\n";
             echo "🌐 Base URL: " . $api->getBaseUrl() . "\n";
             echo "🏢 Agency: " . $api->getAgencySlug() . "\n";
-            
+
             // Test each endpoint quickly
             echo "\n🧪 Testing endpoints...\n";
-            
+
             measureTime('testActivityTypes');
             measureTime('testAddressTypes');
             measureTime('testJobs');
-            
+
             echo "\n🎉 Quick test completed!\n";
-            
         } catch (Exception $e) {
             echo "❌ Error: " . $e->getMessage() . "\n";
         }
     }
 
-    function testActivityTypes() {
+    function testActivityTypes()
+    {
         echo "🔄 Testing Activity Types endpoint...\n";
-        
+
         try {
             $api = new LoxoApiService();
             $result = $api->getActivityTypes();
-            
+
             $count = count($result['activity_types'] ?? []);
             echo "✅ Retrieved {$count} activity types\n";
-            
+
             if (!empty($result['activity_types'])) {
                 $first = $result['activity_types'][0];
                 echo "📋 First: ID={$first['id']}, Name='{$first['name']}'\n";
             }
-            
+
             return $result;
-            
         } catch (LoxoApiException $e) {
             echo "❌ API Error: " . $e->getMessage() . "\n";
             if ($e->getResponse()) {
@@ -128,23 +131,23 @@ namespace {
         }
     }
 
-    function testAddressTypes() {
+    function testAddressTypes()
+    {
         echo "🔄 Testing Address Types endpoint...\n";
-        
+
         try {
             $api = new LoxoApiService();
             $result = $api->getAddressTypes();
-            
+
             $count = count($result['address_types'] ?? []);
             echo "✅ Retrieved {$count} address types\n";
-            
+
             if (!empty($result['address_types'])) {
                 $first = $result['address_types'][0];
                 echo "📋 First: ID={$first['id']}, Name='{$first['name']}'\n";
             }
-            
+
             return $result;
-            
         } catch (LoxoApiException $e) {
             echo "❌ API Error: " . $e->getMessage() . "\n";
             if ($e->getResponse()) {
@@ -157,57 +160,56 @@ namespace {
         }
     }
 
-    function testJobs() {
+    function testJobs()
+    {
         echo "🔄 Testing Jobs endpoint...\n";
-        
+
         try {
             $api = new LoxoApiService();
-            
+
             // Test basic request
             echo "📋 Testing basic jobs request...\n";
             $result = $api->getJobs(['per_page' => 5]);
-            
-            $count = count($result['jobs'] ?? []);
+
+                        $count = count($result['results'] ?? []);
             echo "✅ Retrieved {$count} jobs\n";
             
-            if (isset($result['meta'])) {
-                $meta = $result['meta'];
-                echo "📊 Total: {$meta['total']}, Page: {$meta['current_page']}, Per page: {$meta['per_page']}\n";
+            if (isset($result['total_count'])) {
+                echo "📊 Total: {$result['total_count']}, Page: {$result['current_page']}, Per page: {$result['per_page']}\n";
             }
             
-            if (!empty($result['jobs'])) {
-                $first = $result['jobs'][0];
+            if (!empty($result['results'])) {
+                $first = $result['results'][0];
                 $published = ($first['published'] ?? false) ? 'Published' : 'Draft';
                 echo "📄 First job: ID={$first['id']}, Title='{$first['title']}', Status={$published}\n";
             }
-            
+
             // Test with search
             echo "\n🔍 Testing jobs search...\n";
             $searchResult = $api->getJobs([
                 'query' => 'developer',
                 'per_page' => 3
             ]);
-            
-            $searchCount = count($searchResult['jobs'] ?? []);
+
+                        $searchCount = count($searchResult['results'] ?? []);
             echo "✅ Found {$searchCount} jobs matching 'developer'\n";
             
-            if (!empty($searchResult['jobs'])) {
-                foreach ($searchResult['jobs'] as $job) {
+            if (!empty($searchResult['results'])) {
+                foreach ($searchResult['results'] as $job) {
                     echo "   📄 {$job['title']} (ID: {$job['id']})\n";
                 }
             }
-            
+
             // Test with advanced filters
             echo "\n🎯 Testing advanced filters...\n";
             $filteredResult = $api->getJobs([
                 'per_page' => 2
             ]);
-            
-            $filteredCount = count($filteredResult['jobs'] ?? []);
+
+            $filteredCount = count($filteredResult['results'] ?? []);
             echo "✅ Found {$filteredCount} jobs with basic filters\n";
-            
+
             return $result;
-            
         } catch (LoxoApiException $e) {
             echo "❌ API Error: " . $e->getMessage() . "\n";
             if ($e->getResponse()) {
