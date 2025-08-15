@@ -29,9 +29,9 @@ test-real: ## Test with real API (requires valid credentials)
 	@echo "🌐 Testing with real API..."
 	php dev-bootstrap.php
 
-quick: ## Quick test during development
-	@echo "⚡ Quick test..."
-	@php -r "require 'dev-bootstrap.php'; quickTest();"
+quick: ## Quick test all endpoints
+	@echo "⚡ Quick test all endpoints..."
+	@php dev-bootstrap.php
 
 debug-config: ## Show current configuration
 	@php -r "require 'dev-bootstrap.php'; debugConfig();"
@@ -41,6 +41,9 @@ activity-types: ## Test activity types endpoint
 
 address-types: ## Test address types endpoint  
 	@php -r "require 'dev-bootstrap.php'; measureTime('testAddressTypes');"
+
+jobs: ## Test jobs endpoint
+	@php -r "require 'dev-bootstrap.php'; measureTime('testJobs');"
 
 lint: ## Check code style
 	@if [ -f vendor/bin/phpcs ]; then \

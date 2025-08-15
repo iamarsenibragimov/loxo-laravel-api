@@ -118,25 +118,25 @@ This file tracks the coverage of Loxo API endpoints in our package.
 | `/{agency_slug}/forms/{id}`          | GET, PUT, DELETE | ❌      |       |
 
 ## Jobs & Positions
-| Endpoint                                                            | Methods          | Status | Notes |
-| ------------------------------------------------------------------- | ---------------- | ------ | ----- |
-| `/{agency_slug}/job_categories`                                     | GET              | ❌      |       |
-| `/{agency_slug}/job_contact_types`                                  | GET              | ❌      |       |
-| `/{agency_slug}/job_listing_config`                                 | GET, PUT         | ❌      |       |
-| `/{agency_slug}/job_owner_types`                                    | GET              | ❌      |       |
-| `/{agency_slug}/job_statuses`                                       | GET              | ❌      |       |
-| `/{agency_slug}/job_types`                                          | GET              | ❌      |       |
+| Endpoint                                                            | Methods          | Status | Notes           |
+| ------------------------------------------------------------------- | ---------------- | ------ | --------------- |
+| `/{agency_slug}/job_categories`                                     | GET              | ❌      |                 |
+| `/{agency_slug}/job_contact_types`                                  | GET              | ❌      |                 |
+| `/{agency_slug}/job_listing_config`                                 | GET, PUT         | ❌      |                 |
+| `/{agency_slug}/job_owner_types`                                    | GET              | ❌      |                 |
+| `/{agency_slug}/job_statuses`                                       | GET              | ❌      |                 |
+| `/{agency_slug}/job_types`                                          | GET              | ❌      |                 |
 | `/{agency_slug}/jobs`                                               | GET, POST        | ✅      | GET implemented |
-| `/{agency_slug}/jobs/{id}`                                          | GET, PUT, DELETE | ❌      |       |
-| `/{agency_slug}/jobs/{id}/merge`                                    | POST             | ❌      |       |
-| `/{agency_slug}/jobs/{job_id}/apply`                                | POST             | ❌      |       |
-| `/{agency_slug}/jobs/{job_id}/candidates`                           | GET, POST        | ❌      |       |
-| `/{agency_slug}/jobs/{job_id}/candidates/{id}`                      | GET, PUT, DELETE | ❌      |       |
-| `/{agency_slug}/jobs/{job_id}/contacts`                             | GET, POST        | ❌      |       |
-| `/{agency_slug}/jobs/{job_id}/contacts/{id}`                        | GET, PUT, DELETE | ❌      |       |
-| `/{agency_slug}/jobs/{job_id}/documents`                            | GET, POST        | ❌      |       |
-| `/{agency_slug}/jobs/{job_id}/documents/{id}`                       | GET, PUT, DELETE | ❌      |       |
-| `/{agency_slug}/jobs/{job_id}/documents/{job_document_id}/download` | GET              | ❌      |       |
+| `/{agency_slug}/jobs/{id}`                                          | GET, PUT, DELETE | ❌      |                 |
+| `/{agency_slug}/jobs/{id}/merge`                                    | POST             | ❌      |                 |
+| `/{agency_slug}/jobs/{job_id}/apply`                                | POST             | ❌      |                 |
+| `/{agency_slug}/jobs/{job_id}/candidates`                           | GET, POST        | ❌      |                 |
+| `/{agency_slug}/jobs/{job_id}/candidates/{id}`                      | GET, PUT, DELETE | ❌      |                 |
+| `/{agency_slug}/jobs/{job_id}/contacts`                             | GET, POST        | ❌      |                 |
+| `/{agency_slug}/jobs/{job_id}/contacts/{id}`                        | GET, PUT, DELETE | ❌      |                 |
+| `/{agency_slug}/jobs/{job_id}/documents`                            | GET, POST        | ❌      |                 |
+| `/{agency_slug}/jobs/{job_id}/documents/{id}`                       | GET, PUT, DELETE | ❌      |                 |
+| `/{agency_slug}/jobs/{job_id}/documents/{job_document_id}/download` | GET              | ❌      |                 |
 
 ## People & Candidates
 | Endpoint                                                                    | Methods          | Status | Notes |

@@ -123,7 +123,7 @@ class LoxoApiServiceTest extends TestCase
                 'current_page' => 1
             ]
         ];
-        
+
         $params = [
             'per_page' => 20,
             'page' => 1,
