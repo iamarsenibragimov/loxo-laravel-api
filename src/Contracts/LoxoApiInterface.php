@@ -21,6 +21,14 @@ interface LoxoApiInterface
     public function getAddressTypes(array $params = []): array;
 
     /**
+     * Get jobs for the agency
+     *
+     * @param array $params Query parameters (per_page, page, query, published, etc.)
+     * @return array
+     */
+    public function getJobs(array $params = []): array;
+
+    /**
      * Make a GET request to the Loxo API
      *
      * @param string $endpoint

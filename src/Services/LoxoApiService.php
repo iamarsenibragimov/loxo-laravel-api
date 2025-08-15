@@ -99,6 +99,40 @@ class LoxoApiService implements LoxoApiInterface
     }
 
     /**
+     * Get jobs for the agency
+     *
+     * @param array $params Query parameters:
+     *  - per_page (int): Number of results to return in each page
+     *  - page (int): Page number to return. Starting at 1
+     *  - query (string): Search query. Supports Lucene query syntax
+     *  - include_related_agencies (bool): Include results from related agencies
+     *  - published_at_sort (string): Sort by published_at
+     *  - rank_sort (string): Sort by rank
+     *  - updated_at_sort (string): Sort by updated_at
+     *  - location_sort (string): Sort by location
+     *  - job_title_sort (string): Sort by title
+     *  - published (bool): Filter by published status
+     *  - job_status_id (int): Filter by job status ID
+     *  - job_status_ids (array): Filter by multiple job status IDs
+     *  - job_type_id (int): Filter by job type ID
+     *  - country_id (int): Filter by country ID
+     *  - state_id (int): Filter by state ID
+     *  - city (string): Filter by city
+     *  - job_category_ids (array): Filter by job category IDs
+     *  - owned_by_ids (array): Filter by job owner IDs
+     *  - status (string): Filter by status
+     *  - job_type (string): Filter by job type
+     *  - remote_work_allowed (bool): Filter by remote work allowed
+     *  - serialization_set (string): Serialization set
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function getJobs(array $params = []): array
+    {
+        return $this->get('jobs', $params);
+    }
+
+    /**
      * Make a GET request to the Loxo API
      *
      * @param string $endpoint

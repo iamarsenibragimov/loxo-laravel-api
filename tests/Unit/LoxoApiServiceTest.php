@@ -91,6 +91,55 @@ class LoxoApiServiceTest extends TestCase
         $this->assertEquals($mockResponse, $result);
     }
 
+    public function test_it_can_get_jobs()
+    {
+        $mockResponse = [
+            'jobs' => [
+                ['id' => 1, 'title' => 'Software Engineer', 'published' => true],
+                ['id' => 2, 'title' => 'Product Manager', 'published' => false],
+            ],
+            'meta' => [
+                'total' => 2,
+                'per_page' => 10,
+                'current_page' => 1
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getJobs();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_jobs_with_params()
+    {
+        $mockResponse = [
+            'jobs' => [
+                ['id' => 1, 'title' => 'Remote Developer', 'remote_work_allowed' => true]
+            ],
+            'meta' => [
+                'total' => 1,
+                'per_page' => 20,
+                'current_page' => 1
+            ]
+        ];
+        
+        $params = [
+            'per_page' => 20,
+            'page' => 1,
+            'query' => 'developer',
+            'published' => true,
+            'remote_work_allowed' => true,
+            'job_category_ids' => [1, 2],
+            'owned_by_ids' => [5]
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getJobs($params);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
     public function test_it_throws_exception_on_api_error()
     {
         $this->expectException(LoxoApiException::class);

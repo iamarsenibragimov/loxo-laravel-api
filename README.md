@@ -96,7 +96,7 @@ class YourController extends Controller
 
 ### Available Methods
 
-> **📊 API Coverage Status:** Currently 2 out of 144+ Loxo API endpoints are implemented (1.4%). See [API_COVERAGE.md](API_COVERAGE.md) for detailed progress tracking.
+> **📊 API Coverage Status:** Currently 3 out of 144+ Loxo API endpoints are implemented (2.1%). See [API_COVERAGE.md](API_COVERAGE.md) for detailed progress tracking.
 
 #### Activity Types
 ```php
@@ -114,6 +114,42 @@ $activityTypes = Loxo::getActivityTypes([
 ```php
 // Get all address types
 $addressTypes = Loxo::getAddressTypes();
+```
+
+#### Jobs
+```php
+// Get all jobs
+$jobs = Loxo::getJobs();
+
+// Get jobs with pagination
+$jobs = Loxo::getJobs([
+    'per_page' => 20,
+    'page' => 1
+]);
+
+// Search for jobs with query
+$jobs = Loxo::getJobs([
+    'query' => 'software engineer',
+    'published' => true
+]);
+
+// Filter jobs with advanced parameters
+$jobs = Loxo::getJobs([
+    'per_page' => 50,
+    'page' => 1,
+    'query' => 'developer',
+    'published' => true,
+    'remote_work_allowed' => true,
+    'job_category_ids' => [1, 2, 3],
+    'owned_by_ids' => [5, 10],
+    'country_id' => 1,
+    'state_id' => 5,
+    'city' => 'New York',
+    'job_status_id' => 1,
+    'job_type_id' => 2,
+    'published_at_sort' => 'desc',
+    'rank_sort' => 'asc'
+]);
 ```
 
 #### Generic HTTP Methods
