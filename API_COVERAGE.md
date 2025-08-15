@@ -1,28 +1,28 @@
 # Loxo API Endpoints Coverage
 
-Этот файл отслеживает покрытие API эндпоинтов Loxo в нашем пакете.
+This file tracks the coverage of Loxo API endpoints in our package.
 
-## Легенда
+## Legend
 
-- ✅ **Полностью реализовано** - метод добавлен в сервис, протестирован
-- 🚧 **Частично реализовано** - базовая реализация есть, может потребовать доработка
-- ❌ **Не реализовано** - эндпоинт не добавлен в пакет
-- 📝 **Планируется** - в планах на следующие версии
+- ✅ **Fully implemented** - method added to service, tested
+- 🚧 **Partially implemented** - basic implementation exists, may need refinement
+- ❌ **Not implemented** - endpoint not added to package
+- 📝 **Planned** - planned for future versions
 
-## Статистика покрытия
+## Coverage Statistics
 
-**Всего эндпоинтов:** 144  
-**Реализовано:** 2 (1.4%)  
-**В разработке:** 0 (0%)  
-**Не реализовано:** 142 (98.6%)
+**Total endpoints:** 144  
+**Implemented:** 2 (1.4%)  
+**In development:** 0 (0%)  
+**Not implemented:** 142 (98.6%)
 
 ---
 
 ## Activity & Address Types
 | Endpoint | Methods | Status | Notes |
 |----------|---------|--------|-------|
-| `/{agency_slug}/activity_types` | GET | ✅ | Полностью реализовано |
-| `/{agency_slug}/address_types` | GET | ✅ | Полностью реализовано |
+| `/{agency_slug}/activity_types` | GET | ✅ | Fully implemented |
+| `/{agency_slug}/address_types` | GET | ✅ | Fully implemented |
 
 ## Bonus & Payment Types
 | Endpoint | Methods | Status | Notes |
@@ -226,19 +226,19 @@
 
 ---
 
-## Планы развития
+## Development Roadmap
 
-### Версия 1.1.0 (Планируется)
-- **Приоритет 1:** Companies API (основные операции)
-- **Приоритет 2:** People/Candidates API (основные операции)
-- **Приоритет 3:** Jobs API (основные операции)
+### Version 1.1.0 (Planned)
+- **Priority 1:** Companies API (core operations)
+- **Priority 2:** People/Candidates API (core operations)
+- **Priority 3:** Jobs API (core operations)
 
-### Версия 1.2.0 (Планируется)
-- **Приоритет 1:** Deals & Workflows
-- **Приоритет 2:** Dynamic Fields
-- **Приоритет 3:** Geography (Countries, States, Cities)
+### Version 1.2.0 (Planned)
+- **Priority 1:** Deals & Workflows
+- **Priority 2:** Dynamic Fields
+- **Priority 3:** Geography (Countries, States, Cities)
 
-### Версия 1.3.0+ (Долгосрочные планы)
+### Version 1.3.0+ (Long-term plans)
 - Scorecards & Evaluation
 - Forms & Templates
 - Advanced Communication features
@@ -246,15 +246,15 @@
 
 ---
 
-## Как добавить новый эндпоинт
+## How to Add a New Endpoint
 
-1. Добавьте метод в `LoxoApiInterface`
-2. Реализуйте метод в `LoxoApiService`
-3. Добавьте тест в `LoxoApiServiceTest`
-4. Обновите документацию в README.md
-5. Обновите этот файл покрытия
-6. Обновите CHANGELOG.md
+1. Add method to `LoxoApiInterface`
+2. Implement method in `LoxoApiService`
+3. Add test to `LoxoApiServiceTest`
+4. Update documentation in README.md
+5. Update this coverage file
+6. Update CHANGELOG.md
 
 ---
 
-*Последнее обновление: {{ date('Y-m-d H:i:s') }}*
+*Last updated: 2024-12-19*
