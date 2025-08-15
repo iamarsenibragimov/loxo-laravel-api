@@ -215,6 +215,34 @@ class LoxoApiService implements LoxoApiInterface
     }
 
     /**
+     * Apply to a specific job as a candidate
+     *
+     * @param int $jobId Job ID to apply to
+     * @param array $applicationData Application data:
+     *  - email (string, required): Email of applying candidate. Will lookup existing people
+     *  - name (string, required): Name of applying candidate
+     *  - phone (string, required): Phone number of applying candidate
+     *  - linkedin (string): LinkedIn profile URL of applying candidate
+     *  - resume (file): Resume of applying candidate
+     *  - work_authorization (bool): Work authorization status
+     *  - requires_visa (bool): Whether candidate requires visa
+     *  - gender_ids (array): Array of gender IDs
+     *  - ethnicity_ids (array): Array of ethnicity IDs
+     *  - veteran_status_id (int): Veteran status ID
+     *  - pronoun_id (int): Pronoun ID
+     *  - other_pronoun (string): Other pronoun if not in list
+     *  - disability_status_id (int): Disability status ID
+     *  - form_template_id (int): Form template ID
+     *  - source_type_id (int): Source type ID
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function applyToJob(int $jobId, array $applicationData): array
+    {
+        return $this->post("jobs/{$jobId}/apply", $applicationData);
+    }
+
+    /**
      * Make a GET request to the Loxo API
      *
      * @param string $endpoint

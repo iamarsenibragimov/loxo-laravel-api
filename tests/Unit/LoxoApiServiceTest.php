@@ -306,6 +306,109 @@ class LoxoApiServiceTest extends TestCase
         $service->createPerson($personData);
     }
 
+    public function test_it_can_apply_to_job()
+    {
+        $mockResponse = [
+            'application' => [
+                'id' => 789012,
+                'job_id' => 2645723,
+                'candidate_id' => 123456,
+                'status' => 'applied',
+                'applied_at' => '2024-12-19T12:00:00.000Z'
+            ],
+            'message' => 'Application submitted successfully'
+        ];
+
+        $applicationData = [
+            'email' => 'john.doe@example.com',
+            'name' => 'John Doe',
+            'phone' => '+1234567890',
+            'linkedin' => 'https://linkedin.com/in/johndoe'
+        ];
+
+        $service = $this->createServiceWithMockResponse(201, $mockResponse);
+        $result = $service->applyToJob(2645723, $applicationData);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_apply_to_job_with_full_data()
+    {
+        $mockResponse = [
+            'application' => [
+                'id' => 789013,
+                'job_id' => 2645723,
+                'candidate_id' => 123457,
+                'status' => 'applied',
+                'applied_at' => '2024-12-19T12:00:00.000Z'
+            ],
+            'message' => 'Application with diversity data submitted successfully'
+        ];
+
+        $applicationData = [
+            'email' => 'jane.smith@example.com',
+            'name' => 'Jane Smith',
+            'phone' => '+1987654321',
+            'linkedin' => 'https://linkedin.com/in/janesmith',
+            'work_authorization' => true,
+            'requires_visa' => false,
+            'gender_ids' => [1],
+            'ethnicity_ids' => [2, 3],
+            'veteran_status_id' => 1,
+            'pronoun_id' => 2,
+            'disability_status_id' => 1,
+            'source_type_id' => 3
+        ];
+
+        $service = $this->createServiceWithMockResponse(201, $mockResponse);
+        $result = $service->applyToJob(2645723, $applicationData);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_handles_apply_to_job_validation_error()
+    {
+        $errorResponse = [
+            'errors' => [
+                'email' => ['The email field is required.'],
+                'name' => ['The name field is required.'],
+                'phone' => ['The phone field is required.']
+            ],
+            'message' => 'Application validation failed'
+        ];
+
+        $applicationData = [
+            'linkedin' => 'https://linkedin.com/in/incomplete'
+            // Missing required fields
+        ];
+
+        $this->expectException(LoxoApiException::class);
+        $this->expectExceptionMessage('API request failed');
+
+        $service = $this->createServiceWithMockResponse(422, $errorResponse);
+        $service->applyToJob(2645723, $applicationData);
+    }
+
+    public function test_it_handles_apply_to_nonexistent_job()
+    {
+        $errorResponse = [
+            'error' => 'Job not found',
+            'message' => 'The specified job does not exist or is not published'
+        ];
+
+        $applicationData = [
+            'email' => 'test@example.com',
+            'name' => 'Test User',
+            'phone' => '+1234567890'
+        ];
+
+        $this->expectException(LoxoApiException::class);
+        $this->expectExceptionMessage('API request failed');
+
+        $service = $this->createServiceWithMockResponse(404, $errorResponse);
+        $service->applyToJob(999999, $applicationData);
+    }
+
     public function test_it_throws_exception_on_api_error()
     {
         $this->expectException(LoxoApiException::class);

@@ -45,6 +45,15 @@ interface LoxoApiInterface
     public function createPerson(array $personData): array;
 
     /**
+     * Apply to a specific job as a candidate
+     *
+     * @param int $jobId Job ID to apply to
+     * @param array $applicationData Application data
+     * @return array
+     */
+    public function applyToJob(int $jobId, array $applicationData): array;
+
+    /**
      * Make a GET request to the Loxo API
      *
      * @param string $endpoint

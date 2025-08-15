@@ -51,6 +51,9 @@ people: ## Test people endpoint
 create-person: ## Test create person endpoint
 	@php -r "require 'dev-bootstrap.php'; measureTime('testCreatePerson');"
 
+apply-job: ## Test apply to job endpoint
+	@php -r "require 'dev-bootstrap.php'; measureTime('testApplyToJob');"
+
 lint: ## Check code style
 	@if [ -f vendor/bin/phpcs ]; then \
 		vendor/bin/phpcs src/ --standard=PSR12; \
