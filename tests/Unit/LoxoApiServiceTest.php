@@ -9,30 +9,35 @@ use GuzzleHttp\Psr7\Response;
 use Loxo\LaravelApi\Exceptions\ConfigurationException;
 use Loxo\LaravelApi\Exceptions\LoxoApiException;
 use Loxo\LaravelApi\Services\LoxoApiService;
-use PHPUnit\Framework\TestCase;
+use Orchestra\Testbench\TestCase;
+use Loxo\LaravelApi\LoxoApiServiceProvider;
 
 class LoxoApiServiceTest extends TestCase
 {
-    private function mockConfig(): void
+    protected function getPackageProviders($app)
     {
-        // Mock the Config facade for testing
-        if (!class_exists('Illuminate\Support\Facades\Config')) {
-            // Create a simple config mock
-            $GLOBALS['test_config'] = [
-                'loxo.domain' => 'test.loxo.co',
-                'loxo.agency_slug' => 'test-agency',
-                'loxo.api_key' => 'test-api-key',
-                'loxo.timeout' => 30,
-                'loxo.retry_attempts' => 1,
-                'loxo.retry_delay' => 100,
-                'loxo.base_url' => 'https://{domain}/api/{agency_slug}',
-            ];
-        }
+        return [LoxoApiServiceProvider::class];
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        // Set default configuration for testing
+        config([
+            'loxo.domain' => 'test.loxo.co',
+            'loxo.agency_slug' => 'test-agency',
+            'loxo.api_key' => 'test-api-key',
+            'loxo.timeout' => 30,
+            'loxo.retry_attempts' => 1,
+            'loxo.retry_delay' => 100,
+            'loxo.base_url' => 'https://{domain}/api/{agency_slug}',
+        ]);
     }
 
     public function test_it_throws_configuration_exception_when_domain_is_missing()
     {
-        Config::set('loxo.domain', null);
+        config(['loxo.domain' => null]);
 
         $this->expectException(ConfigurationException::class);
         $this->expectExceptionMessage('Loxo domain is not configured');
@@ -42,7 +47,7 @@ class LoxoApiServiceTest extends TestCase
 
     public function test_it_throws_configuration_exception_when_agency_slug_is_missing()
     {
-        Config::set('loxo.agency_slug', null);
+        config(['loxo.agency_slug' => null]);
 
         $this->expectException(ConfigurationException::class);
         $this->expectExceptionMessage('Loxo agency slug is not configured');
@@ -52,7 +57,7 @@ class LoxoApiServiceTest extends TestCase
 
     public function test_it_throws_configuration_exception_when_api_key_is_missing()
     {
-        Config::set('loxo.api_key', null);
+        config(['loxo.api_key' => null]);
 
         $this->expectException(ConfigurationException::class);
         $this->expectExceptionMessage('Loxo API key is not configured');

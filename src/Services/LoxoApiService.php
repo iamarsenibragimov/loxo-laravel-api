@@ -31,21 +31,25 @@ class LoxoApiService implements LoxoApiInterface
      */
     protected function validateConfiguration(): void
     {
-        $this->domain = Config::get('loxo.domain');
-        $this->agencySlug = Config::get('loxo.agency_slug');
-        $this->apiKey = Config::get('loxo.api_key');
+        $domain = Config::get('loxo.domain');
+        $agencySlug = Config::get('loxo.agency_slug');
+        $apiKey = Config::get('loxo.api_key');
 
-        if (empty($this->domain)) {
-            throw new ConfigurationException('Loxo domain is not configured. Please set LOXO_DOMAIN in your .env file.');
+        if (empty($domain)) {
+            throw new ConfigurationException('Loxo domain is not configured');
         }
 
-        if (empty($this->agencySlug)) {
-            throw new ConfigurationException('Loxo agency slug is not configured. Please set LOXO_AGENCY_SLUG in your .env file.');
+        if (empty($agencySlug)) {
+            throw new ConfigurationException('Loxo agency slug is not configured');
         }
 
-        if (empty($this->apiKey)) {
-            throw new ConfigurationException('Loxo API key is not configured. Please set LOXO_API_KEY in your .env file.');
+        if (empty($apiKey)) {
+            throw new ConfigurationException('Loxo API key is not configured');
         }
+
+        $this->domain = $domain;
+        $this->agencySlug = $agencySlug;
+        $this->apiKey = $apiKey;
 
         $this->baseUrl = str_replace(
             ['{domain}', '{agency_slug}'],
