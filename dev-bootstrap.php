@@ -407,7 +407,7 @@ namespace {
             $job = null;
             $jobId = null;
             $jobTitle = null;
-            
+
             foreach ($jobs['results'] as $jobCandidate) {
                 $title = $jobCandidate['title'] ?? '';
                 // Skip jobs marked for deletion or draft status
@@ -418,7 +418,7 @@ namespace {
                     break;
                 }
             }
-            
+
             if (!$job) {
                 echo "⚠️  No suitable jobs found to apply to\n";
                 return;
@@ -472,26 +472,26 @@ namespace {
             echo "🏷️ Gender IDs: " . implode(', ', $advancedApplicationData['gender_ids']) . "\n";
             echo "🏷️ Ethnicity IDs: " . implode(', ', $advancedApplicationData['ethnicity_ids']) . "\n";
 
-                        echo "\n🔬 Testing job application with proper multipart format...\n";
-            
+            echo "\n🔬 Testing job application with proper multipart format...\n";
+
             // Create a temporary resume file
             $tempResume = tempnam(sys_get_temp_dir(), 'resume');
             file_put_contents($tempResume, "Sample Resume Content\n\nName: {$basicApplicationData['name']}\nEmail: {$basicApplicationData['email']}\nPhone: {$basicApplicationData['phone']}\n\nExperience:\n- Software Developer with 3+ years experience\n- Proficient in PHP, JavaScript, Python\n- Experience with Laravel, React, Django");
-            
+
             // Add resume to application data
             $applicationDataWithResume = $basicApplicationData;
             $applicationDataWithResume['resume'] = $tempResume;
-            
+
             try {
                 echo "📎 Created temporary resume file: $tempResume\n";
                 $result = $api->applyToJob($jobId, $applicationDataWithResume);
-                
+
                 if (isset($result['person'])) {
                     $person = $result['person'];
                     echo "✅ Application submitted successfully!\n";
                     echo "📄 Person ID: {$person['id']}\n";
                     echo "👤 Name: {$person['name']}\n";
-                    
+
                     if (!empty($person['candidates'])) {
                         $candidate = $person['candidates'][0];
                         echo "🎯 Candidate ID: {$candidate['id']}\n";
@@ -499,7 +499,7 @@ namespace {
                         echo "📊 Latest Activity: {$candidate['latest_activity_type']['name']}\n";
                         echo "🏗️ Workflow Stage ID: {$candidate['workflow_stage_id']}\n";
                     }
-                    
+
                     if (!empty($person['resumes'])) {
                         $resume = $person['resumes'][0];
                         echo "📎 Resume ID: {$resume['id']}\n";
@@ -509,10 +509,9 @@ namespace {
                     echo "⚠️  Application submitted but unexpected response format\n";
                     echo "📄 Response: " . json_encode($result, JSON_PRETTY_PRINT) . "\n";
                 }
-                
+
                 // Clean up temp file
                 unlink($tempResume);
-                
             } catch (LoxoApiException $exception) {
                 echo "❌ Application failed:\n";
                 echo "📄 Error message: " . $exception->getMessage() . "\n";
@@ -520,7 +519,7 @@ namespace {
                 if ($exception->getResponse()) {
                     echo "📄 Response body: " . json_encode($exception->getResponse(), JSON_PRETTY_PRINT) . "\n";
                 }
-                
+
                 // Clean up temp file on error
                 if (file_exists($tempResume)) {
                     unlink($tempResume);

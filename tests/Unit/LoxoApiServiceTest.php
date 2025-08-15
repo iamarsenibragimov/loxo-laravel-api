@@ -144,8 +144,8 @@ class LoxoApiServiceTest extends TestCase
     {
         $mockResponse = [
             'people' => [
-                ['id' => 1, 'first_name' => 'John', 'last_name' => 'Doe', 'email' => 'john@example.com'],
-                ['id' => 2, 'first_name' => 'Jane', 'last_name' => 'Smith', 'email' => 'jane@example.com'],
+                ['id' => 1, 'first_name' => 'Donut', 'last_name' => 'Coyote', 'email' => 'windmills@aregiants.com'],
+                ['id' => 2, 'first_name' => 'Sherlock', 'last_name' => 'Ohms', 'email' => 'elementary@221b.baker.st'],
             ],
             'meta' => [
                 'total' => 2,
@@ -164,7 +164,7 @@ class LoxoApiServiceTest extends TestCase
     {
         $mockResponse = [
             'people' => [
-                ['id' => 1, 'first_name' => 'John', 'last_name' => 'Doe', 'email' => 'john@example.com']
+                ['id' => 1, 'first_name' => 'Donut', 'last_name' => 'Coyote', 'email' => 'windmills@aregiants.com']
             ],
             'meta' => [
                 'total' => 1,
@@ -175,7 +175,7 @@ class LoxoApiServiceTest extends TestCase
 
         $params = [
             'per_page' => 5,
-            'query' => 'john',
+            'query' => 'donut',
             'person_global_status_id' => 1,
             'include_related_agencies' => true,
             'created_at_sort' => 'desc'
@@ -191,7 +191,7 @@ class LoxoApiServiceTest extends TestCase
     {
         $mockResponse = [
             'people' => [
-                ['id' => 10, 'first_name' => 'Bob', 'last_name' => 'Johnson', 'email' => 'bob@example.com']
+                ['id' => 10, 'first_name' => 'Forrest', 'last_name' => 'Grump', 'email' => 'life.is.like@aboxofchocolates.com']
             ],
             'scroll_id' => 'next_page_cursor_123',
             'meta' => [
@@ -217,8 +217,8 @@ class LoxoApiServiceTest extends TestCase
         $mockResponse = [
             'person' => [
                 'id' => 123456,
-                'name' => 'John Doe',
-                'email' => 'john.doe@example.com',
+                'name' => 'Elon Tusk',
+                'email' => 'elon.tusk@spacex.com',
                 'title' => 'Software Engineer',
                 'company' => 'Tech Corp',
                 'created_at' => '2024-12-19T12:00:00.000Z'
@@ -227,8 +227,8 @@ class LoxoApiServiceTest extends TestCase
 
         $personData = [
             'person' => [
-                'name' => 'John Doe',
-                'email' => 'john.doe@example.com',
+                'name' => 'Elon Tusk',
+                'email' => 'elon.tusk@spacex.com',
                 'title' => 'Software Engineer',
                 'company' => 'Tech Corp',
                 'location' => 'San Francisco, CA'
@@ -246,11 +246,11 @@ class LoxoApiServiceTest extends TestCase
         $mockResponse = [
             'person' => [
                 'id' => 123457,
-                'name' => 'Jane Smith',
-                'email' => 'jane.smith@example.com',
+                'name' => 'Holly Golightly',
+                'email' => 'holly.golightly@breakfast.com',
                 'title' => 'Product Manager',
                 'company' => 'Startup Inc',
-                'linkedin_url' => 'https://linkedin.com/in/janesmith',
+                'linkedin_url' => 'https://linkedin.com/in/hollygolightly',
                 'compensation' => 120000.0,
                 'created_at' => '2024-12-19T12:00:00.000Z'
             ]
@@ -258,15 +258,15 @@ class LoxoApiServiceTest extends TestCase
 
         $personData = [
             'person' => [
-                'name' => 'Jane Smith',
-                'email' => 'jane.smith@example.com',
+                'name' => 'Holly Golightly',
+                'email' => 'holly.golightly@breakfast.com',
                 'title' => 'Product Manager',
                 'company' => 'Startup Inc',
                 'location' => 'New York, NY',
                 'city' => 'New York',
                 'state' => 'NY',
                 'country' => 'United States',
-                'linkedin_url' => 'https://linkedin.com/in/janesmith',
+                'linkedin_url' => 'https://linkedin.com/in/hollygolightly',
                 'compensation' => 120000.0,
                 'salary' => 120000.0,
                 'person_type_id' => 1,
@@ -311,7 +311,7 @@ class LoxoApiServiceTest extends TestCase
         $mockResponse = [
             'person' => [
                 'id' => 123456,
-                'name' => 'John Doe',
+                'name' => 'Walter Black',
                 'candidates' => [
                     [
                         'id' => 789012,
@@ -331,10 +331,10 @@ class LoxoApiServiceTest extends TestCase
         file_put_contents($tempResume, 'Test resume content');
 
         $applicationData = [
-            'email' => 'john.doe@example.com',
-            'name' => 'John Doe',
+            'email' => 'walter.black@badbreaking.com',
+            'name' => 'Walter Black',
             'phone' => '+1234567890',
-            'linkedin' => 'https://linkedin.com/in/johndoe',
+            'linkedin' => 'https://linkedin.com/in/walterblack',
             'resume' => $tempResume
         ];
 
@@ -352,7 +352,7 @@ class LoxoApiServiceTest extends TestCase
         $mockResponse = [
             'person' => [
                 'id' => 123457,
-                'name' => 'Jane Smith',
+                'name' => 'Beatrix Kiddo',
                 'candidates' => [
                     [
                         'id' => 789013,
@@ -372,10 +372,10 @@ class LoxoApiServiceTest extends TestCase
         file_put_contents($tempResume, 'Advanced test resume content');
 
         $applicationData = [
-            'email' => 'jane.smith@example.com',
-            'name' => 'Jane Smith',
+            'email' => 'beatrix.kiddo@kill-bill.com',
+            'name' => 'Beatrix Kiddo',
             'phone' => '+1987654321',
-            'linkedin' => 'https://linkedin.com/in/janesmith',
+            'linkedin' => 'https://linkedin.com/in/beatrixkiddo',
             'resume' => $tempResume,
             'work_authorization' => true,
             'requires_visa' => false,
@@ -399,10 +399,10 @@ class LoxoApiServiceTest extends TestCase
     public function test_it_handles_apply_to_job_validation_error()
     {
         $applicationData = [
-            'email' => 'test@example.com',
-            'name' => 'Test User',
+            'email' => 'error@example.com',
+            'name' => 'Error Prone',
             'phone' => '+1234567890',
-            'linkedin' => 'https://linkedin.com/in/incomplete',
+            'linkedin' => 'https://linkedin.com/in/errorprone',
             'resume' => 'nonexistent_file.pdf'  // This file doesn't exist
         ];
 
@@ -425,8 +425,8 @@ class LoxoApiServiceTest extends TestCase
         file_put_contents($tempResume, 'Test resume for 404 test');
 
         $applicationData = [
-            'email' => 'test@example.com',
-            'name' => 'Test User',
+            'email' => 'ghost@example.com',
+            'name' => 'Ghost User',
             'phone' => '+1234567890',
             'resume' => $tempResume
         ];
@@ -435,7 +435,7 @@ class LoxoApiServiceTest extends TestCase
         $this->expectExceptionMessage('API request failed');
 
         $service = $this->createServiceWithMockResponse(404, $errorResponse);
-        
+
         try {
             $service->applyToJob(999999, $applicationData);
         } finally {

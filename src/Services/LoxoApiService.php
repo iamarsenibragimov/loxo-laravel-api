@@ -241,7 +241,7 @@ class LoxoApiService implements LoxoApiInterface
     {
         // Convert application data to multipart format
         $multipartData = [];
-        
+
         foreach ($applicationData as $key => $value) {
             if ($key === 'resume') {
                 // Handle resume file
@@ -264,7 +264,7 @@ class LoxoApiService implements LoxoApiInterface
                 }
             }
         }
-        
+
         return $this->postMultipart("jobs/{$jobId}/apply", $multipartData);
     }
 
