@@ -111,7 +111,7 @@ class LoxoApiServiceTest extends TestCase
         $this->assertEquals($mockResponse, $result);
     }
 
-    public function test_it_can_get_jobs_with_params()
+        public function test_it_can_get_jobs_with_params()
     {
         $mockResponse = [
             'jobs' => [
@@ -123,7 +123,7 @@ class LoxoApiServiceTest extends TestCase
                 'current_page' => 1
             ]
         ];
-
+        
         $params = [
             'per_page' => 20,
             'page' => 1,
@@ -136,6 +136,78 @@ class LoxoApiServiceTest extends TestCase
 
         $service = $this->createServiceWithMockResponse(200, $mockResponse);
         $result = $service->getJobs($params);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_people()
+    {
+        $mockResponse = [
+            'people' => [
+                ['id' => 1, 'first_name' => 'John', 'last_name' => 'Doe', 'email' => 'john@example.com'],
+                ['id' => 2, 'first_name' => 'Jane', 'last_name' => 'Smith', 'email' => 'jane@example.com'],
+            ],
+            'meta' => [
+                'total' => 2,
+                'per_page' => 10,
+                'current_page' => 1
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getPeople();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_people_with_params()
+    {
+        $mockResponse = [
+            'people' => [
+                ['id' => 1, 'first_name' => 'John', 'last_name' => 'Doe', 'email' => 'john@example.com']
+            ],
+            'meta' => [
+                'total' => 1,
+                'per_page' => 5,
+                'current_page' => 1
+            ]
+        ];
+        
+        $params = [
+            'per_page' => 5,
+            'query' => 'john',
+            'person_global_status_id' => 1,
+            'include_related_agencies' => true,
+            'created_at_sort' => 'desc'
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getPeople($params);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_people_with_scroll()
+    {
+        $mockResponse = [
+            'people' => [
+                ['id' => 10, 'first_name' => 'Bob', 'last_name' => 'Johnson', 'email' => 'bob@example.com']
+            ],
+            'scroll_id' => 'next_page_cursor_123',
+            'meta' => [
+                'total' => 100,
+                'per_page' => 1,
+                'has_more' => true
+            ]
+        ];
+        
+        $params = [
+            'scroll_id' => 'prev_page_cursor_456',
+            'per_page' => 1
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getPeople($params);
 
         $this->assertEquals($mockResponse, $result);
     }

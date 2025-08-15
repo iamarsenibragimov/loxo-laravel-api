@@ -133,6 +133,33 @@ class LoxoApiService implements LoxoApiInterface
     }
 
     /**
+     * Get people (candidates) for the agency
+     *
+     * @param array $params Query parameters:
+     *  - scroll_id (string): A cursor used to retrieve the next page of results
+     *  - per_page (int): Number of results to return in each page
+     *  - query (string): Search query. Supports Lucene query syntax
+     *  - include_related_agencies (bool): Include results from related agencies
+     *  - include_ids (array): Array of person IDs to include
+     *  - exclude_ids (array): Array of person IDs to exclude
+     *  - person_global_status_id (int): Filter by person global status ID
+     *  - active_job_stage_id (int): Filter by active job stage ID
+     *  - active_workflow_stage_id (int): Filter by active workflow stage ID
+     *  - person_type_id (int): Filter by person type ID
+     *  - list_id (int): Filter by list ID
+     *  - created_at_sort (string): Sort by created_at
+     *  - updated_at_sort (string): Sort by updated_at
+     *  - serialization_set (string): Serialization set
+     *  - fields (object): Fields to include in response
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function getPeople(array $params = []): array
+    {
+        return $this->get('people', $params);
+    }
+
+    /**
      * Make a GET request to the Loxo API
      *
      * @param string $endpoint

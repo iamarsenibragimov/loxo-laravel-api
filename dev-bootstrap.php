@@ -95,6 +95,7 @@ namespace {
             measureTime('testActivityTypes');
             measureTime('testAddressTypes');
             measureTime('testJobs');
+            measureTime('testPeople');
 
             echo "\n🎉 Quick test completed!\n";
         } catch (Exception $e) {
@@ -210,6 +211,72 @@ namespace {
             echo "✅ Found {$filteredCount} jobs with basic filters\n";
 
             return $result;
+        } catch (LoxoApiException $e) {
+            echo "❌ API Error: " . $e->getMessage() . "\n";
+            if ($e->getResponse()) {
+                echo "📄 Response: " . json_encode($e->getResponse(), JSON_PRETTY_PRINT) . "\n";
+            }
+            throw $e;
+        } catch (ConfigurationException $e) {
+            echo "❌ Config Error: " . $e->getMessage() . "\n";
+            throw $e;
+        }
+    }
+
+    function testPeople() {
+        echo "🔄 Testing People endpoint...\n";
+        
+        try {
+            $api = new LoxoApiService();
+            
+            // Test basic request
+            echo "👥 Testing basic people request...\n";
+            $result = $api->getPeople(['per_page' => 5]);
+            
+            $count = count($result['people'] ?? []);
+            echo "✅ Retrieved {$count} people\n";
+            
+            if (isset($result['total_count'])) {
+                $scrollInfo = isset($result['scroll_id']) ? " (scroll_id available)" : "";
+                echo "📊 Total: {$result['total_count']}, Retrieved: {$count}{$scrollInfo}\n";
+            }
+            
+            if (!empty($result['people'])) {
+                $first = $result['people'][0];
+                $name = $first['name'] ?? 'No name';
+                $email = !empty($first['emails']) ? $first['emails'][0]['value'] : 'No email';
+                echo "👤 First person: ID={$first['id']}, Name='{$name}', Email={$email}\n";
+            }
+            
+            // Test with search
+            echo "\n🔍 Testing people search...\n";
+            $searchResult = $api->getPeople([
+                'query' => 'john',
+                'per_page' => 3
+            ]);
+            
+            $searchCount = count($searchResult['people'] ?? []);
+            echo "✅ Found {$searchCount} people matching 'john'\n";
+            
+            if (!empty($searchResult['people'])) {
+                foreach ($searchResult['people'] as $person) {
+                    $name = $person['name'] ?? 'No name';
+                    echo "   👤 {$name} (ID: {$person['id']})\n";
+                }
+            }
+            
+            // Test with filters
+            echo "\n🎯 Testing advanced filters...\n";
+            $filteredResult = $api->getPeople([
+                'per_page' => 2,
+                'created_at_sort' => 'desc'
+            ]);
+            
+            $filteredCount = count($filteredResult['people'] ?? []);
+            echo "✅ Found {$filteredCount} people with recent sort\n";
+            
+            return $result;
+            
         } catch (LoxoApiException $e) {
             echo "❌ API Error: " . $e->getMessage() . "\n";
             if ($e->getResponse()) {

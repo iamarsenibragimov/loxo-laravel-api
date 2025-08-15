@@ -45,6 +45,9 @@ address-types: ## Test address types endpoint
 jobs: ## Test jobs endpoint
 	@php -r "require 'dev-bootstrap.php'; measureTime('testJobs');"
 
+people: ## Test people endpoint
+	@php -r "require 'dev-bootstrap.php'; measureTime('testPeople');"
+
 lint: ## Check code style
 	@if [ -f vendor/bin/phpcs ]; then \
 		vendor/bin/phpcs src/ --standard=PSR12; \

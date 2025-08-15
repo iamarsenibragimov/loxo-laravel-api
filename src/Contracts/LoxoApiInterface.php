@@ -29,6 +29,14 @@ interface LoxoApiInterface
     public function getJobs(array $params = []): array;
 
     /**
+     * Get people (candidates) for the agency
+     *
+     * @param array $params Query parameters (scroll_id, per_page, query, etc.)
+     * @return array
+     */
+    public function getPeople(array $params = []): array;
+
+    /**
      * Make a GET request to the Loxo API
      *
      * @param string $endpoint
