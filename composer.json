@@ -1,0 +1,60 @@
+{
+    "name": "iamarsenibragimov/loxo-laravel-api",
+    "description": "Unofficial Laravel package for Loxo API integration",
+    "type": "library",
+    "keywords": [
+        "laravel",
+        "loxo",
+        "api",
+        "recruitment",
+        "hiring",
+        "CRM",
+        "ats",
+        "unofficial"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Arsen Ibragimov",
+            "email": "iamarsenibragimov@gmail.com",
+            "homepage": "https://github.com/iamarsenibragimov"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "illuminate/support": "^10.0|^11.0|^12.0",
+        "guzzlehttp/guzzle": "^7.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^8.0|^9.0|^10.0",
+        "phpunit/phpunit": "^10.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Loxo\\LaravelApi\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Loxo\\LaravelApi\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Loxo\\LaravelApi\\LoxoApiServiceProvider"
+            ],
+            "aliases": {
+                "Loxo": "Loxo\\LaravelApi\\Facades\\Loxo"
+            }
+        }
+    },
+    "homepage": "https://github.com/iamarsenibragimov/loxo-laravel-api",
+    "support": {
+        "issues": "https://github.com/iamarsenibragimov/loxo-laravel-api/issues",
+        "source": "https://github.com/iamarsenibragimov/loxo-laravel-api"
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "version": "1.0.0"
+}

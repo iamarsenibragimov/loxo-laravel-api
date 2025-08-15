@@ -1,0 +1,1 @@
+{"version":2,"defects":{"SimpleTest::testMockErrorResponse":8},"times":{"SimpleTest::testMockActivityTypesResponse":0.001,"SimpleTest::testJsonSerialization":0,"SimpleTest::testUrlConstruction":0,"SimpleTest::testPackageClassesExist":0,"SimpleTest::testMockErrorResponse":0.007}}

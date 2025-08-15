@@ -1,0 +1,17 @@
+/vendor/
+/node_modules/
+/.env
+/.env.local
+/.env.*.local
+.DS_Store
+.idea/
+.vscode/
+*.log
+/storage/logs/
+composer.phar
+phpunit.xml.dist
+.phpunit.result.cache
+/coverage/
+/.coverage/
+.phpstorm.meta.php
+_ide_helper.php
