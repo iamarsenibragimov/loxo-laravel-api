@@ -223,7 +223,7 @@ class LoxoApiService implements LoxoApiInterface
      *  - name (string, required): Name of applying candidate
      *  - phone (string, required): Phone number of applying candidate
      *  - linkedin (string): LinkedIn profile URL of applying candidate
-     *  - resume (file): Resume of applying candidate
+     *  - resume (file|resource, required): Resume file resource or path to file
      *  - work_authorization (bool): Work authorization status
      *  - requires_visa (bool): Whether candidate requires visa
      *  - gender_ids (array): Array of gender IDs
@@ -239,7 +239,33 @@ class LoxoApiService implements LoxoApiInterface
      */
     public function applyToJob(int $jobId, array $applicationData): array
     {
-        return $this->post("jobs/{$jobId}/apply", $applicationData);
+        // Convert application data to multipart format
+        $multipartData = [];
+        
+        foreach ($applicationData as $key => $value) {
+            if ($key === 'resume') {
+                // Handle resume file
+                if (is_resource($value)) {
+                    $multipartData[] = ['name' => $key, 'contents' => $value, 'filename' => 'resume.pdf'];
+                } elseif (is_string($value) && file_exists($value)) {
+                    $multipartData[] = ['name' => $key, 'contents' => fopen($value, 'r'), 'filename' => basename($value)];
+                } else {
+                    throw new \InvalidArgumentException('Resume must be a file resource or valid file path');
+                }
+            } else {
+                // Handle regular form fields
+                if (is_array($value)) {
+                    // Handle array values (like gender_ids, ethnicity_ids)
+                    foreach ($value as $arrayValue) {
+                        $multipartData[] = ['name' => $key . '[]', 'contents' => (string) $arrayValue];
+                    }
+                } else {
+                    $multipartData[] = ['name' => $key, 'contents' => (string) $value];
+                }
+            }
+        }
+        
+        return $this->postMultipart("jobs/{$jobId}/apply", $multipartData);
     }
 
     /**
@@ -266,6 +292,32 @@ class LoxoApiService implements LoxoApiInterface
     public function post(string $endpoint, array $data = []): array
     {
         return $this->makeRequest('POST', $endpoint, ['json' => $data]);
+    }
+
+    /**
+     * Make a POST request to the Loxo API with form data
+     *
+     * @param string $endpoint
+     * @param array $data
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function postForm(string $endpoint, array $data = []): array
+    {
+        return $this->makeRequest('POST', $endpoint, ['form_params' => $data]);
+    }
+
+    /**
+     * Make a POST request to the Loxo API with multipart data
+     *
+     * @param string $endpoint
+     * @param array $multipartData
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function postMultipart(string $endpoint, array $multipartData = []): array
+    {
+        return $this->makeRequest('POST', $endpoint, ['multipart' => $multipartData]);
     }
 
     /**

@@ -387,48 +387,67 @@ namespace {
         }
     }
 
-    function testApplyToJob() {
+    function testApplyToJob()
+    {
         echo "🔄 Testing Apply to Job endpoint...\n";
-        
+
         try {
             $api = new LoxoApiService();
-            
+
             // First, get a job to apply to
             echo "🔍 Finding a job to apply to...\n";
             $jobs = $api->getJobs(['per_page' => 10]);
-            
+
             if (!isset($jobs['results']) || empty($jobs['results'])) {
                 echo "⚠️  No jobs found to apply to\n";
                 return;
             }
+
+            // Find a job that's not marked for deletion
+            $job = null;
+            $jobId = null;
+            $jobTitle = null;
             
-            $job = $jobs['results'][0];
-            $jobId = $job['id'];
-            $jobTitle = $job['title'] ?? 'Unknown Title';
+            foreach ($jobs['results'] as $jobCandidate) {
+                $title = $jobCandidate['title'] ?? '';
+                // Skip jobs marked for deletion or draft status
+                if (!str_contains(strtolower($title), 'delete') && !str_contains(strtolower($title), 'draft')) {
+                    $job = $jobCandidate;
+                    $jobId = $job['id'];
+                    $jobTitle = $job['title'] ?? 'Unknown Title';
+                    break;
+                }
+            }
             
+            if (!$job) {
+                echo "⚠️  No suitable jobs found to apply to\n";
+                return;
+            }
+
             echo "🎯 Target job: '$jobTitle' (ID: $jobId)\n";
-            
+
             // Note: The apply-to-job endpoint requires special permissions or setup
             // For now, we'll demonstrate the functionality without making the actual call
             echo "📝 Testing job application data preparation...\n";
-            
+
             $timestamp = date('Y-m-d_H-i-s');
             $basicApplicationData = [
                 'email' => 'job-applicant-' . $timestamp . '@example.com',
                 'name' => 'Job Applicant ' . $timestamp,
                 'phone' => '+1-555-' . str_pad(rand(0, 9999), 4, '0', STR_PAD_LEFT),
                 'linkedin' => 'https://linkedin.com/in/jobapplicant' . $timestamp
+                // Remove resume to see what happens
             ];
-            
+
             echo "✅ Basic application data prepared:\n";
             echo "📧 Email: {$basicApplicationData['email']}\n";
             echo "👤 Name: {$basicApplicationData['name']}\n";
             echo "📞 Phone: {$basicApplicationData['phone']}\n";
             echo "🔗 LinkedIn: {$basicApplicationData['linkedin']}\n";
-            
+
             // Advanced application with diversity data
             echo "\n🌈 Testing advanced application data preparation...\n";
-            
+
             $advancedApplicationData = [
                 'email' => 'advanced-applicant-' . $timestamp . '@example.com',
                 'name' => 'Advanced Applicant ' . $timestamp,
@@ -442,7 +461,7 @@ namespace {
                 'pronoun_id' => 1,
                 'source_type_id' => 2
             ];
-            
+
             echo "✅ Advanced application data prepared:\n";
             echo "📧 Email: {$advancedApplicationData['email']}\n";
             echo "👤 Name: {$advancedApplicationData['name']}\n";
@@ -452,14 +471,62 @@ namespace {
             echo "🛂 Requires visa: " . ($advancedApplicationData['requires_visa'] ? 'Yes' : 'No') . "\n";
             echo "🏷️ Gender IDs: " . implode(', ', $advancedApplicationData['gender_ids']) . "\n";
             echo "🏷️ Ethnicity IDs: " . implode(', ', $advancedApplicationData['ethnicity_ids']) . "\n";
+
+                        echo "\n🔬 Testing job application with proper multipart format...\n";
             
-            echo "\n⚠️  Note: The actual API call requires special permissions or configuration.\n";
-            echo "🔧 The applyToJob() method is implemented and ready to use when permissions are available.\n";
-            echo "📚 Method signature: applyToJob(int \$jobId, array \$applicationData): array\n";
+            // Create a temporary resume file
+            $tempResume = tempnam(sys_get_temp_dir(), 'resume');
+            file_put_contents($tempResume, "Sample Resume Content\n\nName: {$basicApplicationData['name']}\nEmail: {$basicApplicationData['email']}\nPhone: {$basicApplicationData['phone']}\n\nExperience:\n- Software Developer with 3+ years experience\n- Proficient in PHP, JavaScript, Python\n- Experience with Laravel, React, Django");
             
-            // Uncomment the line below to test the actual API call when permissions are available:
-            // $result = $api->applyToJob($jobId, $basicApplicationData);
+            // Add resume to application data
+            $applicationDataWithResume = $basicApplicationData;
+            $applicationDataWithResume['resume'] = $tempResume;
             
+            try {
+                echo "📎 Created temporary resume file: $tempResume\n";
+                $result = $api->applyToJob($jobId, $applicationDataWithResume);
+                
+                if (isset($result['person'])) {
+                    $person = $result['person'];
+                    echo "✅ Application submitted successfully!\n";
+                    echo "📄 Person ID: {$person['id']}\n";
+                    echo "👤 Name: {$person['name']}\n";
+                    
+                    if (!empty($person['candidates'])) {
+                        $candidate = $person['candidates'][0];
+                        echo "🎯 Candidate ID: {$candidate['id']}\n";
+                        echo "🎯 Job ID: {$candidate['job']['id']}\n";
+                        echo "📊 Latest Activity: {$candidate['latest_activity_type']['name']}\n";
+                        echo "🏗️ Workflow Stage ID: {$candidate['workflow_stage_id']}\n";
+                    }
+                    
+                    if (!empty($person['resumes'])) {
+                        $resume = $person['resumes'][0];
+                        echo "📎 Resume ID: {$resume['id']}\n";
+                        echo "📎 Resume Name: {$resume['name']}\n";
+                    }
+                } else {
+                    echo "⚠️  Application submitted but unexpected response format\n";
+                    echo "📄 Response: " . json_encode($result, JSON_PRETTY_PRINT) . "\n";
+                }
+                
+                // Clean up temp file
+                unlink($tempResume);
+                
+            } catch (LoxoApiException $exception) {
+                echo "❌ Application failed:\n";
+                echo "📄 Error message: " . $exception->getMessage() . "\n";
+                echo "📄 HTTP Status: " . $exception->getCode() . "\n";
+                if ($exception->getResponse()) {
+                    echo "📄 Response body: " . json_encode($exception->getResponse(), JSON_PRETTY_PRINT) . "\n";
+                }
+                
+                // Clean up temp file on error
+                if (file_exists($tempResume)) {
+                    unlink($tempResume);
+                }
+            }
+
             return [
                 'status' => 'prepared',
                 'job_id' => $jobId,
@@ -467,7 +534,6 @@ namespace {
                 'basic_application' => $basicApplicationData,
                 'advanced_application' => $advancedApplicationData
             ];
-            
         } catch (LoxoApiException $e) {
             echo "❌ API Error: " . $e->getMessage() . "\n";
             if ($e->getResponse()) {

@@ -309,47 +309,74 @@ class LoxoApiServiceTest extends TestCase
     public function test_it_can_apply_to_job()
     {
         $mockResponse = [
-            'application' => [
-                'id' => 789012,
-                'job_id' => 2645723,
-                'candidate_id' => 123456,
-                'status' => 'applied',
-                'applied_at' => '2024-12-19T12:00:00.000Z'
-            ],
-            'message' => 'Application submitted successfully'
+            'person' => [
+                'id' => 123456,
+                'name' => 'John Doe',
+                'candidates' => [
+                    [
+                        'id' => 789012,
+                        'job' => ['id' => 2645723],
+                        'latest_activity_type' => ['name' => 'Applied'],
+                        'workflow_stage_id' => 267765
+                    ]
+                ],
+                'resumes' => [
+                    ['id' => 456789, 'name' => 'resume.pdf']
+                ]
+            ]
         ];
+
+        // Create a temporary resume file for testing
+        $tempResume = tempnam(sys_get_temp_dir(), 'test_resume');
+        file_put_contents($tempResume, 'Test resume content');
 
         $applicationData = [
             'email' => 'john.doe@example.com',
             'name' => 'John Doe',
             'phone' => '+1234567890',
-            'linkedin' => 'https://linkedin.com/in/johndoe'
+            'linkedin' => 'https://linkedin.com/in/johndoe',
+            'resume' => $tempResume
         ];
 
         $service = $this->createServiceWithMockResponse(201, $mockResponse);
         $result = $service->applyToJob(2645723, $applicationData);
 
         $this->assertEquals($mockResponse, $result);
+
+        // Clean up
+        unlink($tempResume);
     }
 
     public function test_it_can_apply_to_job_with_full_data()
     {
         $mockResponse = [
-            'application' => [
-                'id' => 789013,
-                'job_id' => 2645723,
-                'candidate_id' => 123457,
-                'status' => 'applied',
-                'applied_at' => '2024-12-19T12:00:00.000Z'
-            ],
-            'message' => 'Application with diversity data submitted successfully'
+            'person' => [
+                'id' => 123457,
+                'name' => 'Jane Smith',
+                'candidates' => [
+                    [
+                        'id' => 789013,
+                        'job' => ['id' => 2645723],
+                        'latest_activity_type' => ['name' => 'Applied'],
+                        'workflow_stage_id' => 267765
+                    ]
+                ],
+                'resumes' => [
+                    ['id' => 456790, 'name' => 'jane_resume.pdf']
+                ]
+            ]
         ];
+
+        // Create a temporary resume file for testing
+        $tempResume = tempnam(sys_get_temp_dir(), 'test_resume_full');
+        file_put_contents($tempResume, 'Advanced test resume content');
 
         $applicationData = [
             'email' => 'jane.smith@example.com',
             'name' => 'Jane Smith',
             'phone' => '+1987654321',
             'linkedin' => 'https://linkedin.com/in/janesmith',
+            'resume' => $tempResume,
             'work_authorization' => true,
             'requires_visa' => false,
             'gender_ids' => [1],
@@ -364,28 +391,25 @@ class LoxoApiServiceTest extends TestCase
         $result = $service->applyToJob(2645723, $applicationData);
 
         $this->assertEquals($mockResponse, $result);
+
+        // Clean up
+        unlink($tempResume);
     }
 
     public function test_it_handles_apply_to_job_validation_error()
     {
-        $errorResponse = [
-            'errors' => [
-                'email' => ['The email field is required.'],
-                'name' => ['The name field is required.'],
-                'phone' => ['The phone field is required.']
-            ],
-            'message' => 'Application validation failed'
-        ];
-
         $applicationData = [
-            'linkedin' => 'https://linkedin.com/in/incomplete'
-            // Missing required fields
+            'email' => 'test@example.com',
+            'name' => 'Test User',
+            'phone' => '+1234567890',
+            'linkedin' => 'https://linkedin.com/in/incomplete',
+            'resume' => 'nonexistent_file.pdf'  // This file doesn't exist
         ];
 
-        $this->expectException(LoxoApiException::class);
-        $this->expectExceptionMessage('API request failed');
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Resume must be a file resource or valid file path');
 
-        $service = $this->createServiceWithMockResponse(422, $errorResponse);
+        $service = $this->createServiceWithMockResponse(400, []);
         $service->applyToJob(2645723, $applicationData);
     }
 
@@ -396,17 +420,28 @@ class LoxoApiServiceTest extends TestCase
             'message' => 'The specified job does not exist or is not published'
         ];
 
+        // Create a temporary resume file for testing
+        $tempResume = tempnam(sys_get_temp_dir(), 'test_resume_404');
+        file_put_contents($tempResume, 'Test resume for 404 test');
+
         $applicationData = [
             'email' => 'test@example.com',
             'name' => 'Test User',
-            'phone' => '+1234567890'
+            'phone' => '+1234567890',
+            'resume' => $tempResume
         ];
 
         $this->expectException(LoxoApiException::class);
         $this->expectExceptionMessage('API request failed');
 
         $service = $this->createServiceWithMockResponse(404, $errorResponse);
-        $service->applyToJob(999999, $applicationData);
+        
+        try {
+            $service->applyToJob(999999, $applicationData);
+        } finally {
+            // Clean up even if test fails
+            unlink($tempResume);
+        }
     }
 
     public function test_it_throws_exception_on_api_error()
