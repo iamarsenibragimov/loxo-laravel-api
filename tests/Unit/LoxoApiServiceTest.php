@@ -111,7 +111,7 @@ class LoxoApiServiceTest extends TestCase
         $this->assertEquals($mockResponse, $result);
     }
 
-        public function test_it_can_get_jobs_with_params()
+    public function test_it_can_get_jobs_with_params()
     {
         $mockResponse = [
             'jobs' => [
@@ -123,7 +123,7 @@ class LoxoApiServiceTest extends TestCase
                 'current_page' => 1
             ]
         ];
-        
+
         $params = [
             'per_page' => 20,
             'page' => 1,
@@ -172,7 +172,7 @@ class LoxoApiServiceTest extends TestCase
                 'current_page' => 1
             ]
         ];
-        
+
         $params = [
             'per_page' => 5,
             'query' => 'john',
@@ -200,7 +200,7 @@ class LoxoApiServiceTest extends TestCase
                 'has_more' => true
             ]
         ];
-        
+
         $params = [
             'scroll_id' => 'prev_page_cursor_456',
             'per_page' => 1
@@ -210,6 +210,100 @@ class LoxoApiServiceTest extends TestCase
         $result = $service->getPeople($params);
 
         $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_create_person()
+    {
+        $mockResponse = [
+            'person' => [
+                'id' => 123456,
+                'name' => 'John Doe',
+                'email' => 'john.doe@example.com',
+                'title' => 'Software Engineer',
+                'company' => 'Tech Corp',
+                'created_at' => '2024-12-19T12:00:00.000Z'
+            ]
+        ];
+
+        $personData = [
+            'person' => [
+                'name' => 'John Doe',
+                'email' => 'john.doe@example.com',
+                'title' => 'Software Engineer',
+                'company' => 'Tech Corp',
+                'location' => 'San Francisco, CA'
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(201, $mockResponse);
+        $result = $service->createPerson($personData);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_create_person_with_full_data()
+    {
+        $mockResponse = [
+            'person' => [
+                'id' => 123457,
+                'name' => 'Jane Smith',
+                'email' => 'jane.smith@example.com',
+                'title' => 'Product Manager',
+                'company' => 'Startup Inc',
+                'linkedin_url' => 'https://linkedin.com/in/janesmith',
+                'compensation' => 120000.0,
+                'created_at' => '2024-12-19T12:00:00.000Z'
+            ]
+        ];
+
+        $personData = [
+            'person' => [
+                'name' => 'Jane Smith',
+                'email' => 'jane.smith@example.com',
+                'title' => 'Product Manager',
+                'company' => 'Startup Inc',
+                'location' => 'New York, NY',
+                'city' => 'New York',
+                'state' => 'NY',
+                'country' => 'United States',
+                'linkedin_url' => 'https://linkedin.com/in/janesmith',
+                'compensation' => 120000.0,
+                'salary' => 120000.0,
+                'person_type_id' => 1,
+                'source_type_id' => 2,
+                'all_raw_tags' => ['javascript', 'product management'],
+                'list_ids' => [1, 2, 3]
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(201, $mockResponse);
+        $result = $service->createPerson($personData);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_handles_create_person_validation_error()
+    {
+        $errorResponse = [
+            'errors' => [
+                'person.email' => ['The email field is required.'],
+                'person.name' => ['The name field is required.']
+            ],
+            'message' => 'Validation failed'
+        ];
+
+        $personData = [
+            'person' => [
+                'title' => 'Developer'
+                // Missing required fields
+            ]
+        ];
+
+        $this->expectException(LoxoApiException::class);
+        $this->expectExceptionMessage('API request failed');
+
+        $service = $this->createServiceWithMockResponse(422, $errorResponse);
+        $service->createPerson($personData);
     }
 
     public function test_it_throws_exception_on_api_error()

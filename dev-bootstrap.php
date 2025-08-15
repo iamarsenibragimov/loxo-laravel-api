@@ -96,6 +96,7 @@ namespace {
             measureTime('testAddressTypes');
             measureTime('testJobs');
             measureTime('testPeople');
+            measureTime('testCreatePerson');
 
             echo "\n🎉 Quick test completed!\n";
         } catch (Exception $e) {
@@ -172,13 +173,13 @@ namespace {
             echo "📋 Testing basic jobs request...\n";
             $result = $api->getJobs(['per_page' => 5]);
 
-                        $count = count($result['results'] ?? []);
+            $count = count($result['results'] ?? []);
             echo "✅ Retrieved {$count} jobs\n";
-            
+
             if (isset($result['total_count'])) {
                 echo "📊 Total: {$result['total_count']}, Page: {$result['current_page']}, Per page: {$result['per_page']}\n";
             }
-            
+
             if (!empty($result['results'])) {
                 $first = $result['results'][0];
                 $published = ($first['published'] ?? false) ? 'Published' : 'Draft';
@@ -192,9 +193,9 @@ namespace {
                 'per_page' => 3
             ]);
 
-                        $searchCount = count($searchResult['results'] ?? []);
+            $searchCount = count($searchResult['results'] ?? []);
             echo "✅ Found {$searchCount} jobs matching 'developer'\n";
-            
+
             if (!empty($searchResult['results'])) {
                 foreach ($searchResult['results'] as $job) {
                     echo "   📄 {$job['title']} (ID: {$job['id']})\n";
@@ -223,60 +224,156 @@ namespace {
         }
     }
 
-    function testPeople() {
+    function testPeople()
+    {
         echo "🔄 Testing People endpoint...\n";
-        
+
         try {
             $api = new LoxoApiService();
-            
+
             // Test basic request
             echo "👥 Testing basic people request...\n";
             $result = $api->getPeople(['per_page' => 5]);
-            
+
             $count = count($result['people'] ?? []);
             echo "✅ Retrieved {$count} people\n";
-            
+
             if (isset($result['total_count'])) {
                 $scrollInfo = isset($result['scroll_id']) ? " (scroll_id available)" : "";
                 echo "📊 Total: {$result['total_count']}, Retrieved: {$count}{$scrollInfo}\n";
             }
-            
+
             if (!empty($result['people'])) {
                 $first = $result['people'][0];
                 $name = $first['name'] ?? 'No name';
                 $email = !empty($first['emails']) ? $first['emails'][0]['value'] : 'No email';
                 echo "👤 First person: ID={$first['id']}, Name='{$name}', Email={$email}\n";
             }
-            
+
             // Test with search
             echo "\n🔍 Testing people search...\n";
             $searchResult = $api->getPeople([
                 'query' => 'john',
                 'per_page' => 3
             ]);
-            
+
             $searchCount = count($searchResult['people'] ?? []);
             echo "✅ Found {$searchCount} people matching 'john'\n";
-            
+
             if (!empty($searchResult['people'])) {
                 foreach ($searchResult['people'] as $person) {
                     $name = $person['name'] ?? 'No name';
                     echo "   👤 {$name} (ID: {$person['id']})\n";
                 }
             }
-            
+
             // Test with filters
             echo "\n🎯 Testing advanced filters...\n";
             $filteredResult = $api->getPeople([
                 'per_page' => 2,
                 'created_at_sort' => 'desc'
             ]);
-            
+
             $filteredCount = count($filteredResult['people'] ?? []);
             echo "✅ Found {$filteredCount} people with recent sort\n";
-            
+
             return $result;
-            
+        } catch (LoxoApiException $e) {
+            echo "❌ API Error: " . $e->getMessage() . "\n";
+            if ($e->getResponse()) {
+                echo "📄 Response: " . json_encode($e->getResponse(), JSON_PRETTY_PRINT) . "\n";
+            }
+            throw $e;
+        } catch (ConfigurationException $e) {
+            echo "❌ Config Error: " . $e->getMessage() . "\n";
+            throw $e;
+        }
+    }
+
+    function testCreatePerson()
+    {
+        echo "🔄 Testing Create Person endpoint...\n";
+
+        try {
+            $api = new LoxoApiService();
+
+            // Test creating a basic person
+            echo "👤 Testing basic person creation...\n";
+
+            $timestamp = date('Y-m-d_H-i-s');
+            $personData = [
+                'person' => [
+                    'name' => 'Test User ' . $timestamp,
+                    'email' => 'test-' . $timestamp . '@example.com',
+                    'title' => 'Test Engineer',
+                    'company' => 'Test Company Inc',
+                    'location' => 'San Francisco, CA',
+                    'city' => 'San Francisco',
+                    'state' => 'CA',
+                    'country' => 'United States',
+                    'linkedin_url' => 'https://linkedin.com/in/testuser',
+                    'description' => 'This is a test user created by the Loxo Laravel API package',
+                    'all_raw_tags' => ['api-test', 'laravel', 'loxo']
+                ]
+            ];
+
+            $result = $api->createPerson($personData);
+
+            if (isset($result['person'])) {
+                $person = $result['person'];
+                echo "✅ Person created successfully!\n";
+                echo "📄 ID: {$person['id']}, Name: '{$person['name']}'\n";
+
+                if (isset($person['email'])) {
+                    echo "📧 Email: {$person['email']}\n";
+                }
+
+                if (isset($person['created_at'])) {
+                    echo "📅 Created: {$person['created_at']}\n";
+                }
+            } else {
+                echo "⚠️  Person created but unexpected response format\n";
+                echo "📄 Response: " . json_encode($result, JSON_PRETTY_PRINT) . "\n";
+            }
+
+            // Test creating person with more complex data
+            echo "\n👥 Testing advanced person creation...\n";
+
+            $advancedPersonData = [
+                'person' => [
+                    'name' => 'Advanced Test User ' . $timestamp,
+                    'email' => 'advanced-test-' . $timestamp . '@example.com',
+                    'title' => 'Senior Software Engineer',
+                    'company' => 'Tech Startup',
+                    'location' => 'New York, NY',
+                    'city' => 'New York',
+                    'state' => 'NY',
+                    'zip' => '10001',
+                    'country' => 'United States',
+                    'linkedin_url' => 'https://linkedin.com/in/advancedtestuser',
+                    'website' => 'https://example.com',
+                    'description' => 'Advanced test user with full profile data',
+                    'compensation' => 150000.0,
+                    'salary' => 150000.0,
+                    'all_raw_tags' => ['senior', 'full-stack', 'react', 'node.js', 'api-test']
+                ]
+            ];
+
+            $advancedResult = $api->createPerson($advancedPersonData);
+
+            if (isset($advancedResult['person'])) {
+                $advancedPerson = $advancedResult['person'];
+                echo "✅ Advanced person created successfully!\n";
+                echo "📄 ID: {$advancedPerson['id']}, Name: '{$advancedPerson['name']}'\n";
+
+                if (isset($advancedPerson['compensation'])) {
+                    echo "💰 Compensation: \${$advancedPerson['compensation']}\n";
+                }
+            } else {
+                echo "⚠️  Advanced person created but unexpected response format\n";
+            }
+
+            return $result;
         } catch (LoxoApiException $e) {
             echo "❌ API Error: " . $e->getMessage() . "\n";
             if ($e->getResponse()) {

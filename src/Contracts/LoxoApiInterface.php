@@ -37,6 +37,14 @@ interface LoxoApiInterface
     public function getPeople(array $params = []): array;
 
     /**
+     * Create a new person (candidate) in the agency
+     *
+     * @param array $personData Person data for creation
+     * @return array
+     */
+    public function createPerson(array $personData): array;
+
+    /**
      * Make a GET request to the Loxo API
      *
      * @param string $endpoint
