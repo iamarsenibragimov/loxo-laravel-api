@@ -272,6 +272,18 @@ class LoxoApiService implements LoxoApiInterface
     }
 
     /**
+     * Get users for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function getUsers(array $params = []): array
+    {
+        return $this->get('users', $params);
+    }
+
+    /**
      * Get jobs for the agency
      *
      * @param array $params Query parameters:

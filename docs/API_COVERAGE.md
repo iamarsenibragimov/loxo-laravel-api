@@ -18,9 +18,9 @@ This file tracks the coverage of Loxo API endpoints in our package.
 ## Coverage Statistics
 
 **Total endpoints:** 144  
-**Implemented:** 15 (10.4%)  
+**Implemented:** 16 (11.1%)  
 **In development:** 0 (0%)  
-**Not implemented:** 129 (89.6%)
+**Not implemented:** 128 (88.9%)
 
 ---
 
@@ -224,7 +224,7 @@ This file tracks the coverage of Loxo API endpoints in our package.
 ## System & Administration
 | Endpoint                          | Methods          | Status | Notes             |
 | --------------------------------- | ---------------- | ------ | ----------------- |
-| `/{agency_slug}/users`            | GET              | ❌      |                   |
+| `/{agency_slug}/users`            | GET              | ✅      | Fully implemented |
 | `/{agency_slug}/veteran_statuses` | GET              | ✅      | Fully implemented |
 | `/{agency_slug}/webhooks`         | GET, POST        | ✅      | Fully implemented |
 | `/{agency_slug}/webhooks/{id}`    | GET, PUT, DELETE | ✅      | Fully implemented |
@@ -267,4 +267,4 @@ This file tracks the coverage of Loxo API endpoints in our package.
 
 ---
 
-*Last updated: 2024-12-19 - Full webhooks CRUD endpoints added*
+*Last updated: 2024-12-19 - Users endpoint added*

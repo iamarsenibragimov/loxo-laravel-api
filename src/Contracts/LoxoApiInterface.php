@@ -118,6 +118,14 @@ interface LoxoApiInterface
     public function deleteWebhook(int $id): array;
 
     /**
+     * Get users for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     */
+    public function getUsers(array $params = []): array;
+
+    /**
      * Get jobs for the agency
      *
      * @param array $params Query parameters (per_page, page, query, published, etc.)

@@ -100,7 +100,7 @@ class YourController extends Controller
 
 ### Available Methods
 
-> **📊 API Coverage Status:** Currently 15 out of 144+ Loxo API endpoints are implemented (10.4%). See [API_COVERAGE.md](docs/API_COVERAGE.md) for detailed progress tracking.
+> **📊 API Coverage Status:** Currently 16 out of 144+ Loxo API endpoints are implemented (11.1%). See [API_COVERAGE.md](docs/API_COVERAGE.md) for detailed progress tracking.
 > 
 > 📖 **Reference:** All endpoints are based on the [official Loxo API documentation](https://loxo.readme.io/reference/loxo-api).
 
@@ -220,6 +220,12 @@ $result = Loxo::deleteWebhook(1);
 //
 // Available actions:
 // - create, update, destroy
+```
+
+#### Users
+```php
+// Get all users
+$users = Loxo::getUsers();
 ```
 
 #### Jobs

@@ -646,6 +646,46 @@ class LoxoApiServiceTest extends TestCase
         $service->updateWebhook(1, $webhookData);
     }
 
+    public function test_it_can_get_users()
+    {
+        $mockResponse = [
+            'users' => [
+                [
+                    'id' => 1,
+                    'first_name' => 'John',
+                    'last_name' => 'Doe',
+                    'email' => 'john.doe@agency.com',
+                    'role' => 'admin',
+                    'active' => true,
+                    'created_at' => '2024-12-19T12:00:00.000Z'
+                ],
+                [
+                    'id' => 2,
+                    'first_name' => 'Jane',
+                    'last_name' => 'Smith',
+                    'email' => 'jane.smith@agency.com',
+                    'role' => 'recruiter',
+                    'active' => true,
+                    'created_at' => '2024-12-19T12:00:00.000Z'
+                ],
+                [
+                    'id' => 3,
+                    'first_name' => 'Bob',
+                    'last_name' => 'Johnson',
+                    'email' => 'bob.johnson@agency.com',
+                    'role' => 'manager',
+                    'active' => false,
+                    'created_at' => '2024-12-19T12:00:00.000Z'
+                ],
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getUsers();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
     public function test_it_can_get_jobs()
     {
         $mockResponse = [
