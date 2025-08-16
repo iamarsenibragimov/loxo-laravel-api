@@ -18,9 +18,9 @@ This file tracks the coverage of Loxo API endpoints in our package.
 ## Coverage Statistics
 
 **Total endpoints:** 144  
-**Implemented:** 20 (13.9%)  
+**Implemented:** 21 (14.6%)  
 **In development:** 0 (0%)  
-**Not implemented:** 124 (86.1%)
+**Not implemented:** 123 (85.4%)
 
 ---
 
@@ -91,7 +91,7 @@ This file tracks the coverage of Loxo API endpoints in our package.
 | `/{agency_slug}/ethnicities`         | GET     | ❌      |       |
 | `/{agency_slug}/genders`             | GET     | ❌      |       |
 | `/{agency_slug}/pronouns`            | GET     | ❌      |       |
-| `/{agency_slug}/veteran_statuses`    | GET     | ❌      |       |
+| `/{agency_slug}/veteran_statuses`    | GET     | ✅      | Fully implemented |
 
 ## Dynamic Fields
 | Endpoint                                                            | Methods          | Status | Notes |
@@ -145,9 +145,9 @@ This file tracks the coverage of Loxo API endpoints in our package.
 | `/{agency_slug}/jobs/{job_id}/documents/{job_document_id}/download` | GET              | ❌      |                 |
 
 ## People & Candidates
-| Endpoint                                                                    | Methods          | Status | Notes |
-| --------------------------------------------------------------------------- | ---------------- | ------ | ----- |
-| `/{agency_slug}/people`                                                     | GET, POST        | ❌      |       |
+| Endpoint                                                                    | Methods          | Status | Notes             |
+| --------------------------------------------------------------------------- | ---------------- | ------ | ----------------- |
+| `/{agency_slug}/people`                                                     | GET, POST        | ✅      | Fully implemented |
 | `/{agency_slug}/people/{id}`                                                | GET, PUT, DELETE | ❌      |       |
 | `/{agency_slug}/people/{id}/merge`                                          | POST             | ❌      |       |
 | `/{agency_slug}/people/{person_id}/documents`                               | GET, POST        | ❌      |       |
@@ -225,7 +225,7 @@ This file tracks the coverage of Loxo API endpoints in our package.
 | Endpoint                          | Methods          | Status | Notes             |
 | --------------------------------- | ---------------- | ------ | ----------------- |
 | `/{agency_slug}/users`            | GET              | ✅      | Fully implemented |
-| `/{agency_slug}/veteran_statuses` | GET              | ✅      | Fully implemented |
+
 | `/{agency_slug}/webhooks`         | GET, POST        | ✅      | Fully implemented |
 | `/{agency_slug}/webhooks/{id}`    | GET, PUT, DELETE | ✅      | Fully implemented |
 | `/{agency_slug}/workflow_stages`  | GET              | ✅      | Fully implemented |
@@ -267,4 +267,4 @@ This file tracks the coverage of Loxo API endpoints in our package.
 
 ---
 
-*Last updated: 2024-12-19 - Job candidates endpoints (GET) added*
+*Last updated: 2024-12-19 - API coverage actualized, fixed People & Veteran Statuses status*

@@ -100,7 +100,7 @@ class YourController extends Controller
 
 ### Available Methods
 
-> **📊 API Coverage Status:** Currently 20 out of 144+ Loxo API endpoints are implemented (13.9%). See [API_COVERAGE.md](docs/API_COVERAGE.md) for detailed progress tracking.
+> **📊 API Coverage Status:** Currently 21 out of 144+ Loxo API endpoints are implemented (14.6%). See [API_COVERAGE.md](docs/API_COVERAGE.md) for detailed progress tracking.
 > 
 > 📖 **Reference:** All endpoints are based on the [official Loxo API documentation](https://loxo.readme.io/reference/loxo-api).
 

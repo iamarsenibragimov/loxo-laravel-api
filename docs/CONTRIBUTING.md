@@ -84,8 +84,8 @@ make help
 
 **API Coverage Progress:**
 - **Total Loxo API Endpoints:** 144
-- **Currently Implemented:** 20 (13.9%)
-- **Remaining:** 124 (86.1%)
+- **Currently Implemented:** 21 (14.6%)
+- **Remaining:** 123 (85.4%)
 
 **Implemented Endpoints:**
 - ✅ `getActivityTypes()` - Activity types
