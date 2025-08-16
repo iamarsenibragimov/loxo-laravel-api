@@ -15,3 +15,4 @@ phpunit.xml.dist
 /.coverage/
 .phpstorm.meta.php
 _ide_helper.php
+/.phpunit.cache/
