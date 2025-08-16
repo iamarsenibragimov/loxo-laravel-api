@@ -1,8 +1,12 @@
 # Loxo Laravel API Package (Unofficial)
 
-An **unofficial** Laravel package for easy integration with the Loxo API. This package provides a simple and elegant way to interact with Loxo's recruitment platform API.
+An **unofficial** Laravel package for easy integration with the [Loxo API](https://loxo.co). This package provides a simple and elegant way to interact with Loxo's recruitment platform API.
 
 > ⚠️ **Disclaimer:** This is an unofficial package and is not affiliated with, endorsed by, or supported by Loxo. It is developed and maintained independently.
+> 
+> 📚 **Official Resources:**
+> - [Loxo Website](https://loxo.co) - Official Loxo platform
+> - [Loxo API Documentation](https://loxo.readme.io/reference/loxo-api) - Official API reference
 
 ## Installation
 
@@ -96,7 +100,9 @@ class YourController extends Controller
 
 ### Available Methods
 
-> **📊 API Coverage Status:** Currently 3 out of 144+ Loxo API endpoints are implemented (2.1%). See [API_COVERAGE.md](API_COVERAGE.md) for detailed progress tracking.
+> **📊 API Coverage Status:** Currently 3 out of 144+ Loxo API endpoints are implemented (2.1%). See [API_COVERAGE.md](docs/API_COVERAGE.md) for detailed progress tracking.
+> 
+> 📖 **Reference:** All endpoints are based on the [official Loxo API documentation](https://loxo.readme.io/reference/loxo-api).
 
 #### Activity Types
 ```php
@@ -331,7 +337,7 @@ This package is open-sourced software licensed under the [MIT license](LICENSE).
 
 ## Contributing
 
-Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details on how to contribute to this project.
+Please see [CONTRIBUTING.md](docs/CONTRIBUTING.md) for details on how to contribute to this project.
 
 ## Support
 
@@ -341,8 +347,9 @@ If you discover any security vulnerabilities or bugs, please create an issue on 
 
 - **[🚀 Quick Start Guide](docs/QUICK_START.md)** - Get started in 5 minutes
 - **[🧪 Testing Guide](docs/TESTING.md)** - Development and automated testing
+- **[🤝 Contributing Guide](docs/CONTRIBUTING.md)** - How to contribute to development
 - **[💡 Examples](examples/)** - Usage examples and code samples
-- **[📊 API Coverage](API_COVERAGE.md)** - Track implemented vs available endpoints
+- **[📊 API Coverage](docs/API_COVERAGE.md)** - Track implemented vs available endpoints
 
 ## Changelog
 

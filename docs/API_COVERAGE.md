@@ -2,6 +2,12 @@
 
 This file tracks the coverage of Loxo API endpoints in our package.
 
+> 📚 **Official Resources:**
+> - [Loxo Website](https://loxo.co) - Official Loxo platform
+> - [Loxo API Documentation](https://loxo.readme.io/reference/loxo-api) - Official API reference
+> 
+> ⚠️ **Note:** This is an unofficial package. All endpoint information is based on the [official Loxo API documentation](https://loxo.readme.io/reference/loxo-api).
+
 ## Legend
 
 - ✅ **Fully implemented** - method added to service, tested
@@ -248,12 +254,15 @@ This file tracks the coverage of Loxo API endpoints in our package.
 
 ## How to Add a New Endpoint
 
-1. Add method to `LoxoApiInterface`
-2. Implement method in `LoxoApiService`
-3. Add test to `LoxoApiServiceTest`
-4. Update documentation in README.md
-5. Update this coverage file
-6. Update CHANGELOG.md
+1. **Research** - Check the [official Loxo API documentation](https://loxo.readme.io/reference/loxo-api) for endpoint details
+2. Add method to `LoxoApiInterface`
+3. Implement method in `LoxoApiService`
+4. Add test to `LoxoApiServiceTest`
+5. Update documentation in README.md
+6. Update this coverage file
+7. Update CHANGELOG.md
+
+> 📖 **Reference:** Always consult the [official API documentation](https://loxo.readme.io/reference/loxo-api) for accurate parameter lists and response formats.
 
 ---
 
