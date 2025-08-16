@@ -91,6 +91,223 @@ class LoxoApiServiceTest extends TestCase
         $this->assertEquals($mockResponse, $result);
     }
 
+    public function test_it_can_get_address_types()
+    {
+        $mockResponse = [
+            'address_types' => [
+                ['id' => 1, 'name' => 'Home'],
+                ['id' => 2, 'name' => 'Work'],
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getAddressTypes();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_bonus_payment_types()
+    {
+        $mockResponse = [
+            'bonus_payment_types' => [
+                ['id' => 1, 'name' => 'Annual'],
+                ['id' => 2, 'name' => 'Quarterly'],
+                ['id' => 3, 'name' => 'Monthly'],
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getBonusPaymentTypes();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_bonus_types()
+    {
+        $mockResponse = [
+            'bonus_types' => [
+                ['id' => 1, 'name' => 'Performance Bonus'],
+                ['id' => 2, 'name' => 'Signing Bonus'],
+                ['id' => 3, 'name' => 'Retention Bonus'],
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getBonusTypes();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_companies()
+    {
+        $mockResponse = [
+            'companies' => [
+                [
+                    'id' => 1,
+                    'name' => 'Tech Corp',
+                    'url' => 'https://techcorp.com',
+                    'description' => 'A leading technology company',
+                    'company_type_id' => 1
+                ],
+                [
+                    'id' => 2,
+                    'name' => 'StartupXYZ',
+                    'url' => 'https://startupxyz.com',
+                    'description' => 'Innovative startup',
+                    'company_type_id' => 2
+                ],
+            ],
+            'meta' => [
+                'total' => 2,
+                'has_more' => false
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getCompanies();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_companies_with_params()
+    {
+        $mockResponse = [
+            'companies' => [
+                [
+                    'id' => 3,
+                    'name' => 'Enterprise Inc',
+                    'url' => 'https://enterprise.com',
+                    'description' => 'Large enterprise company',
+                    'company_type_id' => 1
+                ]
+            ],
+            'scroll_id' => 'next_page_cursor_companies_123',
+            'meta' => [
+                'total' => 50,
+                'has_more' => true
+            ]
+        ];
+
+        $params = [
+            'scroll_id' => 'prev_page_cursor_companies_456',
+            'query' => 'enterprise',
+            'company_type_id' => 1,
+            'company_global_status_id' => 1,
+            'list_id' => 5
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getCompanies($params);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_create_company()
+    {
+        $mockResponse = [
+            'company' => [
+                'id' => 12345,
+                'name' => 'New Tech Company',
+                'url' => 'https://newtechcompany.com',
+                'description' => 'A newly created tech company',
+                'culture' => 'Innovation-focused culture',
+                'company_type_id' => 1,
+                'company_global_status_id' => 1,
+                'created_at' => '2024-12-19T12:00:00.000Z'
+            ]
+        ];
+
+        $companyData = [
+            'company' => [
+                'name' => 'New Tech Company',
+                'url' => 'https://newtechcompany.com',
+                'description' => 'A newly created tech company',
+                'culture' => 'Innovation-focused culture',
+                'company_type_id' => 1,
+                'company_global_status_id' => 1,
+                'owner_email' => 'owner@newtechcompany.com'
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(201, $mockResponse);
+        $result = $service->createCompany($companyData);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_create_company_with_full_data()
+    {
+        $mockResponse = [
+            'company' => [
+                'id' => 12346,
+                'name' => 'Full Data Corp',
+                'url' => 'https://fulldatacorp.com',
+                'description' => 'Company with full data set',
+                'culture' => 'Data-driven culture',
+                'blocked' => false,
+                'fee' => 15.5,
+                'fee_type_id' => 1,
+                'company_type_id' => 2,
+                'company_global_status_id' => 1,
+                'emails' => ['contact@fulldatacorp.com', 'info@fulldatacorp.com'],
+                'phones' => ['+1234567890', '+0987654321'],
+                'addresses' => [
+                    ['street' => '123 Tech St', 'city' => 'San Francisco', 'state' => 'CA']
+                ],
+                'created_at' => '2024-12-19T12:00:00.000Z'
+            ]
+        ];
+
+        $companyData = [
+            'company' => [
+                'name' => 'Full Data Corp',
+                'url' => 'https://fulldatacorp.com',
+                'description' => 'Company with full data set',
+                'culture' => 'Data-driven culture',
+                'blocked' => false,
+                'fee' => 15.5,
+                'fee_type_id' => 1,
+                'company_type_id' => 2,
+                'owner_email' => 'owner@fulldatacorp.com',
+                'company_global_status_id' => 1,
+                'emails' => ['contact@fulldatacorp.com', 'info@fulldatacorp.com'],
+                'phones' => ['+1234567890', '+0987654321'],
+                'addresses' => [
+                    ['street' => '123 Tech St', 'city' => 'San Francisco', 'state' => 'CA']
+                ]
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(201, $mockResponse);
+        $result = $service->createCompany($companyData);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_handles_create_company_validation_error()
+    {
+        $errorResponse = [
+            'errors' => [
+                'company.name' => ['The name field is required.'],
+                'company.company_type_id' => ['The company type id field must be an integer.']
+            ],
+            'message' => 'Validation failed'
+        ];
+
+        $companyData = [
+            'company' => [
+                'url' => 'https://incomplete.com'
+                // Missing required fields
+            ]
+        ];
+
+        $this->expectException(LoxoApiException::class);
+        $this->expectExceptionMessage('API request failed');
+
+        $service = $this->createServiceWithMockResponse(422, $errorResponse);
+        $service->createCompany($companyData);
+    }
+
     public function test_it_can_get_jobs()
     {
         $mockResponse = [

@@ -18,9 +18,9 @@ This file tracks the coverage of Loxo API endpoints in our package.
 ## Coverage Statistics
 
 **Total endpoints:** 144  
-**Implemented:** 3 (2.1%)  
+**Implemented:** 7 (4.9%)  
 **In development:** 0 (0%)  
-**Not implemented:** 141 (97.9%)
+**Not implemented:** 137 (95.1%)
 
 ---
 
@@ -31,27 +31,27 @@ This file tracks the coverage of Loxo API endpoints in our package.
 | `/{agency_slug}/address_types`  | GET     | ✅      | Fully implemented |
 
 ## Bonus & Payment Types
-| Endpoint                             | Methods | Status | Notes |
-| ------------------------------------ | ------- | ------ | ----- |
-| `/{agency_slug}/bonus_payment_types` | GET     | ❌      |       |
-| `/{agency_slug}/bonus_types`         | GET     | ❌      |       |
+| Endpoint                             | Methods | Status | Notes             |
+| ------------------------------------ | ------- | ------ | ----------------- |
+| `/{agency_slug}/bonus_payment_types` | GET     | ✅      | Fully implemented |
+| `/{agency_slug}/bonus_types`         | GET     | ✅      | Fully implemented |
 
 ## Companies
-| Endpoint                                                                         | Methods          | Status | Notes |
-| -------------------------------------------------------------------------------- | ---------------- | ------ | ----- |
-| `/{agency_slug}/companies`                                                       | GET, POST        | ❌      |       |
-| `/{agency_slug}/companies/{id}`                                                  | GET, PUT, DELETE | ❌      |       |
-| `/{agency_slug}/companies/{id}/merge`                                            | POST             | ❌      |       |
-| `/{agency_slug}/companies/{company_id}/addresses`                                | GET, POST        | ❌      |       |
-| `/{agency_slug}/companies/{company_id}/addresses/{id}`                           | GET, PUT, DELETE | ❌      |       |
-| `/{agency_slug}/companies/{company_id}/documents`                                | GET, POST        | ❌      |       |
-| `/{agency_slug}/companies/{company_id}/documents/{id}`                           | GET, PUT, DELETE | ❌      |       |
-| `/{agency_slug}/companies/{company_id}/documents/{company_document_id}/download` | GET              | ❌      |       |
-| `/{agency_slug}/companies/{company_id}/emails`                                   | GET, POST        | ❌      |       |
-| `/{agency_slug}/companies/{company_id}/emails/{id}`                              | GET, PUT, DELETE | ❌      |       |
-| `/{agency_slug}/companies/{company_id}/people`                                   | GET              | ❌      |       |
-| `/{agency_slug}/companies/{company_id}/phones`                                   | GET, POST        | ❌      |       |
-| `/{agency_slug}/companies/{company_id}/phones/{id}`                              | GET, PUT, DELETE | ❌      |       |
+| Endpoint                                                                         | Methods          | Status | Notes             |
+| -------------------------------------------------------------------------------- | ---------------- | ------ | ----------------- |
+| `/{agency_slug}/companies`                                                       | GET, POST        | ✅      | Fully implemented |
+| `/{agency_slug}/companies/{id}`                                                  | GET, PUT, DELETE | ❌      |                   |
+| `/{agency_slug}/companies/{id}/merge`                                            | POST             | ❌      |                   |
+| `/{agency_slug}/companies/{company_id}/addresses`                                | GET, POST        | ❌      |                   |
+| `/{agency_slug}/companies/{company_id}/addresses/{id}`                           | GET, PUT, DELETE | ❌      |                   |
+| `/{agency_slug}/companies/{company_id}/documents`                                | GET, POST        | ❌      |                   |
+| `/{agency_slug}/companies/{company_id}/documents/{id}`                           | GET, PUT, DELETE | ❌      |                   |
+| `/{agency_slug}/companies/{company_id}/documents/{company_document_id}/download` | GET              | ❌      |                   |
+| `/{agency_slug}/companies/{company_id}/emails`                                   | GET, POST        | ❌      |                   |
+| `/{agency_slug}/companies/{company_id}/emails/{id}`                              | GET, PUT, DELETE | ❌      |                   |
+| `/{agency_slug}/companies/{company_id}/people`                                   | GET              | ❌      |                   |
+| `/{agency_slug}/companies/{company_id}/phones`                                   | GET, POST        | ❌      |                   |
+| `/{agency_slug}/companies/{company_id}/phones/{id}`                              | GET, PUT, DELETE | ❌      |                   |
 
 ## Company Types & Statuses
 | Endpoint                                 | Methods | Status | Notes |
@@ -266,4 +266,4 @@ This file tracks the coverage of Loxo API endpoints in our package.
 
 ---
 
-*Last updated: 2024-12-19 - Jobs endpoint added*
+*Last updated: 2024-12-19 - Companies endpoints (GET/POST) added*

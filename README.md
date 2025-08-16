@@ -100,7 +100,7 @@ class YourController extends Controller
 
 ### Available Methods
 
-> **📊 API Coverage Status:** Currently 3 out of 144+ Loxo API endpoints are implemented (2.1%). See [API_COVERAGE.md](docs/API_COVERAGE.md) for detailed progress tracking.
+> **📊 API Coverage Status:** Currently 7 out of 144+ Loxo API endpoints are implemented (4.9%). See [API_COVERAGE.md](docs/API_COVERAGE.md) for detailed progress tracking.
 > 
 > 📖 **Reference:** All endpoints are based on the [official Loxo API documentation](https://loxo.readme.io/reference/loxo-api).
 
@@ -120,6 +120,51 @@ $activityTypes = Loxo::getActivityTypes([
 ```php
 // Get all address types
 $addressTypes = Loxo::getAddressTypes();
+```
+
+#### Bonus Payment Types
+```php
+// Get all bonus payment types
+$bonusPaymentTypes = Loxo::getBonusPaymentTypes();
+```
+
+#### Bonus Types
+```php
+// Get all bonus types
+$bonusTypes = Loxo::getBonusTypes();
+```
+
+#### Companies
+```php
+// Get all companies
+$companies = Loxo::getCompanies();
+
+// Get companies with search and filters
+$companies = Loxo::getCompanies([
+    'query' => 'tech startup',
+    'company_type_id' => 1,
+    'company_global_status_id' => 1,
+    'list_id' => 5
+]);
+
+// Get companies with pagination
+$companies = Loxo::getCompanies([
+    'scroll_id' => 'cursor_123'
+]);
+
+// Create a new company
+$newCompany = Loxo::createCompany([
+    'company' => [
+        'name' => 'New Tech Company',
+        'url' => 'https://newtechcompany.com',
+        'description' => 'A newly created tech company',
+        'culture' => 'Innovation-focused culture',
+        'company_type_id' => 1,
+        'owner_email' => 'owner@newtechcompany.com',
+        'emails' => ['contact@newtechcompany.com'],
+        'phones' => ['+1234567890']
+    ]
+]);
 ```
 
 #### Jobs

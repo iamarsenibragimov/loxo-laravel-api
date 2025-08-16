@@ -84,12 +84,16 @@ make help
 
 **API Coverage Progress:**
 - **Total Loxo API Endpoints:** 144
-- **Currently Implemented:** 3 (2.1%)
-- **Remaining:** 141 (97.9%)
+- **Currently Implemented:** 7 (4.9%)
+- **Remaining:** 137 (95.1%)
 
 **Implemented Endpoints:**
 - ✅ `getActivityTypes()` - Activity types
 - ✅ `getAddressTypes()` - Address types  
+- ✅ `getBonusPaymentTypes()` - Bonus payment types
+- ✅ `getBonusTypes()` - Bonus types
+- ✅ `getCompanies()` - Companies listing
+- ✅ `createCompany()` - Create company
 - ✅ `getJobs()` - Jobs listing
 - ✅ `getPeople()` - People/candidates listing
 - ✅ `createPerson()` - Create person/candidate

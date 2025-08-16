@@ -21,6 +21,38 @@ interface LoxoApiInterface
     public function getAddressTypes(array $params = []): array;
 
     /**
+     * Get bonus payment types for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     */
+    public function getBonusPaymentTypes(array $params = []): array;
+
+    /**
+     * Get bonus types for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     */
+    public function getBonusTypes(array $params = []): array;
+
+    /**
+     * Get companies for the agency
+     *
+     * @param array $params Query parameters (scroll_id, query, company_type_id, list_id, company_global_status_id, fields)
+     * @return array
+     */
+    public function getCompanies(array $params = []): array;
+
+    /**
+     * Create a new company in the agency
+     *
+     * @param array $companyData Company data for creation
+     * @return array
+     */
+    public function createCompany(array $companyData): array;
+
+    /**
      * Get jobs for the agency
      *
      * @param array $params Query parameters (per_page, page, query, published, etc.)

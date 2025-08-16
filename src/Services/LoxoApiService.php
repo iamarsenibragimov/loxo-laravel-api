@@ -99,6 +99,76 @@ class LoxoApiService implements LoxoApiInterface
     }
 
     /**
+     * Get bonus payment types for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function getBonusPaymentTypes(array $params = []): array
+    {
+        return $this->get('bonus_payment_types', $params);
+    }
+
+    /**
+     * Get bonus types for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function getBonusTypes(array $params = []): array
+    {
+        return $this->get('bonus_types', $params);
+    }
+
+    /**
+     * Get companies for the agency
+     *
+     * @param array $params Query parameters:
+     *  - scroll_id (string): A cursor used to retrieve the next page of results
+     *  - query (string): Search query. Supports Lucene query syntax
+     *  - company_type_id (int): Filter by company type ID
+     *  - list_id (int): Filter by list ID
+     *  - company_global_status_id (int): Filter by company global status ID
+     *  - fields (object): Fields to include in response
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function getCompanies(array $params = []): array
+    {
+        return $this->get('companies', $params);
+    }
+
+    /**
+     * Create a new company in the agency
+     *
+     * @param array $companyData Company data:
+     *  - company[name] (string): Company name
+     *  - company[url] (string): Company website URL
+     *  - company[description] (string): Company description
+     *  - company[culture] (string): Company culture description
+     *  - company[blocked] (bool): Whether company is blocked
+     *  - company[blocked_until] (string): Timestamp until blocked
+     *  - company[fee] (float): Fee amount
+     *  - company[fee_type_id] (int): Fee type ID
+     *  - company[company_type_id] (int): Company type ID
+     *  - company[owner_email] (string): Owner email address
+     *  - company[company_global_status_id] (int): Company global status ID
+     *  - company[emails] (array): Array of email addresses
+     *  - company[phones] (array): Array of phone numbers
+     *  - company[addresses] (array): Array of address objects
+     *  - company[$dynamic_field_key] (string): Custom field values
+     *  - company[$hierarchy_dynamic_field_key] (array): Custom hierarchy field values
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function createCompany(array $companyData): array
+    {
+        return $this->post('companies', $companyData);
+    }
+
+    /**
      * Get jobs for the agency
      *
      * @param array $params Query parameters:
