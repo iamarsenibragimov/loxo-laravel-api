@@ -621,6 +621,38 @@ class LoxoApiService implements LoxoApiInterface
     }
 
     /**
+     * Get education profiles for a specific person
+     *
+     * @param int $personId Person ID
+     * @param array $params Query parameters
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function getPersonEducationProfiles(int $personId, array $params = []): array
+    {
+        return $this->get("people/{$personId}/education_profiles", $params);
+    }
+
+    /**
+     * Create a new education profile for a specific person
+     *
+     * @param int $personId Person ID
+     * @param array $educationData Education profile data:
+     *  - degree (string): Degree obtained
+     *  - school (string): School name
+     *  - month (int): Graduation month
+     *  - year (int): Graduation year
+     *  - education_type_id (int): Education type ID
+     *  - description (string): Description of education
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function createPersonEducationProfile(int $personId, array $educationData): array
+    {
+        return $this->post("people/{$personId}/education_profiles", $educationData);
+    }
+
+    /**
      * Make a GET request to the Loxo API
      *
      * @param string $endpoint

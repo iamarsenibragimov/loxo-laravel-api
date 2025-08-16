@@ -1760,4 +1760,140 @@ class LoxoApiServiceTest extends TestCase
 
         return $service;
     }
+
+    public function test_it_can_get_person_education_profiles()
+    {
+        $mockResponse = [
+            'education_profiles' => [
+                [
+                    'id' => 1,
+                    'degree' => 'Bachelor of Science',
+                    'school' => 'Stanford University',
+                    'month' => 6,
+                    'year' => 2018,
+                    'education_type_id' => 1,
+                    'description' => 'Computer Science degree with focus on software engineering'
+                ],
+                [
+                    'id' => 2,
+                    'degree' => 'Master of Business Administration',
+                    'school' => 'Harvard Business School',
+                    'month' => 5,
+                    'year' => 2020,
+                    'education_type_id' => 2,
+                    'description' => 'MBA with concentration in technology management'
+                ]
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getPersonEducationProfiles(123);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_person_education_profiles_with_params()
+    {
+        $mockResponse = [
+            'education_profiles' => []
+        ];
+
+        $params = [
+            'per_page' => 10,
+            'page' => 1
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getPersonEducationProfiles(123, $params);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_handles_get_person_education_profiles_not_found()
+    {
+        $errorResponse = [
+            'error' => 'Person not found',
+            'message' => 'The specified person does not exist'
+        ];
+
+        $this->expectException(LoxoApiException::class);
+        $this->expectExceptionMessage('API request failed');
+
+        $service = $this->createServiceWithMockResponse(404, $errorResponse);
+        $service->getPersonEducationProfiles(999);
+    }
+
+    public function test_it_can_create_person_education_profile()
+    {
+        $educationData = [
+            'degree' => 'Bachelor of Science',
+            'school' => 'MIT',
+            'month' => 6,
+            'year' => 2022,
+            'education_type_id' => 1,
+            'description' => 'Computer Science with specialization in AI'
+        ];
+
+        $mockResponse = [
+            'education_profile' => [
+                'id' => 3,
+                'degree' => 'Bachelor of Science',
+                'school' => 'MIT',
+                'month' => 6,
+                'year' => 2022,
+                'education_type_id' => 1,
+                'description' => 'Computer Science with specialization in AI',
+                'person_id' => 123
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(201, $mockResponse);
+        $result = $service->createPersonEducationProfile(123, $educationData);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_handles_create_person_education_profile_validation_error()
+    {
+        $educationData = [
+            'degree' => '',  // Invalid: empty degree
+            'school' => 'MIT'
+        ];
+
+        $errorResponse = [
+            'error' => 'Validation failed',
+            'message' => 'Degree is required',
+            'errors' => [
+                'degree' => ['Degree cannot be empty']
+            ]
+        ];
+
+        $this->expectException(LoxoApiException::class);
+        $this->expectExceptionMessage('API request failed');
+
+        $service = $this->createServiceWithMockResponse(422, $errorResponse);
+        $service->createPersonEducationProfile(123, $educationData);
+    }
+
+    public function test_it_handles_create_person_education_profile_unauthorized()
+    {
+        $educationData = [
+            'degree' => 'Bachelor of Science',
+            'school' => 'MIT',
+            'month' => 6,
+            'year' => 2022,
+            'education_type_id' => 1
+        ];
+
+        $errorResponse = [
+            'error' => 'Unauthorized',
+            'message' => 'Access denied'
+        ];
+
+        $this->expectException(LoxoApiException::class);
+        $this->expectExceptionMessage('API request failed');
+
+        $service = $this->createServiceWithMockResponse(403, $errorResponse);
+        $service->createPersonEducationProfile(123, $educationData);
+    }
 }

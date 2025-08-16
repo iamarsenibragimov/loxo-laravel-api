@@ -17,9 +17,9 @@ This file tracks the coverage of Loxo API endpoints in our package.
 ## Coverage Statistics
 
 **Total endpoints:** 144  
-**Implemented:** 24 (16.7%)  
+**Implemented:** 26 (18.1%)  
 **In development:** 0 (0%)  
-**Not implemented:** 120 (83.3%)
+**Not implemented:** 118 (81.9%)
 
 ---
 
@@ -152,7 +152,7 @@ This file tracks the coverage of Loxo API endpoints in our package.
 | `/people/{person_id}/documents`                               | GET, POST        | ❌      |                   |
 | `/people/{person_id}/documents/{id}`                          | GET, PUT, DELETE | ❌      |                   |
 | `/people/{person_id}/documents/{person_document_id}/download` | GET              | ❌      |                   |
-| `/people/{person_id}/education_profiles`                      | GET, POST        | ❌      |                   |
+| `/people/{person_id}/education_profiles`                      | GET, POST        | ✅      | Fully implemented |
 | `/people/{person_id}/education_profiles/{id}`                 | GET, PUT, DELETE | ❌      |                   |
 | `/people/{person_id}/emails`                                  | GET, POST        | ❌      |                   |
 | `/people/{person_id}/emails/{id}`                             | GET, PUT, DELETE | ❌      |                   |

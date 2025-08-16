@@ -100,154 +100,21 @@ class YourController extends Controller
 
 ### Available Methods
 
-> **📊 API Coverage Status:** Currently 21 out of 144+ Loxo API endpoints are implemented (14.6%). See [API_COVERAGE.md](docs/API_COVERAGE.md) for detailed progress tracking.
+> **📊 API Coverage Status:** Currently 26 out of 144+ Loxo API endpoints are implemented (18.1%). See [API_COVERAGE.md](docs/API_COVERAGE.md) for complete endpoint coverage status and details.
 > 
 > 📖 **Reference:** All endpoints are based on the [official Loxo API documentation](https://loxo.readme.io/reference/loxo-api).
 
-#### Activity Types
+#### Quick Examples
+
 ```php
-// Get all activity types
-$activityTypes = Loxo::getActivityTypes();
-
-// Get activity types with filters
-$activityTypes = Loxo::getActivityTypes([
-    'workflow_id' => 123,
-    'show_hidden' => true
-]);
-```
-
-#### Address Types
-```php
-// Get all address types
-$addressTypes = Loxo::getAddressTypes();
-```
-
-#### Bonus Payment Types
-```php
-// Get all bonus payment types
-$bonusPaymentTypes = Loxo::getBonusPaymentTypes();
-```
-
-#### Bonus Types
-```php
-// Get all bonus types
-$bonusTypes = Loxo::getBonusTypes();
-```
-
-#### Companies
-```php
-// Get all companies
-$companies = Loxo::getCompanies();
-
-// Get companies with search and filters
-$companies = Loxo::getCompanies([
-    'query' => 'tech startup',
-    'company_type_id' => 1,
-    'company_global_status_id' => 1,
-    'list_id' => 5
-]);
-
-// Get companies with pagination
-$companies = Loxo::getCompanies([
-    'scroll_id' => 'cursor_123'
-]);
-
-// Create a new company
-$newCompany = Loxo::createCompany([
-    'company' => [
-        'name' => 'New Tech Company',
-        'url' => 'https://newtechcompany.com',
-        'description' => 'A newly created tech company',
-        'culture' => 'Innovation-focused culture',
-        'company_type_id' => 1,
-        'owner_email' => 'owner@newtechcompany.com',
-        'emails' => ['contact@newtechcompany.com'],
-        'phones' => ['+1234567890']
-    ]
-]);
-```
-
-#### Workflows
-```php
-// Get all workflows
-$workflows = Loxo::getWorkflows();
-```
-
-#### Workflow Stages
-```php
-// Get all workflow stages
-$workflowStages = Loxo::getWorkflowStages();
-```
-
-#### Veteran Statuses
-```php
-// Get all veteran statuses
-$veteranStatuses = Loxo::getVeteranStatuses();
-```
-
-#### Webhooks
-```php
-// Get all webhooks
-$webhooks = Loxo::getWebhooks();
-
-// Get a specific webhook
-$webhook = Loxo::getWebhook(1);
-
-// Create a new webhook
-$newWebhook = Loxo::createWebhook([
-    'webhook' => [
-        'item_type' => 'candidate',
-        'action' => 'create',
-        'endpoint_url' => 'https://myapp.com/webhooks/candidate-created'
-    ]
-]);
-
-// Update a webhook
-$updatedWebhook = Loxo::updateWebhook(1, [
-    'webhook' => [
-        'item_type' => 'candidate',
-        'action' => 'update',
-        'endpoint_url' => 'https://myapp.com/webhooks/candidate-updated'
-    ]
-]);
-
-// Delete a webhook
-$result = Loxo::deleteWebhook(1);
-
-// Available item types:
-// - candidate, company, deal, job, person_education_profile, 
-//   person_event, person_job_profile, person, placement_split, placement
-//
-// Available actions:
-// - create, update, destroy
-```
-
-#### Users
-```php
-// Get all users
-$users = Loxo::getUsers();
-```
-
-#### People (Candidates)
-```php
-// Get all people
+// Get all people (candidates)
 $people = Loxo::getPeople();
 
-// Get people with pagination using scroll_id
-$people = Loxo::getPeople([
-    'scroll_id' => 'cursor_123',
-    'per_page' => 20
-]);
-
-// Search for people with advanced filters
+// Search for people with filters
 $people = Loxo::getPeople([
     'query' => 'software engineer',
     'person_global_status_id' => 1,
-    'person_type_id' => 2,
-    'active_job_stage_id' => 5,
-    'include_related_agencies' => true,
-    'list_id' => 3,
-    'created_at_sort' => 'desc'
+    'per_page' => 20
 ]);
 
 // Create a new person/candidate
@@ -255,102 +122,38 @@ $newPerson = Loxo::createPerson([
     'person' => [
         'name' => 'John Doe',
         'email' => 'john.doe@example.com',
-        'phone' => '+1234567890',
-        'title' => 'Software Engineer',
-        'company' => 'Tech Corp',
-        'location' => 'San Francisco, CA',
-        'linkedin_url' => 'https://linkedin.com/in/johndoe',
-        'person_type_id' => 1,
-        'compensation' => 120000.0,
-        'salary' => 120000.0,
-        'all_raw_tags' => ['python', 'javascript', 'react']
+        'title' => 'Software Engineer'
     ]
 ]);
-```
 
-#### Person Events
-```php
-// Get all person events
-$personEvents = Loxo::getPersonEvents();
+// Get all companies
+$companies = Loxo::getCompanies();
 
-// Get person events with filters
-$personEvents = Loxo::getPersonEvents([
-    'person_id' => 123,
-    'activity_type_ids' => [1, 2],
-    'created_by_ids' => [1, 3],
-    'job_ids' => [456, 789],
-    'company_id' => 101,
-    'query' => 'interview',
-    'created_at_start' => '2024-12-01T00:00:00.000Z',
-    'created_at_end' => '2024-12-31T23:59:59.000Z',
-    'created_at_sort' => 'desc',
-    'per_page' => 20
-]);
+// Get jobs and their candidates
+$jobs = Loxo::getJobs();
+$jobCandidates = Loxo::getJobCandidates(456);
 
-// Create a new person event
+// Create person events
 $newEvent = Loxo::createPersonEvent([
     'person_event' => [
         'activity_type_id' => 1,
         'person_id' => 456,
-        'job_id' => 789,
-        'company_id' => 101,
-        'notes' => 'Phone screening completed successfully',
-        'pinned' => false,
-        'created_by_id' => 1
+        'notes' => 'Interview completed'
+    ]
+]);
+
+// Manage webhooks
+$webhooks = Loxo::getWebhooks();
+$newWebhook = Loxo::createWebhook([
+    'webhook' => [
+        'item_type' => 'candidate',
+        'action' => 'create',
+        'endpoint_url' => 'https://myapp.com/webhooks/candidate-created'
     ]
 ]);
 ```
 
-#### Jobs
-```php
-// Get all jobs
-$jobs = Loxo::getJobs();
-
-// Get jobs with pagination
-$jobs = Loxo::getJobs([
-    'per_page' => 20,
-    'page' => 1
-]);
-
-// Search for jobs with query
-$jobs = Loxo::getJobs([
-    'query' => 'software engineer',
-    'published' => true
-]);
-
-// Filter jobs with advanced parameters
-$jobs = Loxo::getJobs([
-    'per_page' => 50,
-    'page' => 1,
-    'query' => 'developer',
-    'published' => true,
-    'remote_work_allowed' => true,
-    'job_category_ids' => [1, 2, 3],
-    'owned_by_ids' => [5, 10],
-    'country_id' => 1,
-    'state_id' => 5,
-    'city' => 'New York',
-    'job_status_id' => 1,
-    'job_type_id' => 2,
-    'published_at_sort' => 'desc',
-    'rank_sort' => 'asc'
-]);
-
-// Get candidates for a specific job
-$jobCandidates = Loxo::getJobCandidates(456);
-
-// Get job candidates with filters
-$jobCandidates = Loxo::getJobCandidates(456, [
-    'per_page' => 20,
-    'scroll_id' => 'cursor_123',
-    'query' => 'senior developer',
-    'activity_type_id' => 1,
-    'person_id' => 123
-]);
-
-// Get a specific candidate for a job
-$jobCandidate = Loxo::getJobCandidate(456, 1);
-```
+For a complete list of all available methods, filters, and parameters, please see [API_COVERAGE.md](docs/API_COVERAGE.md).
 
 #### Generic HTTP Methods
 ```php

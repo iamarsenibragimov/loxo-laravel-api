@@ -221,6 +221,24 @@ interface LoxoApiInterface
     public function applyToJob(int $jobId, array $applicationData): array;
 
     /**
+     * Get education profiles for a specific person
+     *
+     * @param int $personId Person ID
+     * @param array $params Query parameters
+     * @return array
+     */
+    public function getPersonEducationProfiles(int $personId, array $params = []): array;
+
+    /**
+     * Create a new education profile for a specific person
+     *
+     * @param int $personId Person ID
+     * @param array $educationData Education profile data
+     * @return array
+     */
+    public function createPersonEducationProfile(int $personId, array $educationData): array;
+
+    /**
      * Make a GET request to the Loxo API
      *
      * @param string $endpoint
