@@ -84,8 +84,8 @@ make help
 
 **API Coverage Progress:**
 - **Total Loxo API Endpoints:** 144
-- **Currently Implemented:** 7 (4.9%)
-- **Remaining:** 137 (95.1%)
+- **Currently Implemented:** 15 (10.4%)
+- **Remaining:** 129 (89.6%)
 
 **Implemented Endpoints:**
 - ✅ `getActivityTypes()` - Activity types
@@ -94,6 +94,14 @@ make help
 - ✅ `getBonusTypes()` - Bonus types
 - ✅ `getCompanies()` - Companies listing
 - ✅ `createCompany()` - Create company
+- ✅ `getWorkflows()` - Workflows listing
+- ✅ `getWorkflowStages()` - Workflow stages listing
+- ✅ `getVeteranStatuses()` - Veteran statuses listing
+- ✅ `getWebhooks()` - Webhooks listing
+- ✅ `getWebhook()` - Get webhook by ID
+- ✅ `createWebhook()` - Create webhook
+- ✅ `updateWebhook()` - Update webhook
+- ✅ `deleteWebhook()` - Delete webhook
 - ✅ `getJobs()` - Jobs listing
 - ✅ `getPeople()` - People/candidates listing
 - ✅ `createPerson()` - Create person/candidate

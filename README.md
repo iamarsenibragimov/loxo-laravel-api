@@ -100,7 +100,7 @@ class YourController extends Controller
 
 ### Available Methods
 
-> **📊 API Coverage Status:** Currently 7 out of 144+ Loxo API endpoints are implemented (4.9%). See [API_COVERAGE.md](docs/API_COVERAGE.md) for detailed progress tracking.
+> **📊 API Coverage Status:** Currently 15 out of 144+ Loxo API endpoints are implemented (10.4%). See [API_COVERAGE.md](docs/API_COVERAGE.md) for detailed progress tracking.
 > 
 > 📖 **Reference:** All endpoints are based on the [official Loxo API documentation](https://loxo.readme.io/reference/loxo-api).
 
@@ -165,6 +165,61 @@ $newCompany = Loxo::createCompany([
         'phones' => ['+1234567890']
     ]
 ]);
+```
+
+#### Workflows
+```php
+// Get all workflows
+$workflows = Loxo::getWorkflows();
+```
+
+#### Workflow Stages
+```php
+// Get all workflow stages
+$workflowStages = Loxo::getWorkflowStages();
+```
+
+#### Veteran Statuses
+```php
+// Get all veteran statuses
+$veteranStatuses = Loxo::getVeteranStatuses();
+```
+
+#### Webhooks
+```php
+// Get all webhooks
+$webhooks = Loxo::getWebhooks();
+
+// Get a specific webhook
+$webhook = Loxo::getWebhook(1);
+
+// Create a new webhook
+$newWebhook = Loxo::createWebhook([
+    'webhook' => [
+        'item_type' => 'candidate',
+        'action' => 'create',
+        'endpoint_url' => 'https://myapp.com/webhooks/candidate-created'
+    ]
+]);
+
+// Update a webhook
+$updatedWebhook = Loxo::updateWebhook(1, [
+    'webhook' => [
+        'item_type' => 'candidate',
+        'action' => 'update',
+        'endpoint_url' => 'https://myapp.com/webhooks/candidate-updated'
+    ]
+]);
+
+// Delete a webhook
+$result = Loxo::deleteWebhook(1);
+
+// Available item types:
+// - candidate, company, deal, job, person_education_profile, 
+//   person_event, person_job_profile, person, placement_split, placement
+//
+// Available actions:
+// - create, update, destroy
 ```
 
 #### Jobs

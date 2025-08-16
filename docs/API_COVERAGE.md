@@ -18,9 +18,9 @@ This file tracks the coverage of Loxo API endpoints in our package.
 ## Coverage Statistics
 
 **Total endpoints:** 144  
-**Implemented:** 7 (4.9%)  
+**Implemented:** 15 (10.4%)  
 **In development:** 0 (0%)  
-**Not implemented:** 137 (95.1%)
+**Not implemented:** 129 (89.6%)
 
 ---
 
@@ -222,13 +222,14 @@ This file tracks the coverage of Loxo API endpoints in our package.
 | `/{agency_slug}/source_types/{id}`    | GET, PUT, DELETE | ❌      |       |
 
 ## System & Administration
-| Endpoint                         | Methods          | Status | Notes |
-| -------------------------------- | ---------------- | ------ | ----- |
-| `/{agency_slug}/users`           | GET              | ❌      |       |
-| `/{agency_slug}/webhooks`        | GET, POST        | ❌      |       |
-| `/{agency_slug}/webhooks/{id}`   | GET, PUT, DELETE | ❌      |       |
-| `/{agency_slug}/workflow_stages` | GET              | ❌      |       |
-| `/{agency_slug}/workflows`       | GET, POST        | ❌      |       |
+| Endpoint                          | Methods          | Status | Notes             |
+| --------------------------------- | ---------------- | ------ | ----------------- |
+| `/{agency_slug}/users`            | GET              | ❌      |                   |
+| `/{agency_slug}/veteran_statuses` | GET              | ✅      | Fully implemented |
+| `/{agency_slug}/webhooks`         | GET, POST        | ✅      | Fully implemented |
+| `/{agency_slug}/webhooks/{id}`    | GET, PUT, DELETE | ✅      | Fully implemented |
+| `/{agency_slug}/workflow_stages`  | GET              | ✅      | Fully implemented |
+| `/{agency_slug}/workflows`        | GET, POST        | ✅      | GET implemented   |
 
 ---
 
@@ -266,4 +267,4 @@ This file tracks the coverage of Loxo API endpoints in our package.
 
 ---
 
-*Last updated: 2024-12-19 - Companies endpoints (GET/POST) added*
+*Last updated: 2024-12-19 - Full webhooks CRUD endpoints added*

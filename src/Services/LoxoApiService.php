@@ -169,6 +169,109 @@ class LoxoApiService implements LoxoApiInterface
     }
 
     /**
+     * Get workflows for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function getWorkflows(array $params = []): array
+    {
+        return $this->get('workflows', $params);
+    }
+
+    /**
+     * Get workflow stages for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function getWorkflowStages(array $params = []): array
+    {
+        return $this->get('workflow_stages', $params);
+    }
+
+    /**
+     * Get veteran statuses for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function getVeteranStatuses(array $params = []): array
+    {
+        return $this->get('veteran_statuses', $params);
+    }
+
+    /**
+     * Get webhooks for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function getWebhooks(array $params = []): array
+    {
+        return $this->get('webhooks', $params);
+    }
+
+    /**
+     * Get a specific webhook by ID
+     *
+     * @param int $id Webhook ID
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function getWebhook(int $id): array
+    {
+        return $this->get("webhooks/{$id}");
+    }
+
+    /**
+     * Create a new webhook in the agency
+     *
+     * @param array $webhookData Webhook data:
+     *  - webhook[item_type] (string): Type of item to watch (candidate, company, deal, job, person_education_profile, person_event, person_job_profile, person, placement_split, placement)
+     *  - webhook[action] (string): Action to watch for (create, update, destroy)
+     *  - webhook[endpoint_url] (string): URL to send webhook notifications to
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function createWebhook(array $webhookData): array
+    {
+        return $this->post('webhooks', $webhookData);
+    }
+
+    /**
+     * Update an existing webhook
+     *
+     * @param int $id Webhook ID
+     * @param array $webhookData Webhook data:
+     *  - webhook[item_type] (string): Type of item to watch (candidate, company, deal, job, person_education_profile, person_event, person_job_profile, person, placement_split, placement)
+     *  - webhook[action] (string): Action to watch for (create, update, destroy)
+     *  - webhook[endpoint_url] (string): URL to send webhook notifications to
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function updateWebhook(int $id, array $webhookData): array
+    {
+        return $this->put("webhooks/{$id}", $webhookData);
+    }
+
+    /**
+     * Delete a webhook
+     *
+     * @param int $id Webhook ID
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function deleteWebhook(int $id): array
+    {
+        return $this->delete("webhooks/{$id}");
+    }
+
+    /**
      * Get jobs for the agency
      *
      * @param array $params Query parameters:

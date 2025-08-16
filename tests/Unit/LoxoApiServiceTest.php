@@ -308,6 +308,344 @@ class LoxoApiServiceTest extends TestCase
         $service->createCompany($companyData);
     }
 
+    public function test_it_can_get_workflows()
+    {
+        $mockResponse = [
+            'workflows' => [
+                [
+                    'id' => 1,
+                    'name' => 'Hiring Workflow',
+                    'description' => 'Standard hiring process workflow',
+                    'active' => true
+                ],
+                [
+                    'id' => 2,
+                    'name' => 'Client Workflow',
+                    'description' => 'Client onboarding workflow',
+                    'active' => true
+                ],
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getWorkflows();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_workflow_stages()
+    {
+        $mockResponse = [
+            'workflow_stages' => [
+                [
+                    'id' => 1,
+                    'name' => 'Application Received',
+                    'workflow_id' => 1,
+                    'position' => 1,
+                    'active' => true
+                ],
+                [
+                    'id' => 2,
+                    'name' => 'Phone Screen',
+                    'workflow_id' => 1,
+                    'position' => 2,
+                    'active' => true
+                ],
+                [
+                    'id' => 3,
+                    'name' => 'Technical Interview',
+                    'workflow_id' => 1,
+                    'position' => 3,
+                    'active' => true
+                ],
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getWorkflowStages();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_veteran_statuses()
+    {
+        $mockResponse = [
+            'veteran_statuses' => [
+                [
+                    'id' => 1,
+                    'name' => 'Veteran',
+                    'description' => 'Military veteran status'
+                ],
+                [
+                    'id' => 2,
+                    'name' => 'Active Duty',
+                    'description' => 'Currently serving in military'
+                ],
+                [
+                    'id' => 3,
+                    'name' => 'Not Applicable',
+                    'description' => 'No military service'
+                ],
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getVeteranStatuses();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_webhooks()
+    {
+        $mockResponse = [
+            'webhooks' => [
+                [
+                    'id' => 1,
+                    'item_type' => 'candidate',
+                    'action' => 'create',
+                    'endpoint_url' => 'https://example.com/webhooks/candidate-created',
+                    'active' => true,
+                    'created_at' => '2024-12-19T12:00:00.000Z'
+                ],
+                [
+                    'id' => 2,
+                    'item_type' => 'company',
+                    'action' => 'update',
+                    'endpoint_url' => 'https://example.com/webhooks/company-updated',
+                    'active' => true,
+                    'created_at' => '2024-12-19T12:00:00.000Z'
+                ],
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getWebhooks();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_webhook()
+    {
+        $mockResponse = [
+            'webhook' => [
+                'id' => 1,
+                'item_type' => 'candidate',
+                'action' => 'create',
+                'endpoint_url' => 'https://example.com/webhooks/candidate-created',
+                'active' => true,
+                'created_at' => '2024-12-19T12:00:00.000Z',
+                'updated_at' => '2024-12-19T12:00:00.000Z'
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getWebhook(1);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_create_webhook()
+    {
+        $mockResponse = [
+            'webhook' => [
+                'id' => 123,
+                'item_type' => 'job',
+                'action' => 'create',
+                'endpoint_url' => 'https://myapp.com/webhooks/job-created',
+                'active' => true,
+                'created_at' => '2024-12-19T12:00:00.000Z'
+            ]
+        ];
+
+        $webhookData = [
+            'webhook' => [
+                'item_type' => 'job',
+                'action' => 'create',
+                'endpoint_url' => 'https://myapp.com/webhooks/job-created'
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(201, $mockResponse);
+        $result = $service->createWebhook($webhookData);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_create_webhook_with_all_item_types()
+    {
+        $itemTypes = [
+            'candidate',
+            'company',
+            'deal',
+            'job',
+            'person_education_profile',
+            'person_event',
+            'person_job_profile',
+            'person',
+            'placement_split',
+            'placement'
+        ];
+
+        foreach ($itemTypes as $itemType) {
+            $mockResponse = [
+                'webhook' => [
+                    'id' => 124,
+                    'item_type' => $itemType,
+                    'action' => 'update',
+                    'endpoint_url' => "https://myapp.com/webhooks/{$itemType}-updated",
+                    'active' => true,
+                    'created_at' => '2024-12-19T12:00:00.000Z'
+                ]
+            ];
+
+            $webhookData = [
+                'webhook' => [
+                    'item_type' => $itemType,
+                    'action' => 'update',
+                    'endpoint_url' => "https://myapp.com/webhooks/{$itemType}-updated"
+                ]
+            ];
+
+            $service = $this->createServiceWithMockResponse(201, $mockResponse);
+            $result = $service->createWebhook($webhookData);
+
+            $this->assertEquals($mockResponse, $result);
+        }
+    }
+
+    public function test_it_can_create_webhook_with_all_actions()
+    {
+        $actions = ['create', 'update', 'destroy'];
+
+        foreach ($actions as $action) {
+            $mockResponse = [
+                'webhook' => [
+                    'id' => 125,
+                    'item_type' => 'person',
+                    'action' => $action,
+                    'endpoint_url' => "https://myapp.com/webhooks/person-{$action}",
+                    'active' => true,
+                    'created_at' => '2024-12-19T12:00:00.000Z'
+                ]
+            ];
+
+            $webhookData = [
+                'webhook' => [
+                    'item_type' => 'person',
+                    'action' => $action,
+                    'endpoint_url' => "https://myapp.com/webhooks/person-{$action}"
+                ]
+            ];
+
+            $service = $this->createServiceWithMockResponse(201, $mockResponse);
+            $result = $service->createWebhook($webhookData);
+
+            $this->assertEquals($mockResponse, $result);
+        }
+    }
+
+    public function test_it_can_update_webhook()
+    {
+        $mockResponse = [
+            'webhook' => [
+                'id' => 1,
+                'item_type' => 'candidate',
+                'action' => 'update',
+                'endpoint_url' => 'https://newapp.com/webhooks/candidate-updated',
+                'active' => true,
+                'created_at' => '2024-12-19T12:00:00.000Z',
+                'updated_at' => '2024-12-19T13:00:00.000Z'
+            ]
+        ];
+
+        $webhookData = [
+            'webhook' => [
+                'item_type' => 'candidate',
+                'action' => 'update',
+                'endpoint_url' => 'https://newapp.com/webhooks/candidate-updated'
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->updateWebhook(1, $webhookData);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_delete_webhook()
+    {
+        $mockResponse = [
+            'message' => 'Webhook deleted successfully'
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->deleteWebhook(1);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_handles_webhook_not_found()
+    {
+        $errorResponse = [
+            'error' => 'Webhook not found',
+            'message' => 'The specified webhook does not exist'
+        ];
+
+        $this->expectException(LoxoApiException::class);
+        $this->expectExceptionMessage('API request failed');
+
+        $service = $this->createServiceWithMockResponse(404, $errorResponse);
+        $service->getWebhook(999);
+    }
+
+    public function test_it_handles_create_webhook_validation_error()
+    {
+        $errorResponse = [
+            'errors' => [
+                'webhook.item_type' => ['The item type field is required.'],
+                'webhook.action' => ['The action field is required.'],
+                'webhook.endpoint_url' => ['The endpoint url field is required.']
+            ],
+            'message' => 'Validation failed'
+        ];
+
+        $webhookData = [
+            'webhook' => [
+                // Missing required fields
+            ]
+        ];
+
+        $this->expectException(LoxoApiException::class);
+        $this->expectExceptionMessage('API request failed');
+
+        $service = $this->createServiceWithMockResponse(422, $errorResponse);
+        $service->createWebhook($webhookData);
+    }
+
+    public function test_it_handles_update_webhook_validation_error()
+    {
+        $errorResponse = [
+            'errors' => [
+                'webhook.endpoint_url' => ['The endpoint url must be a valid URL.']
+            ],
+            'message' => 'Validation failed'
+        ];
+
+        $webhookData = [
+            'webhook' => [
+                'item_type' => 'candidate',
+                'action' => 'create',
+                'endpoint_url' => 'invalid-url'
+            ]
+        ];
+
+        $this->expectException(LoxoApiException::class);
+        $this->expectExceptionMessage('API request failed');
+
+        $service = $this->createServiceWithMockResponse(422, $errorResponse);
+        $service->updateWebhook(1, $webhookData);
+    }
+
     public function test_it_can_get_jobs()
     {
         $mockResponse = [

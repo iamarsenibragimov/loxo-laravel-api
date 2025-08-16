@@ -53,6 +53,71 @@ interface LoxoApiInterface
     public function createCompany(array $companyData): array;
 
     /**
+     * Get workflows for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     */
+    public function getWorkflows(array $params = []): array;
+
+    /**
+     * Get workflow stages for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     */
+    public function getWorkflowStages(array $params = []): array;
+
+    /**
+     * Get veteran statuses for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     */
+    public function getVeteranStatuses(array $params = []): array;
+
+    /**
+     * Get webhooks for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     */
+    public function getWebhooks(array $params = []): array;
+
+    /**
+     * Get a specific webhook by ID
+     *
+     * @param int $id Webhook ID
+     * @return array
+     */
+    public function getWebhook(int $id): array;
+
+    /**
+     * Create a new webhook in the agency
+     *
+     * @param array $webhookData Webhook data for creation
+     * @return array
+     */
+    public function createWebhook(array $webhookData): array;
+
+    /**
+     * Update an existing webhook
+     *
+     * @param int $id Webhook ID
+     * @param array $webhookData Webhook data for update
+     * @return array
+     */
+    public function updateWebhook(int $id, array $webhookData): array;
+
+    /**
+     * Delete a webhook
+     *
+     * @param int $id Webhook ID
+     * @return array
+     */
+    public function deleteWebhook(int $id): array;
+
+    /**
      * Get jobs for the agency
      *
      * @param array $params Query parameters (per_page, page, query, published, etc.)
