@@ -368,6 +368,21 @@ class LoxoApiService implements LoxoApiInterface
     }
 
     /**
+     * Update a specific candidate for a specific job
+     *
+     * @param int $jobId Job ID
+     * @param int $candidateId Candidate ID
+     * @param array $candidateData Candidate data for update:
+     *  - highlights (string): Candidate highlights or notes
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function updateJobCandidate(int $jobId, int $candidateId, array $candidateData): array
+    {
+        return $this->put("jobs/{$jobId}/candidates/{$candidateId}", $candidateData);
+    }
+
+    /**
      * Get jobs for the agency
      *
      * @param array $params Query parameters:
@@ -481,6 +496,74 @@ class LoxoApiService implements LoxoApiInterface
     public function createPerson(array $personData): array
     {
         return $this->post('people', $personData);
+    }
+
+    /**
+     * Get a specific person by ID
+     *
+     * @param int $id Person ID
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function getPerson(int $id): array
+    {
+        return $this->get("people/{$id}");
+    }
+
+    /**
+     * Update a specific person by ID
+     *
+     * @param int $id Person ID
+     * @param array $personData Person data for update:
+     *  - person[profile_picture] (file): Profile picture of the person
+     *  - person[name] (string): Full name
+     *  - person[description] (string): Description
+     *  - person[location] (string): Location
+     *  - person[address] (string): Address
+     *  - person[city] (string): City
+     *  - person[state] (string): State
+     *  - person[zip] (string): ZIP code
+     *  - person[country] (string): Country
+     *  - person[person_global_status_id] (int): Global status ID
+     *  - person[source_type_id] (int): Source type ID
+     *  - person[blocked] (bool): Whether person is blocked
+     *  - person[blocked_until] (string): Timestamp until blocked
+     *  - person[title] (string): Current job title
+     *  - person[company] (string): Current company
+     *  - person[email] (string): Email address
+     *  - person[emails] (array): Array of email objects
+     *  - person[phone] (string): Phone number
+     *  - person[phones] (array): Array of phone objects
+     *  - person[data_sources] (array): Array of data source objects
+     *  - person[linkedin_url] (string): LinkedIn profile URL
+     *  - person[website] (string): Website URL
+     *  - person[resume] (file): Resume file
+     *  - person[resume_skip_parse] (bool): Skip resume parsing
+     *  - person[document] (file): Additional documents
+     *  - person[all_raw_tags] (array): Array of tags
+     *  - person[person_type_id] (int): Person type ID
+     *  - person[candidates] (array): Array of candidate objects
+     *  - person[list_ids] (array): Array of list IDs
+     *  - person[diversity_type_ids] (array): Array of diversity type IDs
+     *  - person[compensation] (float): Compensation amount
+     *  - person[compensation_notes] (string): Compensation notes
+     *  - person[salary] (float): Salary amount
+     *  - person[salary_type_id] (int): Salary type ID
+     *  - person[compensation_currency_id] (int): Currency ID
+     *  - person[bonus] (int): Bonus amount
+     *  - person[bonus_type_id] (int): Bonus type ID
+     *  - person[bonus_payment_type_id] (int): Bonus payment type ID
+     *  - person[equity] (float): Equity amount
+     *  - person[equity_type_id] (int): Equity type ID
+     *  - person[owned_by_id] (int): Owner user ID
+     *  - person[$dynamic_field_key] (string): Custom field values
+     *  - person[$hierarchy_dynamic_field_key] (array): Custom hierarchy field values
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function updatePerson(int $id, array $personData): array
+    {
+        return $this->put("people/{$id}", $personData);
     }
 
     /**

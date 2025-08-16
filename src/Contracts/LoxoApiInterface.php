@@ -161,6 +161,16 @@ interface LoxoApiInterface
     public function getJobCandidate(int $jobId, int $candidateId, array $params = []): array;
 
     /**
+     * Update a specific candidate for a specific job
+     *
+     * @param int $jobId Job ID
+     * @param int $candidateId Candidate ID
+     * @param array $candidateData Candidate data for update
+     * @return array
+     */
+    public function updateJobCandidate(int $jobId, int $candidateId, array $candidateData): array;
+
+    /**
      * Get jobs for the agency
      *
      * @param array $params Query parameters (per_page, page, query, published, etc.)
@@ -183,6 +193,23 @@ interface LoxoApiInterface
      * @return array
      */
     public function createPerson(array $personData): array;
+
+    /**
+     * Get a specific person by ID
+     *
+     * @param int $id Person ID
+     * @return array
+     */
+    public function getPerson(int $id): array;
+
+    /**
+     * Update a specific person by ID
+     *
+     * @param int $id Person ID
+     * @param array $personData Person data for update
+     * @return array
+     */
+    public function updatePerson(int $id, array $personData): array;
 
     /**
      * Apply to a specific job as a candidate

@@ -17,9 +17,9 @@ This file tracks the coverage of Loxo API endpoints in our package.
 ## Coverage Statistics
 
 **Total endpoints:** 144  
-**Implemented:** 21 (14.6%)  
+**Implemented:** 24 (16.7%)  
 **In development:** 0 (0%)  
-**Not implemented:** 123 (85.4%)
+**Not implemented:** 120 (83.3%)
 
 ---
 
@@ -123,31 +123,31 @@ This file tracks the coverage of Loxo API endpoints in our package.
 | `/forms/{id}`          | GET, PUT, DELETE | ❌      |       |
 
 ## Jobs & Positions
-| Endpoint                                              | Methods          | Status | Notes           |
-| ----------------------------------------------------- | ---------------- | ------ | --------------- |
-| `/job_categories`                                     | GET              | ❌      |                 |
-| `/job_contact_types`                                  | GET              | ❌      |                 |
-| `/job_listing_config`                                 | GET, PUT         | ❌      |                 |
-| `/job_owner_types`                                    | GET              | ❌      |                 |
-| `/job_statuses`                                       | GET              | ❌      |                 |
-| `/job_types`                                          | GET              | ❌      |                 |
-| `/jobs`                                               | GET, POST        | 🚧      | GET implemented |
-| `/jobs/{id}`                                          | GET, PUT, DELETE | ❌      |                 |
-| `/jobs/{id}/merge`                                    | POST             | ❌      |                 |
-| `/jobs/{job_id}/apply`                                | POST             | ❌      |                 |
-| `/jobs/{job_id}/candidates`                           | GET, POST        | 🚧      | GET implemented |
-| `/jobs/{job_id}/candidates/{id}`                      | GET, PUT, DELETE | 🚧      | GET implemented |
-| `/jobs/{job_id}/contacts`                             | GET, POST        | ❌      |                 |
-| `/jobs/{job_id}/contacts/{id}`                        | GET, PUT, DELETE | ❌      |                 |
-| `/jobs/{job_id}/documents`                            | GET, POST        | ❌      |                 |
-| `/jobs/{job_id}/documents/{id}`                       | GET, PUT, DELETE | ❌      |                 |
-| `/jobs/{job_id}/documents/{job_document_id}/download` | GET              | ❌      |                 |
+| Endpoint                                              | Methods          | Status | Notes             |
+| ----------------------------------------------------- | ---------------- | ------ | ----------------- |
+| `/job_categories`                                     | GET              | ❌      |                   |
+| `/job_contact_types`                                  | GET              | ❌      |                   |
+| `/job_listing_config`                                 | GET, PUT         | ❌      |                   |
+| `/job_owner_types`                                    | GET              | ❌      |                   |
+| `/job_statuses`                                       | GET              | ❌      |                   |
+| `/job_types`                                          | GET              | ❌      |                   |
+| `/jobs`                                               | GET, POST        | 🚧      | GET implemented   |
+| `/jobs/{id}`                                          | GET, PUT, DELETE | ❌      |                   |
+| `/jobs/{id}/merge`                                    | POST             | ❌      |                   |
+| `/jobs/{job_id}/apply`                                | POST             | ❌      |                   |
+| `/jobs/{job_id}/candidates`                           | GET              | ✅      |                   |
+| `/jobs/{job_id}/candidates/{id}`                      | GET, PUT         | ✅      | Fully implemented |
+| `/jobs/{job_id}/contacts`                             | GET, POST        | ❌      |                   |
+| `/jobs/{job_id}/contacts/{id}`                        | GET, PUT, DELETE | ❌      |                   |
+| `/jobs/{job_id}/documents`                            | GET, POST        | ❌      |                   |
+| `/jobs/{job_id}/documents/{id}`                       | GET, PUT, DELETE | ❌      |                   |
+| `/jobs/{job_id}/documents/{job_document_id}/download` | GET              | ❌      |                   |
 
 ## People & Candidates
 | Endpoint                                                      | Methods          | Status | Notes             |
 | ------------------------------------------------------------- | ---------------- | ------ | ----------------- |
 | `/people`                                                     | GET, POST        | ✅      | Fully implemented |
-| `/people/{id}`                                                | GET, PUT, DELETE | ❌      |                   |
+| `/people/{id}`                                                | GET, PUT         | ✅      | Fully implemented |
 | `/people/{id}/merge`                                          | POST             | ❌      |                   |
 | `/people/{person_id}/documents`                               | GET, POST        | ❌      |                   |
 | `/people/{person_id}/documents/{id}`                          | GET, PUT, DELETE | ❌      |                   |

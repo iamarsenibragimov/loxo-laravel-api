@@ -1066,6 +1066,96 @@ class LoxoApiServiceTest extends TestCase
         $service->getJobCandidates(999);
     }
 
+    public function test_it_can_update_job_candidate()
+    {
+        $mockResponse = [
+            'candidate' => [
+                'id' => 1,
+                'person_id' => 123,
+                'job_id' => 456,
+                'workflow_stage_id' => 5,
+                'highlights' => 'Updated: Excellent technical skills and great culture fit',
+                'person' => [
+                    'id' => 123,
+                    'first_name' => 'Alice',
+                    'last_name' => 'Johnson',
+                    'email' => 'alice.johnson@example.com'
+                ],
+                'updated_at' => '2024-12-19T15:00:00.000Z'
+            ]
+        ];
+
+        $candidateData = [
+            'highlights' => 'Updated: Excellent technical skills and great culture fit'
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->updateJobCandidate(456, 1, $candidateData);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_update_job_candidate_with_empty_highlights()
+    {
+        $mockResponse = [
+            'candidate' => [
+                'id' => 2,
+                'person_id' => 124,
+                'job_id' => 456,
+                'workflow_stage_id' => 3,
+                'highlights' => '',
+                'updated_at' => '2024-12-19T15:30:00.000Z'
+            ]
+        ];
+
+        $candidateData = [
+            'highlights' => ''
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->updateJobCandidate(456, 2, $candidateData);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_handles_update_job_candidate_not_found()
+    {
+        $errorResponse = [
+            'error' => 'Candidate not found',
+            'message' => 'The specified candidate does not exist for this job'
+        ];
+
+        $candidateData = [
+            'highlights' => 'This should fail'
+        ];
+
+        $this->expectException(LoxoApiException::class);
+        $this->expectExceptionMessage('API request failed');
+
+        $service = $this->createServiceWithMockResponse(404, $errorResponse);
+        $service->updateJobCandidate(456, 999, $candidateData);
+    }
+
+    public function test_it_handles_update_job_candidate_validation_error()
+    {
+        $errorResponse = [
+            'errors' => [
+                'highlights' => ['The highlights field must be a string.']
+            ],
+            'message' => 'Validation failed'
+        ];
+
+        $candidateData = [
+            'highlights' => 12345  // Invalid type
+        ];
+
+        $this->expectException(LoxoApiException::class);
+        $this->expectExceptionMessage('API request failed');
+
+        $service = $this->createServiceWithMockResponse(422, $errorResponse);
+        $service->updateJobCandidate(456, 1, $candidateData);
+    }
+
     public function test_it_can_get_jobs()
     {
         $mockResponse = [
@@ -1459,6 +1549,188 @@ class LoxoApiServiceTest extends TestCase
             // Clean up even if test fails
             unlink($tempResume);
         }
+    }
+
+    public function test_it_can_get_person()
+    {
+        $mockResponse = [
+            'person' => [
+                'id' => 123,
+                'name' => 'John Doe',
+                'email' => 'john.doe@example.com',
+                'title' => 'Senior Software Engineer',
+                'company' => 'Tech Solutions Inc',
+                'location' => 'San Francisco, CA',
+                'phone' => '+1234567890',
+                'linkedin_url' => 'https://linkedin.com/in/johndoe',
+                'person_global_status_id' => 1,
+                'person_type_id' => 2,
+                'compensation' => 150000.0,
+                'created_at' => '2024-12-19T12:00:00.000Z',
+                'updated_at' => '2024-12-19T12:00:00.000Z'
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getPerson(123);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_handles_get_person_not_found()
+    {
+        $errorResponse = [
+            'error' => 'Person not found',
+            'message' => 'The specified person does not exist'
+        ];
+
+        $this->expectException(LoxoApiException::class);
+        $this->expectExceptionMessage('API request failed');
+
+        $service = $this->createServiceWithMockResponse(404, $errorResponse);
+        $service->getPerson(999);
+    }
+
+    public function test_it_can_update_person()
+    {
+        $mockResponse = [
+            'person' => [
+                'id' => 123,
+                'name' => 'John Doe Updated',
+                'email' => 'john.doe.updated@example.com',
+                'title' => 'Principal Software Engineer',
+                'company' => 'Tech Solutions Inc',
+                'location' => 'San Francisco, CA',
+                'phone' => '+1234567890',
+                'linkedin_url' => 'https://linkedin.com/in/johndoe',
+                'person_global_status_id' => 1,
+                'person_type_id' => 2,
+                'compensation' => 180000.0,
+                'updated_at' => '2024-12-19T15:00:00.000Z'
+            ]
+        ];
+
+        $personData = [
+            'person' => [
+                'name' => 'John Doe Updated',
+                'email' => 'john.doe.updated@example.com',
+                'title' => 'Principal Software Engineer',
+                'compensation' => 180000.0
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->updatePerson(123, $personData);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_update_person_with_full_data()
+    {
+        $mockResponse = [
+            'person' => [
+                'id' => 124,
+                'name' => 'Jane Smith',
+                'email' => 'jane.smith@newcompany.com',
+                'title' => 'VP of Engineering',
+                'company' => 'New Company LLC',
+                'location' => 'New York, NY',
+                'city' => 'New York',
+                'state' => 'NY',
+                'country' => 'United States',
+                'phone' => '+1987654321',
+                'linkedin_url' => 'https://linkedin.com/in/janesmith',
+                'website' => 'https://janesmith.dev',
+                'person_global_status_id' => 2,
+                'person_type_id' => 1,
+                'source_type_id' => 3,
+                'blocked' => false,
+                'compensation' => 200000.0,
+                'salary' => 200000.0,
+                'bonus' => 50000,
+                'equity' => 0.5,
+                'all_raw_tags' => ['leadership', 'engineering', 'startup'],
+                'list_ids' => [1, 3, 5],
+                'updated_at' => '2024-12-19T16:00:00.000Z'
+            ]
+        ];
+
+        $personData = [
+            'person' => [
+                'name' => 'Jane Smith',
+                'email' => 'jane.smith@newcompany.com',
+                'title' => 'VP of Engineering',
+                'company' => 'New Company LLC',
+                'location' => 'New York, NY',
+                'city' => 'New York',
+                'state' => 'NY',
+                'country' => 'United States',
+                'phone' => '+1987654321',
+                'linkedin_url' => 'https://linkedin.com/in/janesmith',
+                'website' => 'https://janesmith.dev',
+                'person_global_status_id' => 2,
+                'person_type_id' => 1,
+                'source_type_id' => 3,
+                'blocked' => false,
+                'compensation' => 200000.0,
+                'salary' => 200000.0,
+                'bonus' => 50000,
+                'equity' => 0.5,
+                'all_raw_tags' => ['leadership', 'engineering', 'startup'],
+                'list_ids' => [1, 3, 5]
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->updatePerson(124, $personData);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_handles_update_person_not_found()
+    {
+        $errorResponse = [
+            'error' => 'Person not found',
+            'message' => 'The specified person does not exist'
+        ];
+
+        $personData = [
+            'person' => [
+                'name' => 'This should fail',
+                'email' => 'fail@example.com'
+            ]
+        ];
+
+        $this->expectException(LoxoApiException::class);
+        $this->expectExceptionMessage('API request failed');
+
+        $service = $this->createServiceWithMockResponse(404, $errorResponse);
+        $service->updatePerson(999, $personData);
+    }
+
+    public function test_it_handles_update_person_validation_error()
+    {
+        $errorResponse = [
+            'errors' => [
+                'person.email' => ['The email must be a valid email address.'],
+                'person.compensation' => ['The compensation must be a number.']
+            ],
+            'message' => 'Validation failed'
+        ];
+
+        $personData = [
+            'person' => [
+                'name' => 'Valid Name',
+                'email' => 'invalid-email',
+                'compensation' => 'not-a-number'
+            ]
+        ];
+
+        $this->expectException(LoxoApiException::class);
+        $this->expectExceptionMessage('API request failed');
+
+        $service = $this->createServiceWithMockResponse(422, $errorResponse);
+        $service->updatePerson(123, $personData);
     }
 
     public function test_it_throws_exception_on_api_error()
