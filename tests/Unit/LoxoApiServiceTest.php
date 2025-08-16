@@ -1205,6 +1205,204 @@ class LoxoApiServiceTest extends TestCase
         $this->assertEquals($mockResponse, $result);
     }
 
+    public function test_it_can_create_job()
+    {
+        $mockResponse = [
+            'job' => [
+                'id' => 12345,
+                'title' => 'Senior Software Engineer',
+                'published_name' => 'Senior Software Engineer',
+                'description' => 'We are looking for a senior software engineer...',
+                'active' => true,
+                'published' => true,
+                'company_id' => 123,
+                'job_type_id' => 1,
+                'job_status_id' => 1,
+                'remote_work_allowed' => true,
+                'salary' => '$120,000 - $150,000',
+                'city' => 'San Francisco',
+                'state_id' => 1,
+                'country_id' => 1,
+                'zip' => '94105',
+                'created_at' => '2024-12-19T12:00:00.000Z'
+            ]
+        ];
+
+        $jobData = [
+            'job' => [
+                'title' => 'Senior Software Engineer',
+                'published_name' => 'Senior Software Engineer',
+                'description' => 'We are looking for a senior software engineer...',
+                'active' => true,
+                'published' => true,
+                'company_id' => 123,
+                'job_type_id' => 1,
+                'job_status_id' => 1,
+                'remote_work_allowed' => true,
+                'salary' => '$120,000 - $150,000',
+                'city' => 'San Francisco',
+                'state_id' => 1,
+                'country_id' => 1,
+                'zip' => '94105'
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(201, $mockResponse);
+        $result = $service->createJob($jobData);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_create_job_with_full_data()
+    {
+        $mockResponse = [
+            'job' => [
+                'id' => 12346,
+                'title' => 'Full Stack Developer',
+                'published_name' => 'Full Stack Developer - Remote',
+                'description' => 'Join our team as a full stack developer...',
+                'internal_notes' => 'High priority position',
+                'active' => true,
+                'published' => true,
+                'published_at' => '2024-12-19T12:00:00.000Z',
+                'published_end_date' => '2025-01-19T23:59:59.000Z',
+                'company_id' => 456,
+                'company_hidden' => false,
+                'raw_company_name' => 'TechCorp Inc',
+                'job_type_id' => 2,
+                'job_status_id' => 1,
+                'job_category_ids' => [1, 2],
+                'owner_emails' => ['hiring@techcorp.com', 'hr@techcorp.com'],
+                'remote_work_allowed' => true,
+                'salary' => '$100,000 - $130,000',
+                'address' => '123 Tech Street',
+                'city' => 'Austin',
+                'state_id' => 2,
+                'country_id' => 1,
+                'zip' => '78701',
+                'created_at' => '2024-12-19T12:00:00.000Z'
+            ]
+        ];
+
+        $jobData = [
+            'job' => [
+                'title' => 'Full Stack Developer',
+                'published_name' => 'Full Stack Developer - Remote',
+                'description' => 'Join our team as a full stack developer...',
+                'internal_notes' => 'High priority position',
+                'active' => true,
+                'published' => true,
+                'published_at' => '2024-12-19T12:00:00.000Z',
+                'published_end_date' => '2025-01-19T23:59:59.000Z',
+                'company_id' => 456,
+                'company_hidden' => false,
+                'raw_company_name' => 'TechCorp Inc',
+                'job_type_id' => 2,
+                'job_status_id' => 1,
+                'job_category_ids' => [1, 2],
+                'owner_emails' => ['hiring@techcorp.com', 'hr@techcorp.com'],
+                'remote_work_allowed' => true,
+                'salary' => '$100,000 - $130,000',
+                'address' => '123 Tech Street',
+                'city' => 'Austin',
+                'state_id' => 2,
+                'country_id' => 1,
+                'zip' => '78701'
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(201, $mockResponse);
+        $result = $service->createJob($jobData);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_create_job_with_custom_fields()
+    {
+        $mockResponse = [
+            'job' => [
+                'id' => 12347,
+                'title' => 'DevOps Engineer',
+                'description' => 'Looking for an experienced DevOps engineer...',
+                'active' => true,
+                'published' => false,
+                'company_id' => 789,
+                'job_type_id' => 3,
+                'job_status_id' => 2,
+                'remote_work_allowed' => false,
+                'priority_level' => 'high',
+                'tech_stack' => ['AWS', 'Docker', 'Kubernetes'],
+                'created_at' => '2024-12-19T12:00:00.000Z'
+            ]
+        ];
+
+        $jobData = [
+            'job' => [
+                'title' => 'DevOps Engineer',
+                'description' => 'Looking for an experienced DevOps engineer...',
+                'active' => true,
+                'published' => false,
+                'company_id' => 789,
+                'job_type_id' => 3,
+                'job_status_id' => 2,
+                'remote_work_allowed' => false,
+                'priority_level' => 'high', // Custom field
+                'tech_stack' => ['AWS', 'Docker', 'Kubernetes'] // Custom hierarchy field
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(201, $mockResponse);
+        $result = $service->createJob($jobData);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_handles_create_job_validation_error()
+    {
+        $errorResponse = [
+            'errors' => [
+                'job.title' => ['The title field is required.'],
+                'job.company_id' => ['The company id field is required.']
+            ],
+            'message' => 'Validation failed'
+        ];
+
+        $jobData = [
+            'job' => [
+                'description' => 'Job without required fields'
+                // Missing required fields
+            ]
+        ];
+
+        $this->expectException(LoxoApiException::class);
+        $this->expectExceptionMessage('API request failed');
+
+        $service = $this->createServiceWithMockResponse(422, $errorResponse);
+        $service->createJob($jobData);
+    }
+
+    public function test_it_handles_create_job_unauthorized()
+    {
+        $errorResponse = [
+            'error' => 'Unauthorized',
+            'message' => 'Insufficient permissions to create jobs'
+        ];
+
+        $jobData = [
+            'job' => [
+                'title' => 'Test Job',
+                'company_id' => 123,
+                'job_type_id' => 1
+            ]
+        ];
+
+        $this->expectException(LoxoApiException::class);
+        $this->expectExceptionMessage('API request failed');
+
+        $service = $this->createServiceWithMockResponse(403, $errorResponse);
+        $service->createJob($jobData);
+    }
+
     public function test_it_can_get_people()
     {
         $mockResponse = [

@@ -17,9 +17,9 @@ This file tracks the coverage of Loxo API endpoints in our package.
 ## Coverage Statistics
 
 **Total endpoints:** 144  
-**Implemented:** 26 (18.1%)  
+**Implemented:** 27 (18.8%)  
 **In development:** 0 (0%)  
-**Not implemented:** 118 (81.9%)
+**Not implemented:** 117 (81.3%)
 
 ---
 
@@ -131,7 +131,7 @@ This file tracks the coverage of Loxo API endpoints in our package.
 | `/job_owner_types`                                    | GET              | ❌      |                   |
 | `/job_statuses`                                       | GET              | ❌      |                   |
 | `/job_types`                                          | GET              | ❌      |                   |
-| `/jobs`                                               | GET, POST        | 🚧      | GET implemented   |
+| `/jobs`                                               | GET, POST        | ✅      | Fully implemented |
 | `/jobs/{id}`                                          | GET, PUT, DELETE | ❌      |                   |
 | `/jobs/{id}/merge`                                    | POST             | ❌      |                   |
 | `/jobs/{job_id}/apply`                                | POST             | ❌      |                   |

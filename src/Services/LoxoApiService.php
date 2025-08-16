@@ -417,6 +417,42 @@ class LoxoApiService implements LoxoApiInterface
     }
 
     /**
+     * Create a new job in the agency
+     *
+     * @param array $jobData Job data:
+     *  - job[active] (bool): Whether the job is active
+     *  - job[address] (string): Job address
+     *  - job[city] (string): Job city
+     *  - job[company_hidden] (bool): Whether the company should be hidden
+     *  - job[company_id] (int): Company ID
+     *  - job[country_id] (int): Country ID
+     *  - job[description] (string): Job description
+     *  - job[internal_notes] (string): Internal notes about the job
+     *  - job[job_category_ids] (array): Array of job category IDs
+     *  - job[job_status_id] (int): Job status ID
+     *  - job[job_type_id] (int): Job type ID
+     *  - job[owner_emails] (array): Array of owner email addresses
+     *  - job[published] (bool): Whether the job is published
+     *  - job[published_at] (string): Date-time when job was published
+     *  - job[raw_company_name] (string): Raw company name
+     *  - job[salary] (string): Salary information
+     *  - job[state_id] (int): State ID
+     *  - job[title] (string): Job title
+     *  - job[published_name] (string): Public title of the job, will use title if not specified
+     *  - job[zip] (string): ZIP code
+     *  - job[published_end_date] (string): Date-time when job publishing ends
+     *  - job[remote_work_allowed] (bool): Whether remote work is allowed
+     *  - job[$dynamic_field_key] (string): Custom field values
+     *  - job[$hierarchy_dynamic_field_key] (array): Custom hierarchy field values
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function createJob(array $jobData): array
+    {
+        return $this->post('jobs', $jobData);
+    }
+
+    /**
      * Get people (candidates) for the agency
      *
      * @param array $params Query parameters:

@@ -179,6 +179,14 @@ interface LoxoApiInterface
     public function getJobs(array $params = []): array;
 
     /**
+     * Create a new job in the agency
+     *
+     * @param array $jobData Job data for creation
+     * @return array
+     */
+    public function createJob(array $jobData): array;
+
+    /**
      * Get people (candidates) for the agency
      *
      * @param array $params Query parameters (scroll_id, per_page, query, etc.)

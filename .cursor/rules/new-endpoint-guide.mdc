@@ -3,4 +3,4 @@ description: use the rule when creating/editing Loxo endpoints
 alwaysApply: false
 ---
 
-Follow the porcess of Loxo API endpoint creation described in docs/CONTRIBUTING.md
+Follow the porcess of Loxo API endpoint creation described in docs/CONTRIBUTING.md and update CHANGELOG.md when relevant
