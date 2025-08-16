@@ -100,7 +100,7 @@ class YourController extends Controller
 
 ### Available Methods
 
-> **📊 API Coverage Status:** Currently 16 out of 144+ Loxo API endpoints are implemented (11.1%). See [API_COVERAGE.md](docs/API_COVERAGE.md) for detailed progress tracking.
+> **📊 API Coverage Status:** Currently 20 out of 144+ Loxo API endpoints are implemented (13.9%). See [API_COVERAGE.md](docs/API_COVERAGE.md) for detailed progress tracking.
 > 
 > 📖 **Reference:** All endpoints are based on the [official Loxo API documentation](https://loxo.readme.io/reference/loxo-api).
 
@@ -228,6 +228,79 @@ $result = Loxo::deleteWebhook(1);
 $users = Loxo::getUsers();
 ```
 
+#### People (Candidates)
+```php
+// Get all people
+$people = Loxo::getPeople();
+
+// Get people with pagination using scroll_id
+$people = Loxo::getPeople([
+    'scroll_id' => 'cursor_123',
+    'per_page' => 20
+]);
+
+// Search for people with advanced filters
+$people = Loxo::getPeople([
+    'query' => 'software engineer',
+    'person_global_status_id' => 1,
+    'person_type_id' => 2,
+    'active_job_stage_id' => 5,
+    'include_related_agencies' => true,
+    'list_id' => 3,
+    'created_at_sort' => 'desc'
+]);
+
+// Create a new person/candidate
+$newPerson = Loxo::createPerson([
+    'person' => [
+        'name' => 'John Doe',
+        'email' => 'john.doe@example.com',
+        'phone' => '+1234567890',
+        'title' => 'Software Engineer',
+        'company' => 'Tech Corp',
+        'location' => 'San Francisco, CA',
+        'linkedin_url' => 'https://linkedin.com/in/johndoe',
+        'person_type_id' => 1,
+        'compensation' => 120000.0,
+        'salary' => 120000.0,
+        'all_raw_tags' => ['python', 'javascript', 'react']
+    ]
+]);
+```
+
+#### Person Events
+```php
+// Get all person events
+$personEvents = Loxo::getPersonEvents();
+
+// Get person events with filters
+$personEvents = Loxo::getPersonEvents([
+    'person_id' => 123,
+    'activity_type_ids' => [1, 2],
+    'created_by_ids' => [1, 3],
+    'job_ids' => [456, 789],
+    'company_id' => 101,
+    'query' => 'interview',
+    'created_at_start' => '2024-12-01T00:00:00.000Z',
+    'created_at_end' => '2024-12-31T23:59:59.000Z',
+    'created_at_sort' => 'desc',
+    'per_page' => 20
+]);
+
+// Create a new person event
+$newEvent = Loxo::createPersonEvent([
+    'person_event' => [
+        'activity_type_id' => 1,
+        'person_id' => 456,
+        'job_id' => 789,
+        'company_id' => 101,
+        'notes' => 'Phone screening completed successfully',
+        'pinned' => false,
+        'created_by_id' => 1
+    ]
+]);
+```
+
 #### Jobs
 ```php
 // Get all jobs
@@ -262,6 +335,21 @@ $jobs = Loxo::getJobs([
     'published_at_sort' => 'desc',
     'rank_sort' => 'asc'
 ]);
+
+// Get candidates for a specific job
+$jobCandidates = Loxo::getJobCandidates(456);
+
+// Get job candidates with filters
+$jobCandidates = Loxo::getJobCandidates(456, [
+    'per_page' => 20,
+    'scroll_id' => 'cursor_123',
+    'query' => 'senior developer',
+    'activity_type_id' => 1,
+    'person_id' => 123
+]);
+
+// Get a specific candidate for a job
+$jobCandidate = Loxo::getJobCandidate(456, 1);
 ```
 
 #### Generic HTTP Methods

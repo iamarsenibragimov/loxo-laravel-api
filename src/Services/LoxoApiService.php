@@ -284,6 +284,90 @@ class LoxoApiService implements LoxoApiInterface
     }
 
     /**
+     * Get person events for the agency
+     *
+     * @param array $params Query parameters:
+     *  - scroll_id (string): A cursor used to retrieve the next page of results
+     *  - query (string): Search query. Supports Lucene query syntax
+     *  - per_page (int): Number of results to return in each page
+     *  - page (int): Page number to return. Starting at 1
+     *  - activity_type_ids (array): Array of activity type IDs to filter by
+     *  - created_by_ids (array): Array of user IDs who created events
+     *  - job_ids (array): Array of job IDs to filter by
+     *  - created_at_sort (string): Sort by created_at
+     *  - person_id (int): Filter by person ID
+     *  - company_id (int): Filter by company ID
+     *  - created_at_start (string): Filter events created after this date
+     *  - created_at_end (string): Filter events created before this date
+     *  - before (string): Filter events before this date
+     *  - after (string): Filter events after this date
+     *  - serialization_set (string): Serialization set
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function getPersonEvents(array $params = []): array
+    {
+        return $this->get('person_events', $params);
+    }
+
+    /**
+     * Create a new person event in the agency
+     *
+     * @param array $personEventData Person event data:
+     *  - person_event[activity_type_id] (int): Activity type ID
+     *  - person_event[person_id] (int): Person ID
+     *  - person_event[job_id] (int): Job ID (optional)
+     *  - person_event[company_id] (int): Company ID (optional)
+     *  - person_event[notes] (string): Event notes
+     *  - person_event[pinned] (bool): Whether event is pinned
+     *  - person_event[dragged_and_dropped] (bool): Whether event was dragged and dropped
+     *  - person_event[created_at] (string): Date the entity was created
+     *  - person_event[created_by_id] (int): ID of the user who created this entity
+     *  - person_event[updated_at] (string): Date the entity was updated
+     *  - person_event[updated_by_id] (int): ID of the user who updated this entity
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function createPersonEvent(array $personEventData): array
+    {
+        return $this->post('person_events', $personEventData);
+    }
+
+    /**
+     * Get candidates for a specific job
+     *
+     * @param int $jobId Job ID
+     * @param array $params Query parameters:
+     *  - per_page (int): Number of results to return in each page
+     *  - scroll_id (string): A cursor used to retrieve the next page of results
+     *  - query (string): Search query. Supports Lucene query syntax
+     *  - activity_type_id (int): Filter by activity type ID
+     *  - person_id (int): Filter by person ID
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function getJobCandidates(int $jobId, array $params = []): array
+    {
+        return $this->get("jobs/{$jobId}/candidates", $params);
+    }
+
+    /**
+     * Get a specific candidate for a specific job
+     *
+     * @param int $jobId Job ID
+     * @param int $candidateId Candidate ID
+     * @param array $params Query parameters:
+     *  - job_id (int): Job ID (optional, for additional context)
+     *  - id (int): Candidate ID (optional, for additional context)
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function getJobCandidate(int $jobId, int $candidateId, array $params = []): array
+    {
+        return $this->get("jobs/{$jobId}/candidates/{$candidateId}", $params);
+    }
+
+    /**
      * Get jobs for the agency
      *
      * @param array $params Query parameters:

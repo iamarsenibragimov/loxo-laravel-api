@@ -686,6 +686,386 @@ class LoxoApiServiceTest extends TestCase
         $this->assertEquals($mockResponse, $result);
     }
 
+    public function test_it_can_get_person_events()
+    {
+        $mockResponse = [
+            'person_events' => [
+                [
+                    'id' => 1,
+                    'activity_type_id' => 1,
+                    'person_id' => 123,
+                    'job_id' => 456,
+                    'company_id' => 789,
+                    'notes' => 'Phone interview completed successfully',
+                    'pinned' => false,
+                    'dragged_and_dropped' => false,
+                    'created_at' => '2024-12-19T12:00:00.000Z',
+                    'created_by_id' => 1,
+                    'updated_at' => '2024-12-19T12:00:00.000Z',
+                    'updated_by_id' => 1
+                ],
+                [
+                    'id' => 2,
+                    'activity_type_id' => 2,
+                    'person_id' => 124,
+                    'job_id' => null,
+                    'company_id' => 790,
+                    'notes' => 'Follow-up email sent',
+                    'pinned' => true,
+                    'dragged_and_dropped' => false,
+                    'created_at' => '2024-12-19T13:00:00.000Z',
+                    'created_by_id' => 2,
+                    'updated_at' => '2024-12-19T13:00:00.000Z',
+                    'updated_by_id' => 2
+                ],
+            ],
+            'meta' => [
+                'total' => 2,
+                'per_page' => 10,
+                'current_page' => 1,
+                'has_more' => false
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getPersonEvents();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_person_events_with_filters()
+    {
+        $mockResponse = [
+            'person_events' => [
+                [
+                    'id' => 3,
+                    'activity_type_id' => 1,
+                    'person_id' => 125,
+                    'job_id' => 460,
+                    'notes' => 'Technical interview scheduled',
+                    'created_at' => '2024-12-19T14:00:00.000Z',
+                    'created_by_id' => 1
+                ]
+            ],
+            'scroll_id' => 'next_cursor_123',
+            'meta' => [
+                'total' => 15,
+                'per_page' => 5,
+                'has_more' => true
+            ]
+        ];
+
+        $params = [
+            'scroll_id' => 'prev_cursor_456',
+            'query' => 'technical interview',
+            'per_page' => 5,
+            'page' => 2,
+            'activity_type_ids' => [1, 2],
+            'created_by_ids' => [1, 3],
+            'job_ids' => [460, 461],
+            'person_id' => 125,
+            'company_id' => 791,
+            'created_at_start' => '2024-12-19T00:00:00.000Z',
+            'created_at_end' => '2024-12-19T23:59:59.000Z',
+            'created_at_sort' => 'desc',
+            'serialization_set' => 'full'
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getPersonEvents($params);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_create_person_event()
+    {
+        $mockResponse = [
+            'person_event' => [
+                'id' => 123,
+                'activity_type_id' => 1,
+                'person_id' => 456,
+                'job_id' => 789,
+                'company_id' => 101,
+                'notes' => 'Initial phone screening conducted',
+                'pinned' => false,
+                'dragged_and_dropped' => false,
+                'created_at' => '2024-12-19T15:00:00.000Z',
+                'created_by_id' => 1,
+                'updated_at' => '2024-12-19T15:00:00.000Z',
+                'updated_by_id' => 1
+            ]
+        ];
+
+        $personEventData = [
+            'person_event' => [
+                'activity_type_id' => 1,
+                'person_id' => 456,
+                'job_id' => 789,
+                'company_id' => 101,
+                'notes' => 'Initial phone screening conducted',
+                'pinned' => false,
+                'dragged_and_dropped' => false,
+                'created_by_id' => 1
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(201, $mockResponse);
+        $result = $service->createPersonEvent($personEventData);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_create_person_event_minimal_data()
+    {
+        $mockResponse = [
+            'person_event' => [
+                'id' => 124,
+                'activity_type_id' => 2,
+                'person_id' => 457,
+                'job_id' => null,
+                'company_id' => null,
+                'notes' => 'Quick follow-up call',
+                'pinned' => false,
+                'dragged_and_dropped' => false,
+                'created_at' => '2024-12-19T16:00:00.000Z',
+                'created_by_id' => 2
+            ]
+        ];
+
+        $personEventData = [
+            'person_event' => [
+                'activity_type_id' => 2,
+                'person_id' => 457,
+                'notes' => 'Quick follow-up call',
+                'created_by_id' => 2
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(201, $mockResponse);
+        $result = $service->createPersonEvent($personEventData);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_handles_create_person_event_validation_error()
+    {
+        $errorResponse = [
+            'errors' => [
+                'person_event.activity_type_id' => ['The activity type id field is required.'],
+                'person_event.person_id' => ['The person id field is required.']
+            ],
+            'message' => 'Validation failed'
+        ];
+
+        $personEventData = [
+            'person_event' => [
+                'notes' => 'Event without required fields'
+                // Missing required fields
+            ]
+        ];
+
+        $this->expectException(LoxoApiException::class);
+        $this->expectExceptionMessage('API request failed');
+
+        $service = $this->createServiceWithMockResponse(422, $errorResponse);
+        $service->createPersonEvent($personEventData);
+    }
+
+    public function test_it_can_get_job_candidates()
+    {
+        $mockResponse = [
+            'candidates' => [
+                [
+                    'id' => 1,
+                    'person_id' => 123,
+                    'job_id' => 456,
+                    'workflow_stage_id' => 5,
+                    'person' => [
+                        'id' => 123,
+                        'first_name' => 'Alice',
+                        'last_name' => 'Johnson',
+                        'email' => 'alice.johnson@example.com',
+                        'phone' => '+1234567890'
+                    ],
+                    'latest_activity_type' => [
+                        'id' => 1,
+                        'name' => 'Phone Screen'
+                    ],
+                    'created_at' => '2024-12-19T12:00:00.000Z',
+                    'updated_at' => '2024-12-19T12:00:00.000Z'
+                ],
+                [
+                    'id' => 2,
+                    'person_id' => 124,
+                    'job_id' => 456,
+                    'workflow_stage_id' => 3,
+                    'person' => [
+                        'id' => 124,
+                        'first_name' => 'Bob',
+                        'last_name' => 'Smith',
+                        'email' => 'bob.smith@example.com',
+                        'phone' => '+0987654321'
+                    ],
+                    'latest_activity_type' => [
+                        'id' => 2,
+                        'name' => 'Technical Interview'
+                    ],
+                    'created_at' => '2024-12-19T11:00:00.000Z',
+                    'updated_at' => '2024-12-19T11:00:00.000Z'
+                ]
+            ],
+            'meta' => [
+                'total' => 2,
+                'per_page' => 10,
+                'has_more' => false
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getJobCandidates(456);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_job_candidates_with_filters()
+    {
+        $mockResponse = [
+            'candidates' => [
+                [
+                    'id' => 3,
+                    'person_id' => 125,
+                    'job_id' => 456,
+                    'workflow_stage_id' => 6,
+                    'person' => [
+                        'id' => 125,
+                        'first_name' => 'Carol',
+                        'last_name' => 'Davis',
+                        'email' => 'carol.davis@example.com'
+                    ],
+                    'latest_activity_type' => [
+                        'id' => 1,
+                        'name' => 'Phone Screen'
+                    ]
+                ]
+            ],
+            'scroll_id' => 'next_candidates_cursor_123',
+            'meta' => [
+                'total' => 25,
+                'per_page' => 5,
+                'has_more' => true
+            ]
+        ];
+
+        $params = [
+            'per_page' => 5,
+            'scroll_id' => 'prev_candidates_cursor_456',
+            'query' => 'carol engineer',
+            'activity_type_id' => 1,
+            'person_id' => 125
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getJobCandidates(456, $params);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_job_candidate()
+    {
+        $mockResponse = [
+            'candidate' => [
+                'id' => 1,
+                'person_id' => 123,
+                'job_id' => 456,
+                'workflow_stage_id' => 5,
+                'person' => [
+                    'id' => 123,
+                    'first_name' => 'Alice',
+                    'last_name' => 'Johnson',
+                    'email' => 'alice.johnson@example.com',
+                    'phone' => '+1234567890',
+                    'title' => 'Senior Software Engineer',
+                    'company' => 'TechCorp Inc',
+                    'location' => 'San Francisco, CA'
+                ],
+                'job' => [
+                    'id' => 456,
+                    'title' => 'Full Stack Developer',
+                    'company' => [
+                        'id' => 789,
+                        'name' => 'StartupXYZ'
+                    ]
+                ],
+                'workflow_stage' => [
+                    'id' => 5,
+                    'name' => 'Technical Interview',
+                    'position' => 3
+                ],
+                'latest_activity_type' => [
+                    'id' => 1,
+                    'name' => 'Phone Screen'
+                ],
+                'created_at' => '2024-12-19T12:00:00.000Z',
+                'updated_at' => '2024-12-19T12:00:00.000Z'
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getJobCandidate(456, 1);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_job_candidate_with_params()
+    {
+        $mockResponse = [
+            'candidate' => [
+                'id' => 2,
+                'person_id' => 124,
+                'job_id' => 456,
+                'workflow_stage_id' => 6
+            ]
+        ];
+
+        $params = [
+            'job_id' => 456,
+            'id' => 2
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getJobCandidate(456, 2, $params);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_handles_job_candidate_not_found()
+    {
+        $errorResponse = [
+            'error' => 'Candidate not found',
+            'message' => 'The specified candidate does not exist for this job'
+        ];
+
+        $this->expectException(LoxoApiException::class);
+        $this->expectExceptionMessage('API request failed');
+
+        $service = $this->createServiceWithMockResponse(404, $errorResponse);
+        $service->getJobCandidate(456, 999);
+    }
+
+    public function test_it_handles_job_not_found_for_candidates()
+    {
+        $errorResponse = [
+            'error' => 'Job not found',
+            'message' => 'The specified job does not exist'
+        ];
+
+        $this->expectException(LoxoApiException::class);
+        $this->expectExceptionMessage('API request failed');
+
+        $service = $this->createServiceWithMockResponse(404, $errorResponse);
+        $service->getJobCandidates(999);
+    }
+
     public function test_it_can_get_jobs()
     {
         $mockResponse = [
@@ -799,6 +1179,48 @@ class LoxoApiServiceTest extends TestCase
         $params = [
             'scroll_id' => 'prev_page_cursor_456',
             'per_page' => 1
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getPeople($params);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_people_with_advanced_filters()
+    {
+        $mockResponse = [
+            'people' => [
+                [
+                    'id' => 15,
+                    'first_name' => 'Alice',
+                    'last_name' => 'Anderson',
+                    'email' => 'alice.anderson@tech.com',
+                    'person_global_status_id' => 1,
+                    'person_type_id' => 2,
+                    'active_job_stage_id' => 5
+                ]
+            ],
+            'meta' => [
+                'total' => 1,
+                'per_page' => 10,
+                'has_more' => false
+            ]
+        ];
+
+        $params = [
+            'query' => 'Alice Anderson',
+            'person_global_status_id' => 1,
+            'person_type_id' => 2,
+            'active_job_stage_id' => 5,
+            'include_related_agencies' => true,
+            'include_ids' => [15, 20],
+            'exclude_ids' => [10, 11],
+            'list_id' => 3,
+            'created_at_sort' => 'desc',
+            'updated_at_sort' => 'asc',
+            'serialization_set' => 'full',
+            'fields' => ['name', 'email', 'phone']
         ];
 
         $service = $this->createServiceWithMockResponse(200, $mockResponse);

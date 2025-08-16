@@ -84,8 +84,8 @@ make help
 
 **API Coverage Progress:**
 - **Total Loxo API Endpoints:** 144
-- **Currently Implemented:** 16 (11.1%)
-- **Remaining:** 128 (88.9%)
+- **Currently Implemented:** 20 (13.9%)
+- **Remaining:** 124 (86.1%)
 
 **Implemented Endpoints:**
 - ✅ `getActivityTypes()` - Activity types
@@ -103,7 +103,11 @@ make help
 - ✅ `updateWebhook()` - Update webhook
 - ✅ `deleteWebhook()` - Delete webhook
 - ✅ `getUsers()` - Users listing
+- ✅ `getPersonEvents()` - Person events listing
+- ✅ `createPersonEvent()` - Create person event
 - ✅ `getJobs()` - Jobs listing
+- ✅ `getJobCandidates()` - Job candidates listing
+- ✅ `getJobCandidate()` - Get job candidate by ID
 - ✅ `getPeople()` - People/candidates listing
 - ✅ `createPerson()` - Create person/candidate
 - ✅ `applyToJob()` - Apply to job

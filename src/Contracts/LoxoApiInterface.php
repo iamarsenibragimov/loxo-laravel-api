@@ -126,6 +126,41 @@ interface LoxoApiInterface
     public function getUsers(array $params = []): array;
 
     /**
+     * Get person events for the agency
+     *
+     * @param array $params Query parameters (scroll_id, query, per_page, page, activity_type_ids, created_by_ids, job_ids, etc.)
+     * @return array
+     */
+    public function getPersonEvents(array $params = []): array;
+
+    /**
+     * Create a new person event in the agency
+     *
+     * @param array $personEventData Person event data for creation
+     * @return array
+     */
+    public function createPersonEvent(array $personEventData): array;
+
+    /**
+     * Get candidates for a specific job
+     *
+     * @param int $jobId Job ID
+     * @param array $params Query parameters (per_page, scroll_id, query, activity_type_id, person_id)
+     * @return array
+     */
+    public function getJobCandidates(int $jobId, array $params = []): array;
+
+    /**
+     * Get a specific candidate for a specific job
+     *
+     * @param int $jobId Job ID
+     * @param int $candidateId Candidate ID
+     * @param array $params Query parameters
+     * @return array
+     */
+    public function getJobCandidate(int $jobId, int $candidateId, array $params = []): array;
+
+    /**
      * Get jobs for the agency
      *
      * @param array $params Query parameters (per_page, page, query, published, etc.)

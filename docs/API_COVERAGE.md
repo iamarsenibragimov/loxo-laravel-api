@@ -18,9 +18,9 @@ This file tracks the coverage of Loxo API endpoints in our package.
 ## Coverage Statistics
 
 **Total endpoints:** 144  
-**Implemented:** 16 (11.1%)  
+**Implemented:** 20 (13.9%)  
 **In development:** 0 (0%)  
-**Not implemented:** 128 (88.9%)
+**Not implemented:** 124 (86.1%)
 
 ---
 
@@ -136,8 +136,8 @@ This file tracks the coverage of Loxo API endpoints in our package.
 | `/{agency_slug}/jobs/{id}`                                          | GET, PUT, DELETE | ❌      |                 |
 | `/{agency_slug}/jobs/{id}/merge`                                    | POST             | ❌      |                 |
 | `/{agency_slug}/jobs/{job_id}/apply`                                | POST             | ❌      |                 |
-| `/{agency_slug}/jobs/{job_id}/candidates`                           | GET, POST        | ❌      |                 |
-| `/{agency_slug}/jobs/{job_id}/candidates/{id}`                      | GET, PUT, DELETE | ❌      |                 |
+| `/{agency_slug}/jobs/{job_id}/candidates`                           | GET, POST        | ✅      | GET implemented |
+| `/{agency_slug}/jobs/{job_id}/candidates/{id}`                      | GET, PUT, DELETE | ✅      | GET implemented |
 | `/{agency_slug}/jobs/{job_id}/contacts`                             | GET, POST        | ❌      |                 |
 | `/{agency_slug}/jobs/{job_id}/contacts/{id}`                        | GET, PUT, DELETE | ❌      |                 |
 | `/{agency_slug}/jobs/{job_id}/documents`                            | GET, POST        | ❌      |                 |
@@ -176,17 +176,17 @@ This file tracks the coverage of Loxo API endpoints in our package.
 | `/{agency_slug}/people/update_by_email`                                     | PUT              | ❌      |       |
 
 ## Person Events & Lists
-| Endpoint                                                                                       | Methods          | Status | Notes |
-| ---------------------------------------------------------------------------------------------- | ---------------- | ------ | ----- |
-| `/{agency_slug}/person_events`                                                                 | GET, POST        | ❌      |       |
-| `/{agency_slug}/person_events/{id}`                                                            | GET, PUT, DELETE | ❌      |       |
-| `/{agency_slug}/person_events/{person_event_id}/documents`                                     | GET, POST        | ❌      |       |
-| `/{agency_slug}/person_events/{person_event_id}/documents/{id}`                                | GET, PUT, DELETE | ❌      |       |
-| `/{agency_slug}/person_events/{person_event_id}/documents/{person_event_document_id}/download` | GET              | ❌      |       |
-| `/{agency_slug}/person_global_statuses`                                                        | GET              | ❌      |       |
-| `/{agency_slug}/person_lists`                                                                  | GET, POST        | ❌      |       |
-| `/{agency_slug}/person_share_field_types`                                                      | GET              | ❌      |       |
-| `/{agency_slug}/person_types`                                                                  | GET              | ❌      |       |
+| Endpoint                                                                                       | Methods          | Status | Notes             |
+| ---------------------------------------------------------------------------------------------- | ---------------- | ------ | ----------------- |
+| `/{agency_slug}/person_events`                                                                 | GET, POST        | ✅      | Fully implemented |
+| `/{agency_slug}/person_events/{id}`                                                            | GET, PUT, DELETE | ❌      |                   |
+| `/{agency_slug}/person_events/{person_event_id}/documents`                                     | GET, POST        | ❌      |                   |
+| `/{agency_slug}/person_events/{person_event_id}/documents/{id}`                                | GET, PUT, DELETE | ❌      |                   |
+| `/{agency_slug}/person_events/{person_event_id}/documents/{person_event_document_id}/download` | GET              | ❌      |                   |
+| `/{agency_slug}/person_global_statuses`                                                        | GET              | ❌      |                   |
+| `/{agency_slug}/person_lists`                                                                  | GET, POST        | ❌      |                   |
+| `/{agency_slug}/person_share_field_types`                                                      | GET              | ❌      |                   |
+| `/{agency_slug}/person_types`                                                                  | GET              | ❌      |                   |
 
 ## Placements & Performance
 | Endpoint                         | Methods          | Status | Notes |
@@ -267,4 +267,4 @@ This file tracks the coverage of Loxo API endpoints in our package.
 
 ---
 
-*Last updated: 2024-12-19 - Users endpoint added*
+*Last updated: 2024-12-19 - Job candidates endpoints (GET) added*
