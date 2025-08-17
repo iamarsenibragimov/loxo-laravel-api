@@ -100,7 +100,7 @@ class YourController extends Controller
 
 ### Available Methods
 
-> **📊 API Coverage Status:** Currently 32 out of 144+ Loxo API endpoints are implemented (22.2%). See [API_COVERAGE.md](docs/API_COVERAGE.md) for complete endpoint coverage status and details.
+> **📊 API Coverage Status:** Currently 37 out of 144+ Loxo API endpoints are implemented (25.7%). See [API_COVERAGE.md](docs/API_COVERAGE.md) for complete endpoint coverage status and details.
 > 
 > 📖 **Reference:** All endpoints are based on the [official Loxo API documentation](https://loxo.readme.io/reference/loxo-api).
 
@@ -180,6 +180,21 @@ $visibilityTypes = Loxo::getScorecardVisibilityTypes();
 
 // Get available scorecard types
 $scorecardTypes = Loxo::getScorecardTypes();
+
+// Get pronouns for person profiles
+$pronouns = Loxo::getPronouns();
+
+// Get phone types for contact information
+$phoneTypes = Loxo::getPhoneTypes();
+
+// Get person types for classification
+$personTypes = Loxo::getPersonTypes();
+
+// Get person share field types for data sharing configuration
+$shareFieldTypes = Loxo::getPersonShareFieldTypes();
+
+// Get person lists for candidate organization
+$personLists = Loxo::getPersonLists();
 ```
 
 For a complete list of all available methods, filters, and parameters, please see [API_COVERAGE.md](docs/API_COVERAGE.md).

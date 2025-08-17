@@ -772,6 +772,66 @@ class LoxoApiService implements LoxoApiInterface
     }
 
     /**
+     * Get pronouns for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function getPronouns(array $params = []): array
+    {
+        return $this->get('pronouns', $params);
+    }
+
+    /**
+     * Get phone types for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function getPhoneTypes(array $params = []): array
+    {
+        return $this->get('phone_types', $params);
+    }
+
+    /**
+     * Get person types for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function getPersonTypes(array $params = []): array
+    {
+        return $this->get('person_types', $params);
+    }
+
+    /**
+     * Get person share field types for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function getPersonShareFieldTypes(array $params = []): array
+    {
+        return $this->get('person_share_field_types', $params);
+    }
+
+    /**
+     * Get person lists for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function getPersonLists(array $params = []): array
+    {
+        return $this->get('person_lists', $params);
+    }
+
+    /**
      * Make a GET request to the Loxo API
      *
      * @param string $endpoint

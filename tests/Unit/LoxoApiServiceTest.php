@@ -2368,4 +2368,170 @@ class LoxoApiServiceTest extends TestCase
 
         $this->assertEquals($mockResponse, $result);
     }
+
+    public function test_it_can_get_pronouns()
+    {
+        $mockResponse = [
+            'pronouns' => [
+                [
+                    'id' => 1,
+                    'name' => 'He/Him',
+                    'description' => 'Masculine pronouns'
+                ],
+                [
+                    'id' => 2,
+                    'name' => 'She/Her',
+                    'description' => 'Feminine pronouns'
+                ],
+                [
+                    'id' => 3,
+                    'name' => 'They/Them',
+                    'description' => 'Gender-neutral pronouns'
+                ],
+                [
+                    'id' => 4,
+                    'name' => 'Other',
+                    'description' => 'Other pronouns'
+                ]
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getPronouns();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_phone_types()
+    {
+        $mockResponse = [
+            'phone_types' => [
+                [
+                    'id' => 1,
+                    'name' => 'Mobile',
+                    'description' => 'Mobile phone number'
+                ],
+                [
+                    'id' => 2,
+                    'name' => 'Home',
+                    'description' => 'Home phone number'
+                ],
+                [
+                    'id' => 3,
+                    'name' => 'Work',
+                    'description' => 'Work phone number'
+                ],
+                [
+                    'id' => 4,
+                    'name' => 'Fax',
+                    'description' => 'Fax number'
+                ]
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getPhoneTypes();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_person_types()
+    {
+        $mockResponse = [
+            'person_types' => [
+                [
+                    'id' => 1,
+                    'name' => 'Candidate',
+                    'description' => 'Job candidate'
+                ],
+                [
+                    'id' => 2,
+                    'name' => 'Contact',
+                    'description' => 'Company contact'
+                ],
+                [
+                    'id' => 3,
+                    'name' => 'Employee',
+                    'description' => 'Current employee'
+                ],
+                [
+                    'id' => 4,
+                    'name' => 'Contractor',
+                    'description' => 'Independent contractor'
+                ]
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getPersonTypes();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_person_share_field_types()
+    {
+        $mockResponse = [
+            'person_share_field_types' => [
+                [
+                    'id' => 1,
+                    'name' => 'Email',
+                    'description' => 'Email address sharing'
+                ],
+                [
+                    'id' => 2,
+                    'name' => 'Phone',
+                    'description' => 'Phone number sharing'
+                ],
+                [
+                    'id' => 3,
+                    'name' => 'Resume',
+                    'description' => 'Resume document sharing'
+                ],
+                [
+                    'id' => 4,
+                    'name' => 'Profile',
+                    'description' => 'Full profile sharing'
+                ]
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getPersonShareFieldTypes();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_person_lists()
+    {
+        $mockResponse = [
+            'person_lists' => [
+                [
+                    'id' => 1,
+                    'name' => 'Top Candidates',
+                    'description' => 'List of top performing candidates',
+                    'person_count' => 25,
+                    'created_at' => '2024-01-15T10:00:00.000Z'
+                ],
+                [
+                    'id' => 2,
+                    'name' => 'Tech Talent Pool',
+                    'description' => 'Technology professionals',
+                    'person_count' => 150,
+                    'created_at' => '2024-02-01T14:30:00.000Z'
+                ],
+                [
+                    'id' => 3,
+                    'name' => 'Marketing Specialists',
+                    'description' => 'Marketing and communications experts',
+                    'person_count' => 75,
+                    'created_at' => '2024-02-10T09:15:00.000Z'
+                ]
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getPersonLists();
+
+        $this->assertEquals($mockResponse, $result);
+    }
 }

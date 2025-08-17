@@ -84,8 +84,8 @@ make help
 
 **API Coverage Progress:**
 - **Total Loxo API Endpoints:** 144
-- **Currently Implemented:** 32 (22.2%)
-- **Remaining:** 112 (77.8%)
+- **Currently Implemented:** 37 (25.7%)
+- **Remaining:** 107 (74.3%)
 
 **Implemented Endpoints:**
 - ✅ `getActivityTypes()` - Activity types
@@ -123,6 +123,11 @@ make help
 - ✅ `getSeniorityLevels()` - Get seniority levels
 - ✅ `getScorecardVisibilityTypes()` - Get scorecard visibility types
 - ✅ `getScorecardTypes()` - Get scorecard types
+- ✅ `getPronouns()` - Get pronouns
+- ✅ `getPhoneTypes()` - Get phone types
+- ✅ `getPersonTypes()` - Get person types
+- ✅ `getPersonShareFieldTypes()` - Get person share field types
+- ✅ `getPersonLists()` - Get person lists
 
 **Priority Areas for Contribution:**
 1. **Companies API** (34+ endpoints) - High priority

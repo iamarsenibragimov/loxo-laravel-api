@@ -17,9 +17,9 @@ This file tracks the coverage of Loxo API endpoints in our package.
 ## Coverage Statistics
 
 **Total endpoints:** 144  
-**Implemented:** 32 (22.2%)  
+**Implemented:** 37 (25.7%)  
 **In development:** 0 (0%)  
-**Not implemented:** 112 (77.8%)
+**Not implemented:** 107 (74.3%)
 
 ---
 
@@ -89,7 +89,7 @@ This file tracks the coverage of Loxo API endpoints in our package.
 | `/diversity_types`     | GET     | ❌      |                   |
 | `/ethnicities`         | GET     | ❌      |                   |
 | `/genders`             | GET     | ❌      |                   |
-| `/pronouns`            | GET     | ❌      |                   |
+| `/pronouns`            | GET     | ✅      | Fully implemented |
 | `/veteran_statuses`    | GET     | ✅      | Fully implemented |
 
 ## Dynamic Fields
@@ -110,7 +110,7 @@ This file tracks the coverage of Loxo API endpoints in our package.
 | ----------------- | ---------------- | ------ | ----------------- |
 | `/email_tracking` | GET, POST        | ❌      |                   |
 | `/email_types`    | GET              | ❌      |                   |
-| `/phone_types`    | GET              | ❌      |                   |
+| `/phone_types`    | GET              | ✅      | Fully implemented |
 | `/sms`            | GET, POST        | ✅      | Fully implemented |
 | `/sms/{id}`       | GET, PUT, DELETE | 🚧      | GET implemented   |
 
@@ -183,9 +183,9 @@ This file tracks the coverage of Loxo API endpoints in our package.
 | `/person_events/{person_event_id}/documents/{id}`                                | GET, PUT, DELETE | ❌      |                   |
 | `/person_events/{person_event_id}/documents/{person_event_document_id}/download` | GET              | ❌      |                   |
 | `/person_global_statuses`                                                        | GET              | ❌      |                   |
-| `/person_lists`                                                                  | GET, POST        | ❌      |                   |
-| `/person_share_field_types`                                                      | GET              | ❌      |                   |
-| `/person_types`                                                                  | GET              | ❌      |                   |
+| `/person_lists`                                                                  | GET, POST        | 🚧      | GET implemented   |
+| `/person_share_field_types`                                                      | GET              | ✅      | Fully implemented |
+| `/person_types`                                                                  | GET              | ✅      | Fully implemented |
 
 ## Placements & Performance
 | Endpoint           | Methods          | Status | Notes |

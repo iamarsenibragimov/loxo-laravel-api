@@ -295,6 +295,46 @@ interface LoxoApiInterface
     public function getScorecardTypes(array $params = []): array;
 
     /**
+     * Get pronouns for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     */
+    public function getPronouns(array $params = []): array;
+
+    /**
+     * Get phone types for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     */
+    public function getPhoneTypes(array $params = []): array;
+
+    /**
+     * Get person types for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     */
+    public function getPersonTypes(array $params = []): array;
+
+    /**
+     * Get person share field types for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     */
+    public function getPersonShareFieldTypes(array $params = []): array;
+
+    /**
+     * Get person lists for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     */
+    public function getPersonLists(array $params = []): array;
+
+    /**
      * Make a GET request to the Loxo API
      *
      * @param string $endpoint

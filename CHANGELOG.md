@@ -16,6 +16,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `getSeniorityLevels()` - Get seniority levels for the agency
   - `getScorecardVisibilityTypes()` - Get scorecard visibility types for the agency
   - `getScorecardTypes()` - Get scorecard types for the agency
+  - `getPronouns()` - Get pronouns for person profiles
+  - `getPhoneTypes()` - Get phone types for contact information
+  - `getPersonTypes()` - Get person types for classification
+  - `getPersonShareFieldTypes()` - Get person share field types for data sharing configuration
+  - `getPersonLists()` - Get person lists for candidate organization
 - **Enhanced Communication Support:**
   - Complete SMS messaging functionality for the Loxo platform
   - Support for SMS filtering by date range and pagination
@@ -24,15 +29,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Seniority levels management for job positions
   - Scorecard configuration and visibility settings
   - Complete scorecard types functionality
+  - Pronouns management for inclusive person profiles
+  - Phone types classification for contact information
+  - Person types categorization for better organization
+  - Person share field types for data sharing configuration
+  - Person lists management for candidate organization
 - **Testing:**
   - Added comprehensive unit tests for all SMS endpoints
-  - Added unit tests for configuration endpoints (seniority levels, scorecard types)
+  - Added unit tests for configuration endpoints (seniority levels, scorecard types, pronouns, phone types, person types, person share field types, person lists)
   - All tests include success scenarios, parameter validation, and error handling
-  - Total test coverage: 82 tests with 117 assertions
+  - Total test coverage: 87 tests with 122 assertions
 - **Documentation:**
   - New SMS example file (`examples/sms_example.php`)
   - Updated README.md with SMS and configuration usage examples
-  - Updated API coverage from 26 to 32 endpoints (22.2% coverage)
+  - Updated API coverage from 26 to 37 endpoints (25.7% coverage)
   - Updated CONTRIBUTING.md with current implementation status
 
 ## [1.1.1] - 2025-01-19
