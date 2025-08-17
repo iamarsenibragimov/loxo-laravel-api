@@ -736,6 +736,42 @@ class LoxoApiService implements LoxoApiInterface
     }
 
     /**
+     * Get seniority levels for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function getSeniorityLevels(array $params = []): array
+    {
+        return $this->get('seniority_levels', $params);
+    }
+
+    /**
+     * Get scorecard visibility types for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function getScorecardVisibilityTypes(array $params = []): array
+    {
+        return $this->get('scorecards/scorecard_visibility_types', $params);
+    }
+
+    /**
+     * Get scorecard types for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function getScorecardTypes(array $params = []): array
+    {
+        return $this->get('scorecards/scorecard_types', $params);
+    }
+
+    /**
      * Make a GET request to the Loxo API
      *
      * @param string $endpoint

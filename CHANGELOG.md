@@ -12,14 +12,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `getSms()` - Get SMS messages with filtering and pagination support
   - `createSms()` - Send new SMS messages with full parameter support
   - `getSmsById()` - Get specific SMS message by ID
+- **New Configuration API Endpoints:**
+  - `getSeniorityLevels()` - Get seniority levels for the agency
+  - `getScorecardVisibilityTypes()` - Get scorecard visibility types for the agency
+  - `getScorecardTypes()` - Get scorecard types for the agency
 - **Enhanced Communication Support:**
   - Complete SMS messaging functionality for the Loxo platform
   - Support for SMS filtering by date range and pagination
   - Comprehensive SMS creation with job and person associations
+- **Enhanced Configuration Support:**
+  - Seniority levels management for job positions
+  - Scorecard configuration and visibility settings
+  - Complete scorecard types functionality
+- **Testing:**
+  - Added comprehensive unit tests for all SMS endpoints
+  - Added unit tests for configuration endpoints (seniority levels, scorecard types)
+  - All tests include success scenarios, parameter validation, and error handling
+  - Total test coverage: 82 tests with 117 assertions
 - **Documentation:**
   - New SMS example file (`examples/sms_example.php`)
-  - Updated README.md with SMS usage examples
-  - Updated API coverage from 26 to 29 endpoints (20.1% coverage)
+  - Updated README.md with SMS and configuration usage examples
+  - Updated API coverage from 26 to 32 endpoints (22.2% coverage)
+  - Updated CONTRIBUTING.md with current implementation status
 
 ## [1.1.1] - 2025-01-19
 

@@ -17,9 +17,9 @@ This file tracks the coverage of Loxo API endpoints in our package.
 ## Coverage Statistics
 
 **Total endpoints:** 144  
-**Implemented:** 27 (18.8%)  
+**Implemented:** 32 (22.2%)  
 **In development:** 0 (0%)  
-**Not implemented:** 117 (81.3%)
+**Not implemented:** 112 (77.8%)
 
 ---
 
@@ -106,13 +106,13 @@ This file tracks the coverage of Loxo API endpoints in our package.
 | `/education_types` | GET     | ❌      |       |
 
 ## Email & Communication
-| Endpoint          | Methods          | Status | Notes |
-| ----------------- | ---------------- | ------ | ----- |
-| `/email_tracking` | GET, POST        | ❌      |       |
-| `/email_types`    | GET              | ❌      |       |
-| `/phone_types`    | GET              | ❌      |       |
-| `/sms`            | GET, POST        | ❌      |       |
-| `/sms/{id}`       | GET, PUT, DELETE | ❌      |       |
+| Endpoint          | Methods          | Status | Notes             |
+| ----------------- | ---------------- | ------ | ----------------- |
+| `/email_tracking` | GET, POST        | ❌      |                   |
+| `/email_types`    | GET              | ❌      |                   |
+| `/phone_types`    | GET              | ❌      |                   |
+| `/sms`            | GET, POST        | ✅      | Fully implemented |
+| `/sms/{id}`       | GET, PUT, DELETE | 🚧      | GET implemented   |
 
 ## Forms & Templates
 | Endpoint               | Methods          | Status | Notes |
@@ -134,7 +134,7 @@ This file tracks the coverage of Loxo API endpoints in our package.
 | `/jobs`                                               | GET, POST        | ✅      | Fully implemented |
 | `/jobs/{id}`                                          | GET, PUT, DELETE | ❌      |                   |
 | `/jobs/{id}/merge`                                    | POST             | ❌      |                   |
-| `/jobs/{job_id}/apply`                                | POST             | ❌      |                   |
+| `/jobs/{job_id}/apply`                                | POST             | ✅      | Fully implemented |
 | `/jobs/{job_id}/candidates`                           | GET              | ✅      |                   |
 | `/jobs/{job_id}/candidates/{id}`                      | GET, PUT         | ✅      | Fully implemented |
 | `/jobs/{job_id}/contacts`                             | GET, POST        | ❌      |                   |
@@ -200,25 +200,25 @@ This file tracks the coverage of Loxo API endpoints in our package.
 | `/schedule_items/{id}` | GET, PUT, DELETE | ❌      |       |
 
 ## Scorecards & Evaluation
-| Endpoint                                     | Methods          | Status | Notes |
-| -------------------------------------------- | ---------------- | ------ | ----- |
-| `/scorecards`                                | GET, POST        | ❌      |       |
-| `/scorecards/{id}`                           | GET, PUT, DELETE | ❌      |       |
-| `/scorecards/scorecard_recommendation_types` | GET              | ❌      |       |
-| `/scorecards/scorecard_templates`            | GET, POST        | ❌      |       |
-| `/scorecards/scorecard_templates/{id}`       | GET, PUT, DELETE | ❌      |       |
-| `/scorecards/scorecard_types`                | GET              | ❌      |       |
-| `/scorecards/scorecard_visibility_types`     | GET              | ❌      |       |
+| Endpoint                                     | Methods          | Status | Notes             |
+| -------------------------------------------- | ---------------- | ------ | ----------------- |
+| `/scorecards`                                | GET, POST        | ❌      |                   |
+| `/scorecards/{id}`                           | GET, PUT, DELETE | ❌      |                   |
+| `/scorecards/scorecard_recommendation_types` | GET              | ❌      |                   |
+| `/scorecards/scorecard_templates`            | GET, POST        | ❌      |                   |
+| `/scorecards/scorecard_templates/{id}`       | GET, PUT, DELETE | ❌      |                   |
+| `/scorecards/scorecard_types`                | GET              | ✅      | Fully implemented |
+| `/scorecards/scorecard_visibility_types`     | GET              | ✅      | Fully implemented |
 
 ## Miscellaneous
-| Endpoint                | Methods          | Status | Notes |
-| ----------------------- | ---------------- | ------ | ----- |
-| `/merges`               | GET              | ❌      |       |
-| `/question_types`       | GET              | ❌      |       |
-| `/seniority_levels`     | GET              | ❌      |       |
-| `/social_profile_types` | GET              | ❌      |       |
-| `/source_types`         | GET, POST        | ❌      |       |
-| `/source_types/{id}`    | GET, PUT, DELETE | ❌      |       |
+| Endpoint                | Methods          | Status | Notes             |
+| ----------------------- | ---------------- | ------ | ----------------- |
+| `/merges`               | GET              | ❌      |                   |
+| `/question_types`       | GET              | ❌      |                   |
+| `/seniority_levels`     | GET              | ✅      | Fully implemented |
+| `/social_profile_types` | GET              | ❌      |                   |
+| `/source_types`         | GET, POST        | ❌      |                   |
+| `/source_types/{id}`    | GET, PUT, DELETE | ❌      |                   |
 
 ## System & Administration
 | Endpoint           | Methods          | Status | Notes             |

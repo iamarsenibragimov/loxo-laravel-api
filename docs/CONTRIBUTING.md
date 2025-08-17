@@ -84,8 +84,8 @@ make help
 
 **API Coverage Progress:**
 - **Total Loxo API Endpoints:** 144
-- **Currently Implemented:** 21 (14.6%)
-- **Remaining:** 123 (85.4%)
+- **Currently Implemented:** 32 (22.2%)
+- **Remaining:** 112 (77.8%)
 
 **Implemented Endpoints:**
 - ✅ `getActivityTypes()` - Activity types
@@ -110,7 +110,19 @@ make help
 - ✅ `getJobCandidate()` - Get job candidate by ID
 - ✅ `getPeople()` - People/candidates listing
 - ✅ `createPerson()` - Create person/candidate
+- ✅ `getPerson()` - Get person by ID
+- ✅ `updatePerson()` - Update person by ID
+- ✅ `updateJobCandidate()` - Update job candidate
 - ✅ `applyToJob()` - Apply to job
+- ✅ `getPersonEducationProfiles()` - Get person education profiles
+- ✅ `createPersonEducationProfile()` - Create person education profile
+- ✅ `createJob()` - Create new job
+- ✅ `getSms()` - Get SMS messages
+- ✅ `createSms()` - Send SMS message
+- ✅ `getSmsById()` - Get SMS by ID
+- ✅ `getSeniorityLevels()` - Get seniority levels
+- ✅ `getScorecardVisibilityTypes()` - Get scorecard visibility types
+- ✅ `getScorecardTypes()` - Get scorecard types
 
 **Priority Areas for Contribution:**
 1. **Companies API** (34+ endpoints) - High priority

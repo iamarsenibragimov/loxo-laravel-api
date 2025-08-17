@@ -271,6 +271,30 @@ interface LoxoApiInterface
     public function getSmsById(int $id): array;
 
     /**
+     * Get seniority levels for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     */
+    public function getSeniorityLevels(array $params = []): array;
+
+    /**
+     * Get scorecard visibility types for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     */
+    public function getScorecardVisibilityTypes(array $params = []): array;
+
+    /**
+     * Get scorecard types for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     */
+    public function getScorecardTypes(array $params = []): array;
+
+    /**
      * Make a GET request to the Loxo API
      *
      * @param string $endpoint

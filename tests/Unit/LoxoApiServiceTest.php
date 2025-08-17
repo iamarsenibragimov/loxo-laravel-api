@@ -2094,4 +2094,278 @@ class LoxoApiServiceTest extends TestCase
         $service = $this->createServiceWithMockResponse(403, $errorResponse);
         $service->createPersonEducationProfile(123, $educationData);
     }
+
+    public function test_it_can_get_sms()
+    {
+        $mockResponse = [
+            'sms' => [
+                [
+                    'id' => 1,
+                    'from_number' => '+1234567890',
+                    'to_number' => '+0987654321',
+                    'body' => 'Hello! This is a test SMS message.',
+                    'status' => 'sent',
+                    'job_id' => 123,
+                    'person_id' => 456,
+                    'created_at' => '2024-12-19T12:00:00.000Z'
+                ],
+                [
+                    'id' => 2,
+                    'from_number' => '+1234567890',
+                    'to_number' => '+1111111111',
+                    'body' => 'Another SMS message.',
+                    'status' => 'delivered',
+                    'job_id' => null,
+                    'person_id' => 789,
+                    'created_at' => '2024-12-19T13:00:00.000Z'
+                ]
+            ],
+            'scroll_id' => 'next_page_cursor'
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getSms();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_sms_with_params()
+    {
+        $mockResponse = [
+            'sms' => [
+                [
+                    'id' => 3,
+                    'from_number' => '+1234567890',
+                    'to_number' => '+2222222222',
+                    'body' => 'Filtered SMS message.',
+                    'status' => 'sent',
+                    'created_at' => '2024-12-20T10:00:00.000Z'
+                ]
+            ]
+        ];
+
+        $params = [
+            'per_page' => 10,
+            'created_at_start' => '2024-12-20T00:00:00Z',
+            'created_at_end' => '2024-12-20T23:59:59Z'
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getSms($params);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_create_sms()
+    {
+        $mockResponse = [
+            'sms' => [
+                'id' => 12345,
+                'from_number' => '+1234567890',
+                'to_number' => '+0987654321',
+                'body' => 'Hello! This is a new SMS message.',
+                'status' => 'queued',
+                'job_id' => 123,
+                'person_id' => 456,
+                'target_send_time' => null,
+                'block_override' => false,
+                'created_at' => '2024-12-19T14:00:00.000Z'
+            ]
+        ];
+
+        $smsData = [
+            'from_number' => '+1234567890',
+            'to_number' => '+0987654321',
+            'body' => 'Hello! This is a new SMS message.',
+            'job_id' => 123,
+            'person_id' => 456,
+            'block_override' => false
+        ];
+
+        $service = $this->createServiceWithMockResponse(201, $mockResponse);
+        $result = $service->createSms($smsData);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_create_sms_with_scheduled_time()
+    {
+        $mockResponse = [
+            'sms' => [
+                'id' => 12346,
+                'from_number' => '+1234567890',
+                'to_number' => '+0987654321',
+                'body' => 'Scheduled SMS message.',
+                'status' => 'scheduled',
+                'job_id' => null,
+                'person_id' => 789,
+                'target_send_time' => '2024-12-20T09:00:00.000Z',
+                'block_override' => true,
+                'created_at' => '2024-12-19T14:30:00.000Z'
+            ]
+        ];
+
+        $smsData = [
+            'from_number' => '+1234567890',
+            'to_number' => '+0987654321',
+            'body' => 'Scheduled SMS message.',
+            'person_id' => 789,
+            'target_send_time' => '2024-12-20T09:00:00.000Z',
+            'block_override' => true
+        ];
+
+        $service = $this->createServiceWithMockResponse(201, $mockResponse);
+        $result = $service->createSms($smsData);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_handles_create_sms_validation_error()
+    {
+        $errorResponse = [
+            'errors' => [
+                'from_number' => ['The from number field is required.'],
+                'to_number' => ['The to number field is required.'],
+                'body' => ['The body field is required.']
+            ],
+            'message' => 'Validation failed'
+        ];
+
+        $smsData = [
+            'body' => '' // Missing required fields
+        ];
+
+        $this->expectException(LoxoApiException::class);
+        $this->expectExceptionMessage('API request failed');
+
+        $service = $this->createServiceWithMockResponse(422, $errorResponse);
+        $service->createSms($smsData);
+    }
+
+    public function test_it_can_get_sms_by_id()
+    {
+        $mockResponse = [
+            'sms' => [
+                'id' => 123,
+                'from_number' => '+1234567890',
+                'to_number' => '+0987654321',
+                'body' => 'Specific SMS message by ID.',
+                'status' => 'delivered',
+                'job_id' => 456,
+                'person_id' => 789,
+                'target_send_time' => null,
+                'block_override' => false,
+                'created_at' => '2024-12-19T15:00:00.000Z',
+                'updated_at' => '2024-12-19T15:01:00.000Z'
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getSmsById(123);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_seniority_levels()
+    {
+        $mockResponse = [
+            'seniority_levels' => [
+                [
+                    'id' => 1,
+                    'name' => 'Junior',
+                    'description' => 'Entry level position',
+                    'level' => 1
+                ],
+                [
+                    'id' => 2,
+                    'name' => 'Mid-Level',
+                    'description' => 'Intermediate level position',
+                    'level' => 2
+                ],
+                [
+                    'id' => 3,
+                    'name' => 'Senior',
+                    'description' => 'Senior level position',
+                    'level' => 3
+                ],
+                [
+                    'id' => 4,
+                    'name' => 'Lead',
+                    'description' => 'Leadership position',
+                    'level' => 4
+                ]
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getSeniorityLevels();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_scorecard_visibility_types()
+    {
+        $mockResponse = [
+            'scorecard_visibility_types' => [
+                [
+                    'id' => 1,
+                    'name' => 'Public',
+                    'description' => 'Visible to all users'
+                ],
+                [
+                    'id' => 2,
+                    'name' => 'Private',
+                    'description' => 'Visible only to creator'
+                ],
+                [
+                    'id' => 3,
+                    'name' => 'Team',
+                    'description' => 'Visible to team members'
+                ],
+                [
+                    'id' => 4,
+                    'name' => 'Manager',
+                    'description' => 'Visible to managers only'
+                ]
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getScorecardVisibilityTypes();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_scorecard_types()
+    {
+        $mockResponse = [
+            'scorecard_types' => [
+                [
+                    'id' => 1,
+                    'name' => 'Technical Interview',
+                    'description' => 'Technical skills evaluation'
+                ],
+                [
+                    'id' => 2,
+                    'name' => 'Cultural Fit',
+                    'description' => 'Company culture alignment assessment'
+                ],
+                [
+                    'id' => 3,
+                    'name' => 'Phone Screen',
+                    'description' => 'Initial phone screening evaluation'
+                ],
+                [
+                    'id' => 4,
+                    'name' => 'Final Interview',
+                    'description' => 'Final round interview assessment'
+                ]
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getScorecardTypes();
+
+        $this->assertEquals($mockResponse, $result);
+    }
 }
