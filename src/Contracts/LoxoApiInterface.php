@@ -247,6 +247,30 @@ interface LoxoApiInterface
     public function createPersonEducationProfile(int $personId, array $educationData): array;
 
     /**
+     * Get SMS messages for the agency
+     *
+     * @param array $params Query parameters (scroll_id, per_page, created_at_start, created_at_end)
+     * @return array
+     */
+    public function getSms(array $params = []): array;
+
+    /**
+     * Create a new SMS message in the agency
+     *
+     * @param array $smsData SMS message data for creation
+     * @return array
+     */
+    public function createSms(array $smsData): array;
+
+    /**
+     * Get a specific SMS message by ID
+     *
+     * @param int $id SMS message ID
+     * @return array
+     */
+    public function getSmsById(int $id): array;
+
+    /**
      * Make a GET request to the Loxo API
      *
      * @param string $endpoint

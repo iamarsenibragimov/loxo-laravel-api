@@ -689,6 +689,53 @@ class LoxoApiService implements LoxoApiInterface
     }
 
     /**
+     * Get SMS messages for the agency
+     *
+     * @param array $params Query parameters:
+     *  - scroll_id (string): A cursor used to retrieve the next page of results
+     *  - per_page (int): Number of results to return in each page
+     *  - created_at_start (string): Filter SMS messages created after this date
+     *  - created_at_end (string): Filter SMS messages created before this date
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function getSms(array $params = []): array
+    {
+        return $this->get('sms', $params);
+    }
+
+    /**
+     * Create a new SMS message in the agency
+     *
+     * @param array $smsData SMS message data:
+     *  - block_override (bool): Override blocking settings
+     *  - from_number (string, required): Phone number to send from
+     *  - body (string, required): SMS message content
+     *  - job_id (int): Unique identifier for associated job
+     *  - person_id (int): Unique identifier for associated person
+     *  - target_send_time (string): Scheduled send time
+     *  - to_number (string, required): Phone number to send to
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function createSms(array $smsData): array
+    {
+        return $this->post('sms', $smsData);
+    }
+
+    /**
+     * Get a specific SMS message by ID
+     *
+     * @param int $id SMS message ID
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function getSmsById(int $id): array
+    {
+        return $this->get("sms/{$id}");
+    }
+
+    /**
      * Make a GET request to the Loxo API
      *
      * @param string $endpoint

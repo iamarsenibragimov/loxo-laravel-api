@@ -100,7 +100,7 @@ class YourController extends Controller
 
 ### Available Methods
 
-> **📊 API Coverage Status:** Currently 26 out of 144+ Loxo API endpoints are implemented (18.1%). See [API_COVERAGE.md](docs/API_COVERAGE.md) for complete endpoint coverage status and details.
+> **📊 API Coverage Status:** Currently 29 out of 144+ Loxo API endpoints are implemented (20.1%). See [API_COVERAGE.md](docs/API_COVERAGE.md) for complete endpoint coverage status and details.
 > 
 > 📖 **Reference:** All endpoints are based on the [official Loxo API documentation](https://loxo.readme.io/reference/loxo-api).
 
@@ -153,6 +153,26 @@ $newWebhook = Loxo::createWebhook([
 ]);
 ```
 
+```php
+// SMS Messages
+$smsMessages = Loxo::getSms([
+    'per_page' => 10,
+    'created_at_start' => '2024-01-01T00:00:00Z'
+]);
+
+// Send SMS
+$newSms = Loxo::createSms([
+    'from_number' => '+1234567890',
+    'to_number' => '+0987654321',
+    'body' => 'Hello! This is a test SMS.',
+    'job_id' => 123,
+    'person_id' => 456
+]);
+
+// Get specific SMS
+$sms = Loxo::getSmsById(123);
+```
+
 For a complete list of all available methods, filters, and parameters, please see [API_COVERAGE.md](docs/API_COVERAGE.md).
 
 #### Generic HTTP Methods
@@ -181,10 +201,6 @@ $agencySlug = Loxo::getAgencySlug();
 // Get domain
 $domain = Loxo::getDomain();
 ```
-
-## Error Handling
-
-The package provides custom exceptions for better error handling:
 
 ### LoxoApiException
 
@@ -345,7 +361,6 @@ If you discover any security vulnerabilities or bugs, please create an issue on 
 - **[🚀 Quick Start Guide](docs/QUICK_START.md)** - Get started in 5 minutes
 - **[🧪 Testing Guide](docs/TESTING.md)** - Development and automated testing
 - **[🤝 Contributing Guide](docs/CONTRIBUTING.md)** - How to contribute to development
-- **[💡 Examples](examples/)** - Usage examples and code samples
 - **[📊 API Coverage](docs/API_COVERAGE.md)** - Track implemented vs available endpoints
 
 ## Changelog

@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **New SMS API Endpoints:**
+  - `getSms()` - Get SMS messages with filtering and pagination support
+  - `createSms()` - Send new SMS messages with full parameter support
+  - `getSmsById()` - Get specific SMS message by ID
+- **Enhanced Communication Support:**
+  - Complete SMS messaging functionality for the Loxo platform
+  - Support for SMS filtering by date range and pagination
+  - Comprehensive SMS creation with job and person associations
+- **Documentation:**
+  - New SMS example file (`examples/sms_example.php`)
+  - Updated README.md with SMS usage examples
+  - Updated API coverage from 26 to 29 endpoints (20.1% coverage)
+
 ## [1.1.1] - 2025-01-19
 
 ### Added
