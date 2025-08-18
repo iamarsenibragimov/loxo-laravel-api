@@ -832,6 +832,259 @@ class LoxoApiService implements LoxoApiInterface
     }
 
     /**
+     * Get merges for the agency
+     *
+     * @param array $params Query parameters:
+     *  - scroll_id (string): A cursor used to retrieve the next page of results
+     *  - per_page (int): Number of results to return in each page
+     *  - item_type (string): Filter by item type
+     *  - item_ids (array): Array of item IDs to filter by
+     *  - created_before (string): Timestamp before which the merge was created
+     *  - created_after (string): Timestamp after which the merge was created
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function getMerges(array $params = []): array
+    {
+        return $this->get('merges', $params);
+    }
+
+    /**
+     * Get question types for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function getQuestionTypes(array $params = []): array
+    {
+        return $this->get('question_types', $params);
+    }
+
+    /**
+     * Get social profile types for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function getSocialProfileTypes(array $params = []): array
+    {
+        return $this->get('social_profile_types', $params);
+    }
+
+    /**
+     * Get education types for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function getEducationTypes(array $params = []): array
+    {
+        return $this->get('education_types', $params);
+    }
+
+    /**
+     * Get genders for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function getGenders(array $params = []): array
+    {
+        return $this->get('genders', $params);
+    }
+
+    /**
+     * Get ethnicities for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function getEthnicities(array $params = []): array
+    {
+        return $this->get('ethnicities', $params);
+    }
+
+    /**
+     * Get diversity types for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function getDiversityTypes(array $params = []): array
+    {
+        return $this->get('diversity_types', $params);
+    }
+
+    /**
+     * Get fee types for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function getFeeTypes(array $params = []): array
+    {
+        return $this->get('fee_types', $params);
+    }
+
+    /**
+     * Get equity types for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function getEquityTypes(array $params = []): array
+    {
+        return $this->get('equity_types', $params);
+    }
+
+    /**
+     * Get compensation types for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function getCompensationTypes(array $params = []): array
+    {
+        return $this->get('compensation_types', $params);
+    }
+
+    /**
+     * Get email types for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function getEmailTypes(array $params = []): array
+    {
+        return $this->get('email_types', $params);
+    }
+
+    /**
+     * Get email tracking data for the agency
+     *
+     * @param array $params Query parameters:
+     *  - scroll_id (string): A cursor used to retrieve the next page of results
+     *  - per_page (int): Number of results to return in each page
+     *  - person_ids (array): Array of person IDs receiving the emails
+     *  - created_at_start (string): Filter emails created after this date
+     *  - created_at_end (string): Filter emails created before this date
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function getEmailTracking(array $params = []): array
+    {
+        return $this->get('email_tracking', $params);
+    }
+
+    /**
+     * Get disability statuses for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function getDisabilityStatuses(array $params = []): array
+    {
+        return $this->get('disability_statuses', $params);
+    }
+
+    /**
+     * Get countries for the agency
+     *
+     * @param array $params Query parameters:
+     *  - per_page (int): Number of results to return in each page
+     *  - page (int): Page number to return. Starting at 1
+     *  - query (string): Search query. Supports Lucene query syntax
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function getCountries(array $params = []): array
+    {
+        return $this->get('countries', $params);
+    }
+
+    /**
+     * Get states for a specific country
+     *
+     * @param int $countryId Country ID
+     * @param array $params Query parameters:
+     *  - page (int): Page number to return. Starting at 1
+     *  - per_page (int): Number of results to return in each page
+     *  - query (string): Search query. Supports Lucene query syntax
+     *  - country_id (int): Unique identifier for the country
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function getStates(int $countryId, array $params = []): array
+    {
+        return $this->get("countries/{$countryId}/states", $params);
+    }
+
+    /**
+     * Get cities for a specific country and state
+     *
+     * @param int $countryId Country ID
+     * @param int $stateId State ID
+     * @param array $params Query parameters:
+     *  - scroll_id (string): A cursor used to retrieve the next page of results
+     *  - per_page (int): Number of results to return in each page
+     *  - country_id (int): Unique identifier for the country
+     *  - state_id (int): Unique identifier for the state
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function getCities(int $countryId, int $stateId, array $params = []): array
+    {
+        return $this->get("countries/{$countryId}/states/{$stateId}/cities", $params);
+    }
+
+    /**
+     * Get currencies for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function getCurrencies(array $params = []): array
+    {
+        return $this->get('currencies', $params);
+    }
+
+    /**
+     * Get company global statuses for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function getCompanyGlobalStatuses(array $params = []): array
+    {
+        return $this->get('company_global_statuses', $params);
+    }
+
+    /**
+     * Get company types for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function getCompanyTypes(array $params = []): array
+    {
+        return $this->get('company_types', $params);
+    }
+
+    /**
      * Make a GET request to the Loxo API
      *
      * @param string $endpoint

@@ -2534,4 +2534,1941 @@ class LoxoApiServiceTest extends TestCase
 
         $this->assertEquals($mockResponse, $result);
     }
+
+    public function test_it_can_get_merges()
+    {
+        $mockResponse = [
+            'merges' => [
+                [
+                    'id' => 1,
+                    'item_type' => 'person',
+                    'primary_item_id' => 123,
+                    'secondary_item_id' => 456,
+                    'created_at' => '2024-01-15T10:00:00.000Z',
+                    'created_by_id' => 1,
+                    'notes' => 'Merged duplicate candidates'
+                ],
+                [
+                    'id' => 2,
+                    'item_type' => 'company',
+                    'primary_item_id' => 789,
+                    'secondary_item_id' => 101,
+                    'created_at' => '2024-02-01T14:30:00.000Z',
+                    'created_by_id' => 2,
+                    'notes' => 'Consolidated company records'
+                ]
+            ],
+            'scroll_id' => 'next_page_cursor_123'
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getMerges();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_merges_with_scroll_id()
+    {
+        $mockResponse = [
+            'merges' => [
+                [
+                    'id' => 3,
+                    'item_type' => 'person',
+                    'primary_item_id' => 111,
+                    'secondary_item_id' => 222,
+                    'created_at' => '2024-03-01T09:15:00.000Z',
+                    'created_by_id' => 3,
+                    'notes' => 'Merged candidate profiles'
+                ]
+            ],
+            'scroll_id' => 'next_page_cursor_456'
+        ];
+
+        $params = ['scroll_id' => 'previous_page_cursor_123'];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getMerges($params);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_merges_with_per_page()
+    {
+        $mockResponse = [
+            'merges' => [
+                [
+                    'id' => 4,
+                    'item_type' => 'company',
+                    'primary_item_id' => 333,
+                    'secondary_item_id' => 444,
+                    'created_at' => '2024-03-15T16:45:00.000Z',
+                    'created_by_id' => 4,
+                    'notes' => 'Company merge operation'
+                ]
+            ]
+        ];
+
+        $params = ['per_page' => 10];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getMerges($params);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_merges_with_item_type_filter()
+    {
+        $mockResponse = [
+            'merges' => [
+                [
+                    'id' => 5,
+                    'item_type' => 'person',
+                    'primary_item_id' => 555,
+                    'secondary_item_id' => 666,
+                    'created_at' => '2024-04-01T12:00:00.000Z',
+                    'created_by_id' => 5,
+                    'notes' => 'Person merge with type filter'
+                ]
+            ]
+        ];
+
+        $params = ['item_type' => 'person'];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getMerges($params);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_merges_with_item_ids_filter()
+    {
+        $mockResponse = [
+            'merges' => [
+                [
+                    'id' => 6,
+                    'item_type' => 'company',
+                    'primary_item_id' => 777,
+                    'secondary_item_id' => 888,
+                    'created_at' => '2024-04-15T08:30:00.000Z',
+                    'created_by_id' => 6,
+                    'notes' => 'Specific company merge'
+                ]
+            ]
+        ];
+
+        $params = ['item_ids' => [777, 888]];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getMerges($params);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_merges_with_date_filters()
+    {
+        $mockResponse = [
+            'merges' => [
+                [
+                    'id' => 7,
+                    'item_type' => 'person',
+                    'primary_item_id' => 999,
+                    'secondary_item_id' => 1000,
+                    'created_at' => '2024-05-01T10:00:00.000Z',
+                    'created_by_id' => 7,
+                    'notes' => 'Recent merge within date range'
+                ]
+            ]
+        ];
+
+        $params = [
+            'created_after' => '2024-05-01T00:00:00.000Z',
+            'created_before' => '2024-05-31T23:59:59.000Z'
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getMerges($params);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_merges_with_all_parameters()
+    {
+        $mockResponse = [
+            'merges' => [
+                [
+                    'id' => 8,
+                    'item_type' => 'person',
+                    'primary_item_id' => 1111,
+                    'secondary_item_id' => 1222,
+                    'created_at' => '2024-06-01T14:20:00.000Z',
+                    'created_by_id' => 8,
+                    'notes' => 'Comprehensive filtered merge'
+                ]
+            ],
+            'scroll_id' => 'comprehensive_cursor_789'
+        ];
+
+        $params = [
+            'scroll_id' => 'start_cursor_123',
+            'per_page' => 5,
+            'item_type' => 'person',
+            'item_ids' => [1111, 1222, 1333],
+            'created_after' => '2024-06-01T00:00:00.000Z',
+            'created_before' => '2024-06-30T23:59:59.000Z'
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getMerges($params);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_handles_empty_merges_response()
+    {
+        $mockResponse = [
+            'merges' => [],
+            'scroll_id' => null
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getMerges();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_handles_merges_api_error()
+    {
+        $errorResponse = [
+            'error' => 'Invalid parameters',
+            'message' => 'The specified item_type is not valid'
+        ];
+
+        $this->expectException(LoxoApiException::class);
+        $this->expectExceptionMessage('API request failed with status code: 400');
+
+        $service = $this->createServiceWithMockResponse(400, $errorResponse);
+        $service->getMerges(['item_type' => 'invalid_type']);
+    }
+
+    public function test_it_can_get_question_types()
+    {
+        $mockResponse = [
+            'question_types' => [
+                [
+                    'id' => 1,
+                    'name' => 'Multiple Choice',
+                    'description' => 'Question with multiple choice answers',
+                    'created_at' => '2024-01-15T10:00:00.000Z',
+                    'updated_at' => '2024-01-15T10:00:00.000Z'
+                ],
+                [
+                    'id' => 2,
+                    'name' => 'Text Input',
+                    'description' => 'Free text input question',
+                    'created_at' => '2024-02-01T14:30:00.000Z',
+                    'updated_at' => '2024-02-01T14:30:00.000Z'
+                ],
+                [
+                    'id' => 3,
+                    'name' => 'Rating Scale',
+                    'description' => 'Numerical rating scale question',
+                    'created_at' => '2024-03-01T09:15:00.000Z',
+                    'updated_at' => '2024-03-01T09:15:00.000Z'
+                ]
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getQuestionTypes();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_question_types_with_params()
+    {
+        $mockResponse = [
+            'question_types' => [
+                [
+                    'id' => 4,
+                    'name' => 'Boolean',
+                    'description' => 'Yes/No question type',
+                    'created_at' => '2024-04-01T12:00:00.000Z',
+                    'updated_at' => '2024-04-01T12:00:00.000Z'
+                ]
+            ]
+        ];
+
+        $params = ['active' => true];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getQuestionTypes($params);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_handles_empty_question_types_response()
+    {
+        $mockResponse = [
+            'question_types' => []
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getQuestionTypes();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_handles_question_types_api_error()
+    {
+        $errorResponse = [
+            'error' => 'Unauthorized',
+            'message' => 'Invalid API credentials'
+        ];
+
+        $this->expectException(LoxoApiException::class);
+        $this->expectExceptionMessage('API request failed with status code: 401');
+
+        $service = $this->createServiceWithMockResponse(401, $errorResponse);
+        $service->getQuestionTypes();
+    }
+
+    public function test_it_can_get_social_profile_types()
+    {
+        $mockResponse = [
+            'social_profile_types' => [
+                [
+                    'id' => 1,
+                    'name' => 'LinkedIn',
+                    'description' => 'LinkedIn professional profile',
+                    'url_pattern' => 'https://linkedin.com/in/{username}',
+                    'icon' => 'linkedin-icon.png',
+                    'created_at' => '2024-01-15T10:00:00.000Z',
+                    'updated_at' => '2024-01-15T10:00:00.000Z'
+                ],
+                [
+                    'id' => 2,
+                    'name' => 'GitHub',
+                    'description' => 'GitHub developer profile',
+                    'url_pattern' => 'https://github.com/{username}',
+                    'icon' => 'github-icon.png',
+                    'created_at' => '2024-02-01T14:30:00.000Z',
+                    'updated_at' => '2024-02-01T14:30:00.000Z'
+                ],
+                [
+                    'id' => 3,
+                    'name' => 'Twitter',
+                    'description' => 'Twitter social profile',
+                    'url_pattern' => 'https://twitter.com/{username}',
+                    'icon' => 'twitter-icon.png',
+                    'created_at' => '2024-03-01T09:15:00.000Z',
+                    'updated_at' => '2024-03-01T09:15:00.000Z'
+                ]
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getSocialProfileTypes();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_social_profile_types_with_params()
+    {
+        $mockResponse = [
+            'social_profile_types' => [
+                [
+                    'id' => 4,
+                    'name' => 'Stack Overflow',
+                    'description' => 'Stack Overflow developer profile',
+                    'url_pattern' => 'https://stackoverflow.com/users/{user_id}',
+                    'icon' => 'stackoverflow-icon.png',
+                    'created_at' => '2024-04-01T12:00:00.000Z',
+                    'updated_at' => '2024-04-01T12:00:00.000Z'
+                ]
+            ]
+        ];
+
+        $params = ['active' => true, 'category' => 'professional'];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getSocialProfileTypes($params);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_handles_empty_social_profile_types_response()
+    {
+        $mockResponse = [
+            'social_profile_types' => []
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getSocialProfileTypes();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_handles_social_profile_types_api_error()
+    {
+        $errorResponse = [
+            'error' => 'Forbidden',
+            'message' => 'Access denied to social profile types'
+        ];
+
+        $this->expectException(LoxoApiException::class);
+        $this->expectExceptionMessage('API request failed with status code: 403');
+
+        $service = $this->createServiceWithMockResponse(403, $errorResponse);
+        $service->getSocialProfileTypes();
+    }
+
+    public function test_it_can_get_education_types()
+    {
+        $mockResponse = [
+            'education_types' => [
+                [
+                    'id' => 1,
+                    'name' => 'Bachelor\'s Degree',
+                    'description' => 'Undergraduate degree',
+                    'level' => 'undergraduate',
+                    'duration_years' => 4,
+                    'created_at' => '2024-01-15T10:00:00.000Z',
+                    'updated_at' => '2024-01-15T10:00:00.000Z'
+                ],
+                [
+                    'id' => 2,
+                    'name' => 'Master\'s Degree',
+                    'description' => 'Graduate degree',
+                    'level' => 'graduate',
+                    'duration_years' => 2,
+                    'created_at' => '2024-02-01T14:30:00.000Z',
+                    'updated_at' => '2024-02-01T14:30:00.000Z'
+                ],
+                [
+                    'id' => 3,
+                    'name' => 'PhD',
+                    'description' => 'Doctoral degree',
+                    'level' => 'doctoral',
+                    'duration_years' => 5,
+                    'created_at' => '2024-03-01T09:15:00.000Z',
+                    'updated_at' => '2024-03-01T09:15:00.000Z'
+                ]
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getEducationTypes();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_education_types_with_params()
+    {
+        $mockResponse = [
+            'education_types' => [
+                [
+                    'id' => 4,
+                    'name' => 'Certificate',
+                    'description' => 'Professional certificate',
+                    'level' => 'certificate',
+                    'duration_years' => 1,
+                    'created_at' => '2024-04-01T12:00:00.000Z',
+                    'updated_at' => '2024-04-01T12:00:00.000Z'
+                ]
+            ]
+        ];
+
+        $params = ['level' => 'certificate', 'active' => true];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getEducationTypes($params);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_handles_empty_education_types_response()
+    {
+        $mockResponse = [
+            'education_types' => []
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getEducationTypes();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_handles_education_types_api_error()
+    {
+        $errorResponse = [
+            'error' => 'Internal Server Error',
+            'message' => 'Unable to retrieve education types'
+        ];
+
+        $this->expectException(LoxoApiException::class);
+        $this->expectExceptionMessage('API request failed with status code: 500');
+
+        $service = $this->createServiceWithMockResponse(500, $errorResponse);
+        $service->getEducationTypes();
+    }
+
+    public function test_it_can_get_genders()
+    {
+        $mockResponse = [
+            'genders' => [
+                [
+                    'id' => 1,
+                    'name' => 'Male',
+                    'description' => 'Male gender identity',
+                    'created_at' => '2024-01-15T10:00:00.000Z',
+                    'updated_at' => '2024-01-15T10:00:00.000Z'
+                ],
+                [
+                    'id' => 2,
+                    'name' => 'Female',
+                    'description' => 'Female gender identity',
+                    'created_at' => '2024-02-01T14:30:00.000Z',
+                    'updated_at' => '2024-02-01T14:30:00.000Z'
+                ],
+                [
+                    'id' => 3,
+                    'name' => 'Non-binary',
+                    'description' => 'Non-binary gender identity',
+                    'created_at' => '2024-03-01T09:15:00.000Z',
+                    'updated_at' => '2024-03-01T09:15:00.000Z'
+                ],
+                [
+                    'id' => 4,
+                    'name' => 'Prefer not to say',
+                    'description' => 'Prefer not to disclose gender identity',
+                    'created_at' => '2024-04-01T12:00:00.000Z',
+                    'updated_at' => '2024-04-01T12:00:00.000Z'
+                ]
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getGenders();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_genders_with_params()
+    {
+        $mockResponse = [
+            'genders' => [
+                [
+                    'id' => 1,
+                    'name' => 'Male',
+                    'description' => 'Male gender identity',
+                    'created_at' => '2024-01-15T10:00:00.000Z',
+                    'updated_at' => '2024-01-15T10:00:00.000Z'
+                ]
+            ]
+        ];
+
+        $params = ['active' => true];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getGenders($params);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_handles_empty_genders_response()
+    {
+        $mockResponse = [
+            'genders' => []
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getGenders();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_handles_genders_api_error()
+    {
+        $errorResponse = [
+            'error' => 'Bad Request',
+            'message' => 'Invalid request parameters'
+        ];
+
+        $this->expectException(LoxoApiException::class);
+        $this->expectExceptionMessage('API request failed with status code: 400');
+
+        $service = $this->createServiceWithMockResponse(400, $errorResponse);
+        $service->getGenders();
+    }
+
+    public function test_it_can_get_ethnicities()
+    {
+        $mockResponse = [
+            'ethnicities' => [
+                [
+                    'id' => 1,
+                    'name' => 'White',
+                    'description' => 'White or Caucasian',
+                    'created_at' => '2024-01-15T10:00:00.000Z',
+                    'updated_at' => '2024-01-15T10:00:00.000Z'
+                ],
+                [
+                    'id' => 2,
+                    'name' => 'Black or African American',
+                    'description' => 'Black or African American',
+                    'created_at' => '2024-02-01T14:30:00.000Z',
+                    'updated_at' => '2024-02-01T14:30:00.000Z'
+                ],
+                [
+                    'id' => 3,
+                    'name' => 'Hispanic or Latino',
+                    'description' => 'Hispanic or Latino',
+                    'created_at' => '2024-03-01T09:15:00.000Z',
+                    'updated_at' => '2024-03-01T09:15:00.000Z'
+                ],
+                [
+                    'id' => 4,
+                    'name' => 'Asian',
+                    'description' => 'Asian',
+                    'created_at' => '2024-04-01T12:00:00.000Z',
+                    'updated_at' => '2024-04-01T12:00:00.000Z'
+                ],
+                [
+                    'id' => 5,
+                    'name' => 'Prefer not to say',
+                    'description' => 'Prefer not to disclose ethnicity',
+                    'created_at' => '2024-05-01T16:45:00.000Z',
+                    'updated_at' => '2024-05-01T16:45:00.000Z'
+                ]
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getEthnicities();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_ethnicities_with_params()
+    {
+        $mockResponse = [
+            'ethnicities' => [
+                [
+                    'id' => 3,
+                    'name' => 'Hispanic or Latino',
+                    'description' => 'Hispanic or Latino',
+                    'created_at' => '2024-03-01T09:15:00.000Z',
+                    'updated_at' => '2024-03-01T09:15:00.000Z'
+                ]
+            ]
+        ];
+
+        $params = ['category' => 'hispanic', 'active' => true];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getEthnicities($params);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_handles_empty_ethnicities_response()
+    {
+        $mockResponse = [
+            'ethnicities' => []
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getEthnicities();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_handles_ethnicities_api_error()
+    {
+        $errorResponse = [
+            'error' => 'Unauthorized',
+            'message' => 'Access denied to ethnicity data'
+        ];
+
+        $this->expectException(LoxoApiException::class);
+        $this->expectExceptionMessage('API request failed with status code: 401');
+
+        $service = $this->createServiceWithMockResponse(401, $errorResponse);
+        $service->getEthnicities();
+    }
+
+    public function test_it_can_get_diversity_types()
+    {
+        $mockResponse = [
+            'diversity_types' => [
+                [
+                    'id' => 1,
+                    'name' => 'Women',
+                    'description' => 'Women in the workplace',
+                    'category' => 'gender',
+                    'created_at' => '2024-01-15T10:00:00.000Z',
+                    'updated_at' => '2024-01-15T10:00:00.000Z'
+                ],
+                [
+                    'id' => 2,
+                    'name' => 'Underrepresented Minorities',
+                    'description' => 'Underrepresented ethnic and racial minorities',
+                    'category' => 'ethnicity',
+                    'created_at' => '2024-02-01T14:30:00.000Z',
+                    'updated_at' => '2024-02-01T14:30:00.000Z'
+                ],
+                [
+                    'id' => 3,
+                    'name' => 'LGBTQ+',
+                    'description' => 'Lesbian, Gay, Bisexual, Transgender, Queer/Questioning, and other sexual and gender minorities',
+                    'category' => 'sexual_orientation',
+                    'created_at' => '2024-03-01T09:15:00.000Z',
+                    'updated_at' => '2024-03-01T09:15:00.000Z'
+                ],
+                [
+                    'id' => 4,
+                    'name' => 'People with Disabilities',
+                    'description' => 'Individuals with physical, mental, or cognitive disabilities',
+                    'category' => 'disability',
+                    'created_at' => '2024-04-01T12:00:00.000Z',
+                    'updated_at' => '2024-04-01T12:00:00.000Z'
+                ],
+                [
+                    'id' => 5,
+                    'name' => 'Veterans',
+                    'description' => 'Military veterans and service members',
+                    'category' => 'veteran_status',
+                    'created_at' => '2024-05-01T16:45:00.000Z',
+                    'updated_at' => '2024-05-01T16:45:00.000Z'
+                ]
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getDiversityTypes();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_diversity_types_with_params()
+    {
+        $mockResponse = [
+            'diversity_types' => [
+                [
+                    'id' => 1,
+                    'name' => 'Women',
+                    'description' => 'Women in the workplace',
+                    'category' => 'gender',
+                    'created_at' => '2024-01-15T10:00:00.000Z',
+                    'updated_at' => '2024-01-15T10:00:00.000Z'
+                ]
+            ]
+        ];
+
+        $params = ['category' => 'gender', 'active' => true];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getDiversityTypes($params);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_handles_empty_diversity_types_response()
+    {
+        $mockResponse = [
+            'diversity_types' => []
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getDiversityTypes();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_handles_diversity_types_api_error()
+    {
+        $errorResponse = [
+            'error' => 'Forbidden',
+            'message' => 'Access denied to diversity types data'
+        ];
+
+        $this->expectException(LoxoApiException::class);
+        $this->expectExceptionMessage('API request failed with status code: 403');
+
+        $service = $this->createServiceWithMockResponse(403, $errorResponse);
+        $service->getDiversityTypes();
+    }
+
+    public function test_it_can_get_fee_types()
+    {
+        $mockResponse = [
+            'fee_types' => [
+                [
+                    'id' => 1,
+                    'name' => 'Percentage',
+                    'description' => 'Percentage-based fee structure',
+                    'calculation_method' => 'percentage',
+                    'default_rate' => 20.0,
+                    'created_at' => '2024-01-15T10:00:00.000Z',
+                    'updated_at' => '2024-01-15T10:00:00.000Z'
+                ],
+                [
+                    'id' => 2,
+                    'name' => 'Fixed Amount',
+                    'description' => 'Fixed dollar amount fee',
+                    'calculation_method' => 'fixed',
+                    'default_rate' => 5000.0,
+                    'created_at' => '2024-02-01T14:30:00.000Z',
+                    'updated_at' => '2024-02-01T14:30:00.000Z'
+                ],
+                [
+                    'id' => 3,
+                    'name' => 'Retainer',
+                    'description' => 'Retainer-based fee structure',
+                    'calculation_method' => 'retainer',
+                    'default_rate' => 10000.0,
+                    'created_at' => '2024-03-01T09:15:00.000Z',
+                    'updated_at' => '2024-03-01T09:15:00.000Z'
+                ]
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getFeeTypes();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_fee_types_with_params()
+    {
+        $mockResponse = [
+            'fee_types' => [
+                [
+                    'id' => 1,
+                    'name' => 'Percentage',
+                    'description' => 'Percentage-based fee structure',
+                    'calculation_method' => 'percentage',
+                    'default_rate' => 20.0,
+                    'created_at' => '2024-01-15T10:00:00.000Z',
+                    'updated_at' => '2024-01-15T10:00:00.000Z'
+                ]
+            ]
+        ];
+
+        $params = ['calculation_method' => 'percentage', 'active' => true];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getFeeTypes($params);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_handles_empty_fee_types_response()
+    {
+        $mockResponse = [
+            'fee_types' => []
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getFeeTypes();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_handles_fee_types_api_error()
+    {
+        $errorResponse = [
+            'error' => 'Bad Request',
+            'message' => 'Invalid fee type parameters'
+        ];
+
+        $this->expectException(LoxoApiException::class);
+        $this->expectExceptionMessage('API request failed with status code: 400');
+
+        $service = $this->createServiceWithMockResponse(400, $errorResponse);
+        $service->getFeeTypes();
+    }
+
+    public function test_it_can_get_equity_types()
+    {
+        $mockResponse = [
+            'equity_types' => [
+                [
+                    'id' => 1,
+                    'name' => 'Stock Options',
+                    'description' => 'Employee stock option plan',
+                    'vesting_type' => 'time_based',
+                    'created_at' => '2024-01-15T10:00:00.000Z',
+                    'updated_at' => '2024-01-15T10:00:00.000Z'
+                ],
+                [
+                    'id' => 2,
+                    'name' => 'RSU',
+                    'description' => 'Restricted Stock Units',
+                    'vesting_type' => 'time_based',
+                    'created_at' => '2024-02-01T14:30:00.000Z',
+                    'updated_at' => '2024-02-01T14:30:00.000Z'
+                ],
+                [
+                    'id' => 3,
+                    'name' => 'Phantom Stock',
+                    'description' => 'Phantom stock compensation',
+                    'vesting_type' => 'performance_based',
+                    'created_at' => '2024-03-01T09:15:00.000Z',
+                    'updated_at' => '2024-03-01T09:15:00.000Z'
+                ]
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getEquityTypes();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_equity_types_with_params()
+    {
+        $mockResponse = [
+            'equity_types' => [
+                [
+                    'id' => 1,
+                    'name' => 'Stock Options',
+                    'description' => 'Employee stock option plan',
+                    'vesting_type' => 'time_based',
+                    'created_at' => '2024-01-15T10:00:00.000Z',
+                    'updated_at' => '2024-01-15T10:00:00.000Z'
+                ]
+            ]
+        ];
+
+        $params = ['vesting_type' => 'time_based', 'active' => true];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getEquityTypes($params);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_handles_empty_equity_types_response()
+    {
+        $mockResponse = [
+            'equity_types' => []
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getEquityTypes();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_handles_equity_types_api_error()
+    {
+        $errorResponse = [
+            'error' => 'Unauthorized',
+            'message' => 'Access denied to equity types'
+        ];
+
+        $this->expectException(LoxoApiException::class);
+        $this->expectExceptionMessage('API request failed with status code: 401');
+
+        $service = $this->createServiceWithMockResponse(401, $errorResponse);
+        $service->getEquityTypes();
+    }
+
+    public function test_it_can_get_compensation_types()
+    {
+        $mockResponse = [
+            'compensation_types' => [
+                [
+                    'id' => 1,
+                    'name' => 'Base Salary',
+                    'description' => 'Annual base salary compensation',
+                    'category' => 'salary',
+                    'frequency' => 'annual',
+                    'created_at' => '2024-01-15T10:00:00.000Z',
+                    'updated_at' => '2024-01-15T10:00:00.000Z'
+                ],
+                [
+                    'id' => 2,
+                    'name' => 'Hourly Wage',
+                    'description' => 'Hourly wage compensation',
+                    'category' => 'wage',
+                    'frequency' => 'hourly',
+                    'created_at' => '2024-02-01T14:30:00.000Z',
+                    'updated_at' => '2024-02-01T14:30:00.000Z'
+                ],
+                [
+                    'id' => 3,
+                    'name' => 'Commission',
+                    'description' => 'Performance-based commission',
+                    'category' => 'variable',
+                    'frequency' => 'variable',
+                    'created_at' => '2024-03-01T09:15:00.000Z',
+                    'updated_at' => '2024-03-01T09:15:00.000Z'
+                ]
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getCompensationTypes();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_compensation_types_with_params()
+    {
+        $mockResponse = [
+            'compensation_types' => [
+                [
+                    'id' => 1,
+                    'name' => 'Base Salary',
+                    'description' => 'Annual base salary compensation',
+                    'category' => 'salary',
+                    'frequency' => 'annual',
+                    'created_at' => '2024-01-15T10:00:00.000Z',
+                    'updated_at' => '2024-01-15T10:00:00.000Z'
+                ]
+            ]
+        ];
+
+        $params = ['category' => 'salary', 'frequency' => 'annual'];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getCompensationTypes($params);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_handles_empty_compensation_types_response()
+    {
+        $mockResponse = [
+            'compensation_types' => []
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getCompensationTypes();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_handles_compensation_types_api_error()
+    {
+        $errorResponse = [
+            'error' => 'Internal Server Error',
+            'message' => 'Unable to retrieve compensation types'
+        ];
+
+        $this->expectException(LoxoApiException::class);
+        $this->expectExceptionMessage('API request failed with status code: 500');
+
+        $service = $this->createServiceWithMockResponse(500, $errorResponse);
+        $service->getCompensationTypes();
+    }
+
+    public function test_it_can_get_email_types()
+    {
+        $mockResponse = [
+            'email_types' => [
+                [
+                    'id' => 1,
+                    'name' => 'Work',
+                    'description' => 'Work email address',
+                    'is_primary' => true,
+                    'created_at' => '2024-01-15T10:00:00.000Z',
+                    'updated_at' => '2024-01-15T10:00:00.000Z'
+                ],
+                [
+                    'id' => 2,
+                    'name' => 'Personal',
+                    'description' => 'Personal email address',
+                    'is_primary' => false,
+                    'created_at' => '2024-02-01T14:30:00.000Z',
+                    'updated_at' => '2024-02-01T14:30:00.000Z'
+                ],
+                [
+                    'id' => 3,
+                    'name' => 'Other',
+                    'description' => 'Other email address',
+                    'is_primary' => false,
+                    'created_at' => '2024-03-01T09:15:00.000Z',
+                    'updated_at' => '2024-03-01T09:15:00.000Z'
+                ]
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getEmailTypes();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_email_types_with_params()
+    {
+        $mockResponse = [
+            'email_types' => [
+                [
+                    'id' => 1,
+                    'name' => 'Work',
+                    'description' => 'Work email address',
+                    'is_primary' => true,
+                    'created_at' => '2024-01-15T10:00:00.000Z',
+                    'updated_at' => '2024-01-15T10:00:00.000Z'
+                ]
+            ]
+        ];
+
+        $params = ['is_primary' => true, 'active' => true];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getEmailTypes($params);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_handles_empty_email_types_response()
+    {
+        $mockResponse = [
+            'email_types' => []
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getEmailTypes();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_handles_email_types_api_error()
+    {
+        $errorResponse = [
+            'error' => 'Bad Request',
+            'message' => 'Invalid email type parameters'
+        ];
+
+        $this->expectException(LoxoApiException::class);
+        $this->expectExceptionMessage('API request failed with status code: 400');
+
+        $service = $this->createServiceWithMockResponse(400, $errorResponse);
+        $service->getEmailTypes();
+    }
+
+    public function test_it_can_get_email_tracking()
+    {
+        $mockResponse = [
+            'email_tracking' => [
+                [
+                    'id' => 1,
+                    'email_id' => 'msg_123456',
+                    'person_id' => 789,
+                    'subject' => 'Follow up on your application',
+                    'sent_at' => '2024-01-15T10:00:00.000Z',
+                    'opened_at' => '2024-01-15T10:30:00.000Z',
+                    'clicked_at' => '2024-01-15T10:45:00.000Z',
+                    'status' => 'delivered',
+                    'open_count' => 2,
+                    'click_count' => 1,
+                    'created_at' => '2024-01-15T10:00:00.000Z'
+                ],
+                [
+                    'id' => 2,
+                    'email_id' => 'msg_789012',
+                    'person_id' => 456,
+                    'subject' => 'New job opportunity',
+                    'sent_at' => '2024-01-16T14:00:00.000Z',
+                    'opened_at' => null,
+                    'clicked_at' => null,
+                    'status' => 'sent',
+                    'open_count' => 0,
+                    'click_count' => 0,
+                    'created_at' => '2024-01-16T14:00:00.000Z'
+                ]
+            ],
+            'scroll_id' => 'next_page_cursor_456'
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getEmailTracking();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_email_tracking_with_scroll_id()
+    {
+        $mockResponse = [
+            'email_tracking' => [
+                [
+                    'id' => 3,
+                    'email_id' => 'msg_345678',
+                    'person_id' => 123,
+                    'subject' => 'Interview invitation',
+                    'sent_at' => '2024-01-17T09:00:00.000Z',
+                    'opened_at' => '2024-01-17T09:15:00.000Z',
+                    'clicked_at' => '2024-01-17T09:20:00.000Z',
+                    'status' => 'delivered',
+                    'open_count' => 1,
+                    'click_count' => 1,
+                    'created_at' => '2024-01-17T09:00:00.000Z'
+                ]
+            ],
+            'scroll_id' => 'next_page_cursor_789'
+        ];
+
+        $params = ['scroll_id' => 'previous_page_cursor_456'];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getEmailTracking($params);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_email_tracking_with_person_ids()
+    {
+        $mockResponse = [
+            'email_tracking' => [
+                [
+                    'id' => 4,
+                    'email_id' => 'msg_901234',
+                    'person_id' => 789,
+                    'subject' => 'Thank you for your interest',
+                    'sent_at' => '2024-01-18T11:00:00.000Z',
+                    'opened_at' => '2024-01-18T11:30:00.000Z',
+                    'clicked_at' => null,
+                    'status' => 'delivered',
+                    'open_count' => 1,
+                    'click_count' => 0,
+                    'created_at' => '2024-01-18T11:00:00.000Z'
+                ]
+            ]
+        ];
+
+        $params = ['person_ids' => [789, 456]];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getEmailTracking($params);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_email_tracking_with_date_filters()
+    {
+        $mockResponse = [
+            'email_tracking' => [
+                [
+                    'id' => 5,
+                    'email_id' => 'msg_567890',
+                    'person_id' => 321,
+                    'subject' => 'Weekly update',
+                    'sent_at' => '2024-01-19T16:00:00.000Z',
+                    'opened_at' => '2024-01-19T16:15:00.000Z',
+                    'clicked_at' => '2024-01-19T16:30:00.000Z',
+                    'status' => 'delivered',
+                    'open_count' => 1,
+                    'click_count' => 2,
+                    'created_at' => '2024-01-19T16:00:00.000Z'
+                ]
+            ]
+        ];
+
+        $params = [
+            'created_at_start' => '2024-01-19T00:00:00.000Z',
+            'created_at_end' => '2024-01-19T23:59:59.000Z'
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getEmailTracking($params);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_email_tracking_with_all_parameters()
+    {
+        $mockResponse = [
+            'email_tracking' => [
+                [
+                    'id' => 6,
+                    'email_id' => 'msg_678901',
+                    'person_id' => 654,
+                    'subject' => 'Comprehensive tracking test',
+                    'sent_at' => '2024-01-20T12:00:00.000Z',
+                    'opened_at' => '2024-01-20T12:05:00.000Z',
+                    'clicked_at' => '2024-01-20T12:10:00.000Z',
+                    'status' => 'delivered',
+                    'open_count' => 3,
+                    'click_count' => 1,
+                    'created_at' => '2024-01-20T12:00:00.000Z'
+                ]
+            ],
+            'scroll_id' => 'comprehensive_cursor_123'
+        ];
+
+        $params = [
+            'scroll_id' => 'start_cursor_456',
+            'per_page' => 10,
+            'person_ids' => [654, 321, 789],
+            'created_at_start' => '2024-01-20T00:00:00.000Z',
+            'created_at_end' => '2024-01-20T23:59:59.000Z'
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getEmailTracking($params);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_handles_empty_email_tracking_response()
+    {
+        $mockResponse = [
+            'email_tracking' => [],
+            'scroll_id' => null
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getEmailTracking();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_handles_email_tracking_api_error()
+    {
+        $errorResponse = [
+            'error' => 'Unauthorized',
+            'message' => 'Access denied to email tracking data'
+        ];
+
+        $this->expectException(LoxoApiException::class);
+        $this->expectExceptionMessage('API request failed with status code: 401');
+
+        $service = $this->createServiceWithMockResponse(401, $errorResponse);
+        $service->getEmailTracking();
+    }
+
+    public function test_it_can_get_disability_statuses()
+    {
+        $mockResponse = [
+            'disability_statuses' => [
+                [
+                    'id' => 1,
+                    'name' => 'No Disability',
+                    'description' => 'Individual does not have a disability',
+                    'code' => 'NO_DISABILITY',
+                    'is_protected' => false,
+                    'created_at' => '2024-01-15T10:00:00.000Z',
+                    'updated_at' => '2024-01-15T10:00:00.000Z'
+                ],
+                [
+                    'id' => 2,
+                    'name' => 'Has Disability',
+                    'description' => 'Individual has a disability as defined by the ADA',
+                    'code' => 'HAS_DISABILITY',
+                    'is_protected' => true,
+                    'created_at' => '2024-02-01T14:30:00.000Z',
+                    'updated_at' => '2024-02-01T14:30:00.000Z'
+                ],
+                [
+                    'id' => 3,
+                    'name' => 'Prefer Not to Answer',
+                    'description' => 'Individual prefers not to disclose disability status',
+                    'code' => 'PREFER_NOT_TO_ANSWER',
+                    'is_protected' => true,
+                    'created_at' => '2024-03-01T09:15:00.000Z',
+                    'updated_at' => '2024-03-01T09:15:00.000Z'
+                ]
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getDisabilityStatuses();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_disability_statuses_with_params()
+    {
+        $mockResponse = [
+            'disability_statuses' => [
+                [
+                    'id' => 2,
+                    'name' => 'Has Disability',
+                    'description' => 'Individual has a disability as defined by the ADA',
+                    'code' => 'HAS_DISABILITY',
+                    'is_protected' => true,
+                    'created_at' => '2024-02-01T14:30:00.000Z',
+                    'updated_at' => '2024-02-01T14:30:00.000Z'
+                ]
+            ]
+        ];
+
+        $params = ['is_protected' => true, 'active' => true];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getDisabilityStatuses($params);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_handles_empty_disability_statuses_response()
+    {
+        $mockResponse = [
+            'disability_statuses' => []
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getDisabilityStatuses();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_handles_disability_statuses_api_error()
+    {
+        $errorResponse = [
+            'error' => 'Forbidden',
+            'message' => 'Access denied to disability status data'
+        ];
+
+        $this->expectException(LoxoApiException::class);
+        $this->expectExceptionMessage('API request failed with status code: 403');
+
+        $service = $this->createServiceWithMockResponse(403, $errorResponse);
+        $service->getDisabilityStatuses();
+    }
+
+    public function test_it_can_get_countries()
+    {
+        $mockResponse = [
+            'countries' => [
+                [
+                    'id' => 1,
+                    'name' => 'United States',
+                    'code' => 'US',
+                    'iso_code' => 'USA',
+                    'phone_code' => '+1',
+                    'created_at' => '2024-01-15T10:00:00.000Z',
+                    'updated_at' => '2024-01-15T10:00:00.000Z'
+                ],
+                [
+                    'id' => 2,
+                    'name' => 'Canada',
+                    'code' => 'CA',
+                    'iso_code' => 'CAN',
+                    'phone_code' => '+1',
+                    'created_at' => '2024-02-01T14:30:00.000Z',
+                    'updated_at' => '2024-02-01T14:30:00.000Z'
+                ],
+                [
+                    'id' => 3,
+                    'name' => 'United Kingdom',
+                    'code' => 'GB',
+                    'iso_code' => 'GBR',
+                    'phone_code' => '+44',
+                    'created_at' => '2024-03-01T09:15:00.000Z',
+                    'updated_at' => '2024-03-01T09:15:00.000Z'
+                ]
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getCountries();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_countries_with_params()
+    {
+        $mockResponse = [
+            'countries' => [
+                [
+                    'id' => 1,
+                    'name' => 'United States',
+                    'code' => 'US',
+                    'iso_code' => 'USA',
+                    'phone_code' => '+1',
+                    'created_at' => '2024-01-15T10:00:00.000Z',
+                    'updated_at' => '2024-01-15T10:00:00.000Z'
+                ]
+            ]
+        ];
+
+        $params = ['query' => 'United', 'per_page' => 10, 'page' => 1];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getCountries($params);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_handles_empty_countries_response()
+    {
+        $mockResponse = [
+            'countries' => []
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getCountries();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_handles_countries_api_error()
+    {
+        $errorResponse = [
+            'error' => 'Bad Request',
+            'message' => 'Invalid country search parameters'
+        ];
+
+        $this->expectException(LoxoApiException::class);
+        $this->expectExceptionMessage('API request failed with status code: 400');
+
+        $service = $this->createServiceWithMockResponse(400, $errorResponse);
+        $service->getCountries();
+    }
+
+    public function test_it_can_get_states()
+    {
+        $mockResponse = [
+            'states' => [
+                [
+                    'id' => 1,
+                    'name' => 'California',
+                    'code' => 'CA',
+                    'country_id' => 1,
+                    'created_at' => '2024-01-15T10:00:00.000Z',
+                    'updated_at' => '2024-01-15T10:00:00.000Z'
+                ],
+                [
+                    'id' => 2,
+                    'name' => 'New York',
+                    'code' => 'NY',
+                    'country_id' => 1,
+                    'created_at' => '2024-02-01T14:30:00.000Z',
+                    'updated_at' => '2024-02-01T14:30:00.000Z'
+                ],
+                [
+                    'id' => 3,
+                    'name' => 'Texas',
+                    'code' => 'TX',
+                    'country_id' => 1,
+                    'created_at' => '2024-03-01T09:15:00.000Z',
+                    'updated_at' => '2024-03-01T09:15:00.000Z'
+                ]
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getStates(1);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_states_with_params()
+    {
+        $mockResponse = [
+            'states' => [
+                [
+                    'id' => 1,
+                    'name' => 'California',
+                    'code' => 'CA',
+                    'country_id' => 1,
+                    'created_at' => '2024-01-15T10:00:00.000Z',
+                    'updated_at' => '2024-01-15T10:00:00.000Z'
+                ]
+            ]
+        ];
+
+        $params = ['query' => 'California', 'per_page' => 5, 'page' => 1, 'country_id' => 1];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getStates(1, $params);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_handles_empty_states_response()
+    {
+        $mockResponse = [
+            'states' => []
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getStates(1);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_handles_states_api_error()
+    {
+        $errorResponse = [
+            'error' => 'Not Found',
+            'message' => 'Country not found'
+        ];
+
+        $this->expectException(LoxoApiException::class);
+        $this->expectExceptionMessage('API request failed with status code: 404');
+
+        $service = $this->createServiceWithMockResponse(404, $errorResponse);
+        $service->getStates(999);
+    }
+
+    public function test_it_can_get_cities()
+    {
+        $mockResponse = [
+            'cities' => [
+                [
+                    'id' => 1,
+                    'name' => 'Los Angeles',
+                    'state_id' => 1,
+                    'country_id' => 1,
+                    'latitude' => 34.0522,
+                    'longitude' => -118.2437,
+                    'created_at' => '2024-01-15T10:00:00.000Z',
+                    'updated_at' => '2024-01-15T10:00:00.000Z'
+                ],
+                [
+                    'id' => 2,
+                    'name' => 'San Francisco',
+                    'state_id' => 1,
+                    'country_id' => 1,
+                    'latitude' => 37.7749,
+                    'longitude' => -122.4194,
+                    'created_at' => '2024-02-01T14:30:00.000Z',
+                    'updated_at' => '2024-02-01T14:30:00.000Z'
+                ]
+            ],
+            'scroll_id' => 'next_page_cursor_123'
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getCities(1, 1);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_cities_with_params()
+    {
+        $mockResponse = [
+            'cities' => [
+                [
+                    'id' => 1,
+                    'name' => 'Los Angeles',
+                    'state_id' => 1,
+                    'country_id' => 1,
+                    'latitude' => 34.0522,
+                    'longitude' => -118.2437,
+                    'created_at' => '2024-01-15T10:00:00.000Z',
+                    'updated_at' => '2024-01-15T10:00:00.000Z'
+                ]
+            ],
+            'scroll_id' => 'next_page_cursor_456'
+        ];
+
+        $params = ['scroll_id' => 'start_cursor', 'per_page' => 25, 'country_id' => 1, 'state_id' => 1];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getCities(1, 1, $params);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_handles_empty_cities_response()
+    {
+        $mockResponse = [
+            'cities' => [],
+            'scroll_id' => null
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getCities(1, 1);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_handles_cities_api_error()
+    {
+        $errorResponse = [
+            'error' => 'Not Found',
+            'message' => 'State not found for the specified country'
+        ];
+
+        $this->expectException(LoxoApiException::class);
+        $this->expectExceptionMessage('API request failed with status code: 404');
+
+        $service = $this->createServiceWithMockResponse(404, $errorResponse);
+        $service->getCities(1, 999);
+    }
+
+    public function test_it_can_get_currencies()
+    {
+        $mockResponse = [
+            'currencies' => [
+                [
+                    'id' => 1,
+                    'name' => 'US Dollar',
+                    'code' => 'USD',
+                    'symbol' => '$',
+                    'decimal_places' => 2,
+                    'is_default' => true,
+                    'created_at' => '2024-01-15T10:00:00.000Z',
+                    'updated_at' => '2024-01-15T10:00:00.000Z'
+                ],
+                [
+                    'id' => 2,
+                    'name' => 'Euro',
+                    'code' => 'EUR',
+                    'symbol' => '€',
+                    'decimal_places' => 2,
+                    'is_default' => false,
+                    'created_at' => '2024-02-01T14:30:00.000Z',
+                    'updated_at' => '2024-02-01T14:30:00.000Z'
+                ],
+                [
+                    'id' => 3,
+                    'name' => 'British Pound',
+                    'code' => 'GBP',
+                    'symbol' => '£',
+                    'decimal_places' => 2,
+                    'is_default' => false,
+                    'created_at' => '2024-03-01T09:15:00.000Z',
+                    'updated_at' => '2024-03-01T09:15:00.000Z'
+                ]
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getCurrencies();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_currencies_with_params()
+    {
+        $mockResponse = [
+            'currencies' => [
+                [
+                    'id' => 1,
+                    'name' => 'US Dollar',
+                    'code' => 'USD',
+                    'symbol' => '$',
+                    'decimal_places' => 2,
+                    'is_default' => true,
+                    'created_at' => '2024-01-15T10:00:00.000Z',
+                    'updated_at' => '2024-01-15T10:00:00.000Z'
+                ]
+            ]
+        ];
+
+        $params = ['is_default' => true, 'active' => true];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getCurrencies($params);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_handles_empty_currencies_response()
+    {
+        $mockResponse = [
+            'currencies' => []
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getCurrencies();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_handles_currencies_api_error()
+    {
+        $errorResponse = [
+            'error' => 'Internal Server Error',
+            'message' => 'Unable to retrieve currencies'
+        ];
+
+        $this->expectException(LoxoApiException::class);
+        $this->expectExceptionMessage('API request failed with status code: 500');
+
+        $service = $this->createServiceWithMockResponse(500, $errorResponse);
+        $service->getCurrencies();
+    }
+
+    public function test_it_can_get_company_global_statuses()
+    {
+        $mockResponse = [
+            'company_global_statuses' => [
+                [
+                    'id' => 1,
+                    'name' => 'Active',
+                    'description' => 'Company is actively recruiting',
+                    'color' => '#28a745',
+                    'is_default' => true,
+                    'created_at' => '2024-01-15T10:00:00.000Z',
+                    'updated_at' => '2024-01-15T10:00:00.000Z'
+                ],
+                [
+                    'id' => 2,
+                    'name' => 'Inactive',
+                    'description' => 'Company is not currently recruiting',
+                    'color' => '#dc3545',
+                    'is_default' => false,
+                    'created_at' => '2024-02-01T14:30:00.000Z',
+                    'updated_at' => '2024-02-01T14:30:00.000Z'
+                ],
+                [
+                    'id' => 3,
+                    'name' => 'On Hold',
+                    'description' => 'Company recruitment is temporarily paused',
+                    'color' => '#ffc107',
+                    'is_default' => false,
+                    'created_at' => '2024-03-01T09:15:00.000Z',
+                    'updated_at' => '2024-03-01T09:15:00.000Z'
+                ]
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getCompanyGlobalStatuses();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_company_global_statuses_with_params()
+    {
+        $mockResponse = [
+            'company_global_statuses' => [
+                [
+                    'id' => 1,
+                    'name' => 'Active',
+                    'description' => 'Company is actively recruiting',
+                    'color' => '#28a745',
+                    'is_default' => true,
+                    'created_at' => '2024-01-15T10:00:00.000Z',
+                    'updated_at' => '2024-01-15T10:00:00.000Z'
+                ]
+            ]
+        ];
+
+        $params = ['is_default' => true, 'active' => true];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getCompanyGlobalStatuses($params);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_handles_empty_company_global_statuses_response()
+    {
+        $mockResponse = [
+            'company_global_statuses' => []
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getCompanyGlobalStatuses();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_handles_company_global_statuses_api_error()
+    {
+        $errorResponse = [
+            'error' => 'Forbidden',
+            'message' => 'Access denied to company global statuses'
+        ];
+
+        $this->expectException(LoxoApiException::class);
+        $this->expectExceptionMessage('API request failed with status code: 403');
+
+        $service = $this->createServiceWithMockResponse(403, $errorResponse);
+        $service->getCompanyGlobalStatuses();
+    }
+
+    public function test_it_can_get_company_types()
+    {
+        $mockResponse = [
+            'company_types' => [
+                [
+                    'id' => 1,
+                    'name' => 'Client',
+                    'description' => 'Companies that hire through our agency',
+                    'is_default' => true,
+                    'created_at' => '2024-01-15T10:00:00.000Z',
+                    'updated_at' => '2024-01-15T10:00:00.000Z'
+                ],
+                [
+                    'id' => 2,
+                    'name' => 'Prospect',
+                    'description' => 'Potential client companies',
+                    'is_default' => false,
+                    'created_at' => '2024-02-01T14:30:00.000Z',
+                    'updated_at' => '2024-02-01T14:30:00.000Z'
+                ],
+                [
+                    'id' => 3,
+                    'name' => 'Partner',
+                    'description' => 'Strategic partner companies',
+                    'is_default' => false,
+                    'created_at' => '2024-03-01T09:15:00.000Z',
+                    'updated_at' => '2024-03-01T09:15:00.000Z'
+                ],
+                [
+                    'id' => 4,
+                    'name' => 'Vendor',
+                    'description' => 'Service provider companies',
+                    'is_default' => false,
+                    'created_at' => '2024-04-01T11:45:00.000Z',
+                    'updated_at' => '2024-04-01T11:45:00.000Z'
+                ]
+            ]
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getCompanyTypes();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_can_get_company_types_with_params()
+    {
+        $mockResponse = [
+            'company_types' => [
+                [
+                    'id' => 1,
+                    'name' => 'Client',
+                    'description' => 'Companies that hire through our agency',
+                    'is_default' => true,
+                    'created_at' => '2024-01-15T10:00:00.000Z',
+                    'updated_at' => '2024-01-15T10:00:00.000Z'
+                ]
+            ]
+        ];
+
+        $params = ['is_default' => true, 'type' => 'client'];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getCompanyTypes($params);
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_handles_empty_company_types_response()
+    {
+        $mockResponse = [
+            'company_types' => []
+        ];
+
+        $service = $this->createServiceWithMockResponse(200, $mockResponse);
+        $result = $service->getCompanyTypes();
+
+        $this->assertEquals($mockResponse, $result);
+    }
+
+    public function test_it_handles_company_types_api_error()
+    {
+        $errorResponse = [
+            'error' => 'Internal Server Error',
+            'message' => 'Unable to retrieve company types'
+        ];
+
+        $this->expectException(LoxoApiException::class);
+        $this->expectExceptionMessage('API request failed with status code: 500');
+
+        $service = $this->createServiceWithMockResponse(500, $errorResponse);
+        $service->getCompanyTypes();
+    }
 }

@@ -21,6 +21,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `getPersonTypes()` - Get person types for classification
   - `getPersonShareFieldTypes()` - Get person share field types for data sharing configuration
   - `getPersonLists()` - Get person lists for candidate organization
+- **New Data Management API Endpoints:**
+  - `getMerges()` - Get merge records with comprehensive filtering options (scroll_id, per_page, item_type, item_ids, created_before, created_after)
+  - `getQuestionTypes()` - Get question types for the agency
+  - `getSocialProfileTypes()` - Get social profile types for the agency
+  - `getEducationTypes()` - Get education types for the agency
+- **New Demographics & Diversity API Endpoints:**
+  - `getGenders()` - Get gender options for the agency
+  - `getEthnicities()` - Get ethnicity options for the agency
+  - `getDiversityTypes()` - Get diversity types for the agency
+  - `getDisabilityStatuses()` - Get disability status options for the agency
+- **New Compensation & Financial API Endpoints:**
+  - `getFeeTypes()` - Get fee types for the agency
+  - `getEquityTypes()` - Get equity types for the agency
+  - `getCompensationTypes()` - Get compensation types for the agency
+- **New Email & Communication API Endpoints:**
+  - `getEmailTypes()` - Get email types for the agency
+  - `getEmailTracking()` - Get email tracking data with comprehensive filtering options (scroll_id, per_page, person_ids, created_at_start, created_at_end)
+- **New Geography & Location API Endpoints:**
+  - `getCountries()` - Get countries with search and pagination support (per_page, page, query)
+  - `getStates()` - Get states for a specific country (page, per_page, query, country_id)
+  - `getCities()` - Get cities for a specific country and state (scroll_id, per_page, country_id, state_id)
+  - `getCurrencies()` - Get currencies for the agency
+- **New Company Management API Endpoints:**
+  - `getCompanyGlobalStatuses()` - Get company global statuses for the agency
+  - `getCompanyTypes()` - Get company types for the agency
 - **Enhanced Communication Support:**
   - Complete SMS messaging functionality for the Loxo platform
   - Support for SMS filtering by date range and pagination
@@ -34,16 +59,52 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Person types categorization for better organization
   - Person share field types for data sharing configuration
   - Person lists management for candidate organization
+- **Enhanced Data Management Support:**
+  - Merge records tracking with comprehensive filtering capabilities
+  - Question type management for custom forms and surveys
+  - Social profile types management for candidate social media profiles
+  - Education types management for academic qualification classification
+- **Enhanced Demographics & Diversity Support:**
+  - Gender identity options for inclusive candidate profiles
+  - Ethnicity classification for diversity tracking and reporting
+  - Comprehensive diversity types for advanced diversity and inclusion initiatives
+  - Disability status management for ADA compliance and accessibility tracking
+- **Enhanced Compensation & Financial Support:**
+  - Fee type management for recruitment agency billing structures
+  - Equity compensation types for modern startup and corporate packages
+  - Comprehensive compensation classification for salary and wage management
+- **Enhanced Email & Communication Support:**
+  - Email type classification for contact management
+  - Advanced email tracking with open/click analytics and comprehensive filtering
+- **Enhanced Geography & Location Support:**
+  - Complete geographical hierarchy support (countries → states → cities)
+  - Advanced search capabilities with Lucene query syntax
+  - Comprehensive currency management for international operations
+  - Hierarchical location data with coordinates for cities
+- **Enhanced Company Management Support:**
+  - Company global status tracking for recruitment pipeline management
+  - Company type classification for client relationship management
+  - Status-based workflow automation and reporting capabilities
 - **Testing:**
   - Added comprehensive unit tests for all SMS endpoints
   - Added unit tests for configuration endpoints (seniority levels, scorecard types, pronouns, phone types, person types, person share field types, person lists)
+  - Added comprehensive unit tests for data management endpoints (merges, question types, social profile types, education types)
+  - Added comprehensive unit tests for demographics & diversity endpoints (genders, ethnicities, diversity types, disability statuses)
+  - Added comprehensive unit tests for compensation & financial endpoints (fee types, equity types, compensation types)
+  - Added comprehensive unit tests for email & communication endpoints (email types, email tracking)
+  - Added comprehensive unit tests for geography & location endpoints (countries, states, cities, currencies)
+  - Added comprehensive unit tests for company management endpoints (company global statuses, company types)
   - All tests include success scenarios, parameter validation, and error handling
-  - Total test coverage: 87 tests with 122 assertions
+  - Total test coverage: 163 tests with 202 assertions
 - **Documentation:**
   - New SMS example file (`examples/sms_example.php`)
   - Updated README.md with SMS and configuration usage examples
-  - Updated API coverage from 26 to 37 endpoints (25.7% coverage)
+  - Updated API coverage from 54 to 56 endpoints (38.9% coverage)
   - Updated CONTRIBUTING.md with current implementation status
+- **Development Tools:**
+  - Updated Makefile with individual test commands for all new endpoints
+  - Added grouped test commands for endpoint categories (geography, company, demographics, etc.)
+  - Added `test-new-endpoints` command to test all newly implemented endpoints at once
 
 ## [1.1.1] - 2025-01-19
 

@@ -335,6 +335,161 @@ interface LoxoApiInterface
     public function getPersonLists(array $params = []): array;
 
     /**
+     * Get merges for the agency
+     *
+     * @param array $params Query parameters (scroll_id, per_page, item_type, item_ids, created_before, created_after)
+     * @return array
+     */
+    public function getMerges(array $params = []): array;
+
+    /**
+     * Get question types for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     */
+    public function getQuestionTypes(array $params = []): array;
+
+    /**
+     * Get social profile types for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     */
+    public function getSocialProfileTypes(array $params = []): array;
+
+    /**
+     * Get education types for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     */
+    public function getEducationTypes(array $params = []): array;
+
+    /**
+     * Get genders for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     */
+    public function getGenders(array $params = []): array;
+
+    /**
+     * Get ethnicities for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     */
+    public function getEthnicities(array $params = []): array;
+
+    /**
+     * Get diversity types for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     */
+    public function getDiversityTypes(array $params = []): array;
+
+    /**
+     * Get fee types for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     */
+    public function getFeeTypes(array $params = []): array;
+
+    /**
+     * Get equity types for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     */
+    public function getEquityTypes(array $params = []): array;
+
+    /**
+     * Get compensation types for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     */
+    public function getCompensationTypes(array $params = []): array;
+
+    /**
+     * Get email types for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     */
+    public function getEmailTypes(array $params = []): array;
+
+    /**
+     * Get email tracking data for the agency
+     *
+     * @param array $params Query parameters (scroll_id, per_page, person_ids, created_at_start, created_at_end)
+     * @return array
+     */
+    public function getEmailTracking(array $params = []): array;
+
+    /**
+     * Get disability statuses for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     */
+    public function getDisabilityStatuses(array $params = []): array;
+
+    /**
+     * Get countries for the agency
+     *
+     * @param array $params Query parameters (per_page, page, query)
+     * @return array
+     */
+    public function getCountries(array $params = []): array;
+
+    /**
+     * Get states for a specific country
+     *
+     * @param int $countryId Country ID
+     * @param array $params Query parameters (page, per_page, query, country_id)
+     * @return array
+     */
+    public function getStates(int $countryId, array $params = []): array;
+
+    /**
+     * Get cities for a specific country and state
+     *
+     * @param int $countryId Country ID
+     * @param int $stateId State ID
+     * @param array $params Query parameters (scroll_id, per_page, country_id, state_id)
+     * @return array
+     */
+    public function getCities(int $countryId, int $stateId, array $params = []): array;
+
+    /**
+     * Get currencies for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     */
+    public function getCurrencies(array $params = []): array;
+
+    /**
+     * Get company global statuses for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     */
+    public function getCompanyGlobalStatuses(array $params = []): array;
+
+    /**
+     * Get company types for the agency
+     *
+     * @param array $params Query parameters
+     * @return array
+     */
+    public function getCompanyTypes(array $params = []): array;
+
+    /**
      * Make a GET request to the Loxo API
      *
      * @param string $endpoint

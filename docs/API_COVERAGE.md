@@ -17,9 +17,9 @@ This file tracks the coverage of Loxo API endpoints in our package.
 ## Coverage Statistics
 
 **Total endpoints:** 144  
-**Implemented:** 37 (25.7%)  
+**Implemented:** 56 (38.9%)  
 **In development:** 0 (0%)  
-**Not implemented:** 107 (74.3%)
+**Not implemented:** 88 (61.1%)
 
 ---
 
@@ -53,25 +53,25 @@ This file tracks the coverage of Loxo API endpoints in our package.
 | `/companies/{company_id}/phones/{id}`                              | GET, PUT, DELETE | ❌      |                   |
 
 ## Company Types & Statuses
-| Endpoint                   | Methods | Status | Notes |
-| -------------------------- | ------- | ------ | ----- |
-| `/company_global_statuses` | GET     | ❌      |       |
-| `/company_types`           | GET     | ❌      |       |
+| Endpoint                   | Methods | Status | Notes             |
+| -------------------------- | ------- | ------ | ----------------- |
+| `/company_global_statuses` | GET     | ✅      | Fully implemented |
+| `/company_types`           | GET     | ✅      | Fully implemented |
 
 ## Compensation & Types
-| Endpoint              | Methods | Status | Notes |
-| --------------------- | ------- | ------ | ----- |
-| `/compensation_types` | GET     | ❌      |       |
-| `/equity_types`       | GET     | ❌      |       |
-| `/fee_types`          | GET     | ❌      |       |
+| Endpoint              | Methods | Status | Notes             |
+| --------------------- | ------- | ------ | ----------------- |
+| `/compensation_types` | GET     | ✅      | Fully implemented |
+| `/equity_types`       | GET     | ✅      | Fully implemented |
+| `/fee_types`          | GET     | ✅      | Fully implemented |
 
 ## Geography
-| Endpoint                                           | Methods | Status | Notes |
-| -------------------------------------------------- | ------- | ------ | ----- |
-| `/countries`                                       | GET     | ❌      |       |
-| `/countries/{country_id}/states`                   | GET     | ❌      |       |
-| `/countries/{country_id}/states/{state_id}/cities` | GET     | ❌      |       |
-| `/currencies`                                      | GET     | ❌      |       |
+| Endpoint                                           | Methods | Status | Notes             |
+| -------------------------------------------------- | ------- | ------ | ----------------- |
+| `/countries`                                       | GET     | ✅      | Fully implemented |
+| `/countries/{country_id}/states`                   | GET     | ✅      | Fully implemented |
+| `/countries/{country_id}/states/{state_id}/cities` | GET     | ✅      | Fully implemented |
+| `/currencies`                                      | GET     | ✅      | Fully implemented |
 
 ## Deals & Workflows
 | Endpoint                  | Methods          | Status | Notes |
@@ -85,10 +85,10 @@ This file tracks the coverage of Loxo API endpoints in our package.
 ## Demographics & Diversity
 | Endpoint               | Methods | Status | Notes             |
 | ---------------------- | ------- | ------ | ----------------- |
-| `/disability_statuses` | GET     | ❌      |                   |
-| `/diversity_types`     | GET     | ❌      |                   |
-| `/ethnicities`         | GET     | ❌      |                   |
-| `/genders`             | GET     | ❌      |                   |
+| `/disability_statuses` | GET     | ✅      | Fully implemented |
+| `/diversity_types`     | GET     | ✅      | Fully implemented |
+| `/ethnicities`         | GET     | ✅      | Fully implemented |
+| `/genders`             | GET     | ✅      | Fully implemented |
 | `/pronouns`            | GET     | ✅      | Fully implemented |
 | `/veteran_statuses`    | GET     | ✅      | Fully implemented |
 
@@ -101,18 +101,18 @@ This file tracks the coverage of Loxo API endpoints in our package.
 | `/dynamic_fields/{dynamic_field_id}/hierarchies/{id}` | GET, PUT, DELETE | ❌      |       |
 
 ## Education
-| Endpoint           | Methods | Status | Notes |
-| ------------------ | ------- | ------ | ----- |
-| `/education_types` | GET     | ❌      |       |
+| Endpoint           | Methods | Status | Notes             |
+| ------------------ | ------- | ------ | ----------------- |
+| `/education_types` | GET     | ✅      | Fully implemented |
 
 ## Email & Communication
-| Endpoint          | Methods          | Status | Notes             |
-| ----------------- | ---------------- | ------ | ----------------- |
-| `/email_tracking` | GET, POST        | ❌      |                   |
-| `/email_types`    | GET              | ❌      |                   |
-| `/phone_types`    | GET              | ✅      | Fully implemented |
-| `/sms`            | GET, POST        | ✅      | Fully implemented |
-| `/sms/{id}`       | GET, PUT, DELETE | 🚧      | GET implemented   |
+| Endpoint          | Methods   | Status | Notes             |
+| ----------------- | --------- | ------ | ----------------- |
+| `/email_tracking` | GET       | ✅      | Fully implemented |
+| `/email_types`    | GET       | ✅      | Fully implemented |
+| `/phone_types`    | GET       | ✅      | Fully implemented |
+| `/sms`            | GET, POST | ✅      | Fully implemented |
+| `/sms/{id}`       | GET       | ✅      | Fully implemented |
 
 ## Forms & Templates
 | Endpoint               | Methods          | Status | Notes |
@@ -213,10 +213,10 @@ This file tracks the coverage of Loxo API endpoints in our package.
 ## Miscellaneous
 | Endpoint                | Methods          | Status | Notes             |
 | ----------------------- | ---------------- | ------ | ----------------- |
-| `/merges`               | GET              | ❌      |                   |
-| `/question_types`       | GET              | ❌      |                   |
+| `/merges`               | GET              | ✅      | Fully implemented |
+| `/question_types`       | GET              | ✅      | Fully implemented |
 | `/seniority_levels`     | GET              | ✅      | Fully implemented |
-| `/social_profile_types` | GET              | ❌      |                   |
+| `/social_profile_types` | GET              | ✅      | Fully implemented |
 | `/source_types`         | GET, POST        | ❌      |                   |
 | `/source_types/{id}`    | GET, PUT, DELETE | ❌      |                   |
 
@@ -227,7 +227,7 @@ This file tracks the coverage of Loxo API endpoints in our package.
 | `/webhooks`        | GET, POST        | ✅      | Fully implemented |
 | `/webhooks/{id}`   | GET, PUT, DELETE | ✅      | Fully implemented |
 | `/workflow_stages` | GET              | ✅      | Fully implemented |
-| `/workflows`       | GET, POST        | 🚧      | GET implemented   |
+| `/workflows`       | GET              | ✅      | Fully implemented |
 
 ---
 
