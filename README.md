@@ -380,6 +380,19 @@ Please see [CONTRIBUTING.md](docs/CONTRIBUTING.md) for details on how to contrib
 
 If you discover any security vulnerabilities or bugs, please create an issue on GitHub.
 
+## 🤝 Sponsors & Supporters
+
+This project is proudly supported by:
+
+### [Topliner](https://topliner.app)
+**AI Executive Search Copilot** - Revolutionizing executive recruitment with AI-powered search and matching capabilities.
+
+### [Navis](https://getnavis.app)
+**Executive Talent Mapping - AI Accelerated, Expert Validated** - Advanced talent mapping solutions for executive search professionals.
+
+### [TheBigSearch](https://thebigsearch.com)
+**We find Europe's top software and hardware leaders** - Specialized executive search for technology leadership positions across Europe.
+
 ## 📚 Documentation
 
 - **[🚀 Quick Start Guide](docs/QUICK_START.md)** - Get started in 5 minutes
