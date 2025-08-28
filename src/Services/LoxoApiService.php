@@ -330,7 +330,8 @@ class LoxoApiService implements LoxoApiInterface
      */
     public function createPersonEvent(array $personEventData): array
     {
-        return $this->post('person_events', $personEventData);
+        // Use postForm instead of post to send form-encoded data as expected by Loxo API
+        return $this->postForm('person_events', $personEventData);
     }
 
     /**
