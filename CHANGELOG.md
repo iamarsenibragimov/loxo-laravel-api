@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.2] - 2025-01-XX
+
+### Fixed
+- **Person Events API Fix:**
+  - Fixed `createPersonEvent()` method to use form-encoded data instead of JSON
+  - Resolved 422 error when creating person events due to incorrect content type
+  - Changed from `$this->post()` to `$this->postForm()` for proper API compatibility
+
+### API Coverage
+- **Total Loxo API Endpoints:** 144
+- **Currently Implemented:** 27 (18.8%)
+- **Remaining:** 117 (81.3%)
+
 ## [Unreleased]
 
 ### Added
