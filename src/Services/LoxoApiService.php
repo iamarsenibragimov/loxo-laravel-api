@@ -165,7 +165,8 @@ class LoxoApiService implements LoxoApiInterface
      */
     public function createCompany(array $companyData): array
     {
-        return $this->post('companies', $companyData);
+        // Use postForm instead of post to send form-encoded data as expected by Loxo API
+        return $this->postForm('companies', $companyData);
     }
 
     /**
@@ -240,7 +241,8 @@ class LoxoApiService implements LoxoApiInterface
      */
     public function createWebhook(array $webhookData): array
     {
-        return $this->post('webhooks', $webhookData);
+        // Use postForm instead of post to send form-encoded data as expected by Loxo API
+        return $this->postForm('webhooks', $webhookData);
     }
 
     /**
@@ -256,7 +258,8 @@ class LoxoApiService implements LoxoApiInterface
      */
     public function updateWebhook(int $id, array $webhookData): array
     {
-        return $this->put("webhooks/{$id}", $webhookData);
+        // Use putForm instead of put to send form-encoded data as expected by Loxo API
+        return $this->putForm("webhooks/{$id}", $webhookData);
     }
 
     /**
@@ -380,7 +383,8 @@ class LoxoApiService implements LoxoApiInterface
      */
     public function updateJobCandidate(int $jobId, int $candidateId, array $candidateData): array
     {
-        return $this->put("jobs/{$jobId}/candidates/{$candidateId}", $candidateData);
+        // Use putForm instead of put to send form-encoded data as expected by Loxo API
+        return $this->putForm("jobs/{$jobId}/candidates/{$candidateId}", $candidateData);
     }
 
     /**
@@ -450,7 +454,8 @@ class LoxoApiService implements LoxoApiInterface
      */
     public function createJob(array $jobData): array
     {
-        return $this->post('jobs', $jobData);
+        // Use postForm instead of post to send form-encoded data as expected by Loxo API
+        return $this->postForm('jobs', $jobData);
     }
 
     /**
@@ -532,7 +537,8 @@ class LoxoApiService implements LoxoApiInterface
      */
     public function createPerson(array $personData): array
     {
-        return $this->post('people', $personData);
+        // Use postForm instead of post to send form-encoded data as expected by Loxo API
+        return $this->postForm('people', $personData);
     }
 
     /**
@@ -600,7 +606,8 @@ class LoxoApiService implements LoxoApiInterface
      */
     public function updatePerson(int $id, array $personData): array
     {
-        return $this->put("people/{$id}", $personData);
+        // Use putForm instead of put to send form-encoded data as expected by Loxo API
+        return $this->putForm("people/{$id}", $personData);
     }
 
     /**
@@ -686,7 +693,8 @@ class LoxoApiService implements LoxoApiInterface
      */
     public function createPersonEducationProfile(int $personId, array $educationData): array
     {
-        return $this->post("people/{$personId}/education_profiles", $educationData);
+        // Use postForm instead of post to send form-encoded data as expected by Loxo API
+        return $this->postForm("people/{$personId}/education_profiles", $educationData);
     }
 
     /**
@@ -721,7 +729,8 @@ class LoxoApiService implements LoxoApiInterface
      */
     public function createSms(array $smsData): array
     {
-        return $this->post('sms', $smsData);
+        // Use postForm instead of post to send form-encoded data as expected by Loxo API
+        return $this->postForm('sms', $smsData);
     }
 
     /**
@@ -1148,6 +1157,19 @@ class LoxoApiService implements LoxoApiInterface
     public function put(string $endpoint, array $data = []): array
     {
         return $this->makeRequest('PUT', $endpoint, ['json' => $data]);
+    }
+
+    /**
+     * Make a PUT request to the Loxo API with form-encoded data
+     *
+     * @param string $endpoint
+     * @param array $data
+     * @return array
+     * @throws LoxoApiException
+     */
+    public function putForm(string $endpoint, array $data = []): array
+    {
+        return $this->makeRequest('PUT', $endpoint, ['form_params' => $data]);
     }
 
     /**

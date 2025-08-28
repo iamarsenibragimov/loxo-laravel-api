@@ -8,10 +8,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.1.2] - 2025-01-28
 
 ### Fixed
-- **Person Events API Fix:**
-  - Fixed `createPersonEvent()` method to use form-encoded data instead of JSON
-  - Resolved 422 error when creating person events due to incorrect content type
-  - Changed from `$this->post()` to `$this->postForm()` for proper API compatibility
+- **Critical API Data Format Fixes:**
+  - Fixed **ALL CREATE methods** to use form-encoded data instead of JSON:
+    - `createPersonEvent()` - Person events creation
+    - `createCompany()` - Company creation
+    - `createWebhook()` - Webhook creation
+    - `createJob()` - Job creation
+    - `createPerson()` - Person/candidate creation
+    - `createPersonEducationProfile()` - Education profile creation
+    - `createSms()` - SMS creation
+  - Fixed **ALL UPDATE methods** to use form-encoded data instead of JSON:
+    - `updateWebhook()` - Webhook updates
+    - `updateJobCandidate()` - Job candidate updates
+    - `updatePerson()` - Person/candidate updates
+  - **Root Cause:** Loxo API expects form-encoded data (`application/x-www-form-urlencoded`) for CREATE and UPDATE operations, not JSON
+  - **Impact:** Resolved 422 errors across all create/update endpoints
+- **New HTTP Method Support:**
+  - Added `putForm()` method for form-encoded PUT requests
+  - Enhanced API compatibility with Loxo platform requirements
 
 ### API Coverage
 - **Total Loxo API Endpoints:** 144
